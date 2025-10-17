@@ -225,8 +225,11 @@ namespace CodeWalker.Rendering
         {
             lock (rendersyncroot)
             {
-                camera.OnWindowResize(width, height);
-                shaders.OnWindowResize(width, height);
+                if (shaders != null && camera != null)
+                {
+                    camera.OnWindowResize(width, height);
+                    shaders.OnWindowResize(width, height);
+                }
             }
         }
 

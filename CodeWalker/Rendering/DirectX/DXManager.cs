@@ -208,6 +208,10 @@ namespace CodeWalker.Rendering
         private void Resize()
         {
             if (Resizing) return;
+
+            //Sicherstellen, dass das Handle existiert
+            if (!dxform.Form.IsHandleCreated) return;
+
             Monitor.Enter(syncroot);
 
             int width = dxform.Form.ClientSize.Width;

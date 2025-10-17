@@ -91,7 +91,7 @@ namespace CodeWalker
                 }
                 else
                 {
-                    Application.Run(new WorldForm());
+                    Application.Run(new MainForm());
                 }
 #if !DEBUG
             }

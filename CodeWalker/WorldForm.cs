@@ -226,9 +226,14 @@ namespace CodeWalker
             LastMouseHit.WorldForm = this;
             PrevMouseHit.WorldForm = this;
 
-            initedOk = Renderer.Init();
+            InitRenderer();
 
             GTAFolder.UpdateEnhancedFormTitle(this);
+        }
+
+        public void InitRenderer()
+        {
+            initedOk = Renderer.Init();
         }
 
 
@@ -394,6 +399,9 @@ namespace CodeWalker
         }
         public void BuffersResized(int w, int h)
         {
+            //Schutz vor Null
+            if (Renderer == null || initedOk) return;
+
             Renderer.BuffersResized(w, h);
         }
         public void RenderScene(DeviceContext context)
@@ -8015,6 +8023,15 @@ namespace CodeWalker
         {
             SubtitleTimer.Enabled = false;
             SubtitleLabel.Visible = false;
+        }
+
+        public void WorldForm_Resize()
+        {
+            if (!IsHandleCreated) return;
+            if (Renderer == null) return;
+            if (!initedOk) return;
+
+            Renderer.BuffersResized(ClientSize.Width, ClientSize.Height);
         }
     }
 
