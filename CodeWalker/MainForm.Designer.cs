@@ -115,10 +115,10 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::CodeWalker.Properties.Resources.CodeWalker_Icon;
-            this.pictureBox1.Location = new System.Drawing.Point(11, 9);
+            this.pictureBox1.Location = new System.Drawing.Point(15, 17);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(61, 62);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox1.Size = new System.Drawing.Size(50, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             // 
@@ -278,7 +278,6 @@
             this.panelHeader.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.panel_MainWindow.ResumeLayout(false);
