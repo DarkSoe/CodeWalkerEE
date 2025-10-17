@@ -364,9 +364,9 @@ namespace CodeWalker
             this.StatusLabel,
             this.MousedLabel,
             this.StatsLabel});
-            this.StatusStrip.Location = new System.Drawing.Point(0, 689);
+            this.StatusStrip.Location = new System.Drawing.Point(0, 816);
             this.StatusStrip.Name = "StatusStrip";
-            this.StatusStrip.Size = new System.Drawing.Size(984, 22);
+            this.StatusStrip.Size = new System.Drawing.Size(1071, 22);
             this.StatusStrip.TabIndex = 0;
             this.StatusStrip.Text = "statusStrip1";
             // 
@@ -454,9 +454,9 @@ namespace CodeWalker
             this.ToolsPanel.Controls.Add(this.ToolsPanelExpandButton);
             this.ToolsPanel.Controls.Add(this.ToolsTabControl);
             this.ToolsPanel.Controls.Add(this.ToolsPanelHideButton);
-            this.ToolsPanel.Location = new System.Drawing.Point(754, 12);
+            this.ToolsPanel.Location = new System.Drawing.Point(841, 32);
             this.ToolsPanel.Name = "ToolsPanel";
-            this.ToolsPanel.Size = new System.Drawing.Size(218, 665);
+            this.ToolsPanel.Size = new System.Drawing.Size(218, 772);
             this.ToolsPanel.TabIndex = 2;
             this.ToolsPanel.Visible = false;
             // 
@@ -467,7 +467,7 @@ namespace CodeWalker
             this.ToolsDragPanel.Cursor = System.Windows.Forms.Cursors.VSplit;
             this.ToolsDragPanel.Location = new System.Drawing.Point(0, 0);
             this.ToolsDragPanel.Name = "ToolsDragPanel";
-            this.ToolsDragPanel.Size = new System.Drawing.Size(4, 665);
+            this.ToolsDragPanel.Size = new System.Drawing.Size(4, 772);
             this.ToolsDragPanel.TabIndex = 16;
             this.ToolsDragPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ToolsDragPanel_MouseDown);
             this.ToolsDragPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ToolsDragPanel_MouseMove);
@@ -516,7 +516,7 @@ namespace CodeWalker
             this.ToolsTabControl.Location = new System.Drawing.Point(3, 30);
             this.ToolsTabControl.Name = "ToolsTabControl";
             this.ToolsTabControl.SelectedIndex = 0;
-            this.ToolsTabControl.Size = new System.Drawing.Size(213, 632);
+            this.ToolsTabControl.Size = new System.Drawing.Size(213, 739);
             this.ToolsTabControl.TabIndex = 12;
             // 
             // ViewTabPage
@@ -530,7 +530,7 @@ namespace CodeWalker
             this.ViewTabPage.Location = new System.Drawing.Point(4, 22);
             this.ViewTabPage.Name = "ViewTabPage";
             this.ViewTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ViewTabPage.Size = new System.Drawing.Size(205, 606);
+            this.ViewTabPage.Size = new System.Drawing.Size(205, 713);
             this.ViewTabPage.TabIndex = 0;
             this.ViewTabPage.Text = "View";
             this.ViewTabPage.UseVisualStyleBackColor = true;
@@ -541,7 +541,7 @@ namespace CodeWalker
             this.StatusBarCheckBox.AutoSize = true;
             this.StatusBarCheckBox.Checked = true;
             this.StatusBarCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.StatusBarCheckBox.Location = new System.Drawing.Point(10, 544);
+            this.StatusBarCheckBox.Location = new System.Drawing.Point(10, 651);
             this.StatusBarCheckBox.Name = "StatusBarCheckBox";
             this.StatusBarCheckBox.Size = new System.Drawing.Size(74, 17);
             this.StatusBarCheckBox.TabIndex = 45;
@@ -560,7 +560,7 @@ namespace CodeWalker
             this.ViewTabControl.Location = new System.Drawing.Point(0, 32);
             this.ViewTabControl.Name = "ViewTabControl";
             this.ViewTabControl.SelectedIndex = 0;
-            this.ViewTabControl.Size = new System.Drawing.Size(202, 506);
+            this.ViewTabControl.Size = new System.Drawing.Size(202, 613);
             this.ViewTabControl.TabIndex = 12;
             // 
             // ViewWorldTabPage
@@ -583,7 +583,7 @@ namespace CodeWalker
             this.ViewWorldTabPage.Location = new System.Drawing.Point(4, 22);
             this.ViewWorldTabPage.Name = "ViewWorldTabPage";
             this.ViewWorldTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ViewWorldTabPage.Size = new System.Drawing.Size(194, 480);
+            this.ViewWorldTabPage.Size = new System.Drawing.Size(194, 532);
             this.ViewWorldTabPage.TabIndex = 0;
             this.ViewWorldTabPage.Text = "World";
             this.ViewWorldTabPage.UseVisualStyleBackColor = true;
@@ -853,7 +853,7 @@ namespace CodeWalker
             this.ViewModelTabPage.Controls.Add(this.ModelComboBox);
             this.ViewModelTabPage.Location = new System.Drawing.Point(4, 22);
             this.ViewModelTabPage.Name = "ViewModelTabPage";
-            this.ViewModelTabPage.Size = new System.Drawing.Size(194, 480);
+            this.ViewModelTabPage.Size = new System.Drawing.Size(194, 587);
             this.ViewModelTabPage.TabIndex = 2;
             this.ViewModelTabPage.Text = "Model";
             this.ViewModelTabPage.UseVisualStyleBackColor = true;
@@ -895,7 +895,9 @@ namespace CodeWalker
             // 
             this.ShowToolbarCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ShowToolbarCheckBox.AutoSize = true;
-            this.ShowToolbarCheckBox.Location = new System.Drawing.Point(10, 586);
+            this.ShowToolbarCheckBox.Checked = true;
+            this.ShowToolbarCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ShowToolbarCheckBox.Location = new System.Drawing.Point(10, 693);
             this.ShowToolbarCheckBox.Name = "ShowToolbarCheckBox";
             this.ShowToolbarCheckBox.Size = new System.Drawing.Size(108, 17);
             this.ShowToolbarCheckBox.TabIndex = 47;
@@ -907,7 +909,7 @@ namespace CodeWalker
             // 
             this.ErrorConsoleCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ErrorConsoleCheckBox.AutoSize = true;
-            this.ErrorConsoleCheckBox.Location = new System.Drawing.Point(10, 565);
+            this.ErrorConsoleCheckBox.Location = new System.Drawing.Point(10, 672);
             this.ErrorConsoleCheckBox.Name = "ErrorConsoleCheckBox";
             this.ErrorConsoleCheckBox.Size = new System.Drawing.Size(88, 17);
             this.ErrorConsoleCheckBox.TabIndex = 46;
@@ -2670,7 +2672,7 @@ namespace CodeWalker
             // ToolsPanelShowButton
             // 
             this.ToolsPanelShowButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ToolsPanelShowButton.Location = new System.Drawing.Point(939, 15);
+            this.ToolsPanelShowButton.Location = new System.Drawing.Point(1027, 32);
             this.ToolsPanelShowButton.Name = "ToolsPanelShowButton";
             this.ToolsPanelShowButton.Size = new System.Drawing.Size(30, 23);
             this.ToolsPanelShowButton.TabIndex = 0;
@@ -2684,9 +2686,9 @@ namespace CodeWalker
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ConsolePanel.BackColor = System.Drawing.SystemColors.Control;
             this.ConsolePanel.Controls.Add(this.ConsoleTextBox);
-            this.ConsolePanel.Location = new System.Drawing.Point(12, 576);
+            this.ConsolePanel.Location = new System.Drawing.Point(12, 703);
             this.ConsolePanel.Name = "ConsolePanel";
-            this.ConsolePanel.Size = new System.Drawing.Size(736, 101);
+            this.ConsolePanel.Size = new System.Drawing.Size(823, 101);
             this.ConsolePanel.TabIndex = 3;
             this.ConsolePanel.Visible = false;
             // 
@@ -2699,7 +2701,7 @@ namespace CodeWalker
             this.ConsoleTextBox.Multiline = true;
             this.ConsoleTextBox.Name = "ConsoleTextBox";
             this.ConsoleTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.ConsoleTextBox.Size = new System.Drawing.Size(730, 95);
+            this.ConsoleTextBox.Size = new System.Drawing.Size(817, 95);
             this.ConsoleTextBox.TabIndex = 0;
             // 
             // StatsUpdateTimer
@@ -2889,11 +2891,12 @@ namespace CodeWalker
             this.ToolbarPanel.BackColor = System.Drawing.SystemColors.Control;
             this.ToolbarPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ToolbarPanel.Controls.Add(this.Toolbar);
-            this.ToolbarPanel.Location = new System.Drawing.Point(12, 12);
+            this.ToolbarPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.ToolbarPanel.Location = new System.Drawing.Point(0, 0);
+            this.ToolbarPanel.MinimumSize = new System.Drawing.Size(557, 26);
             this.ToolbarPanel.Name = "ToolbarPanel";
-            this.ToolbarPanel.Size = new System.Drawing.Size(557, 26);
+            this.ToolbarPanel.Size = new System.Drawing.Size(1071, 26);
             this.ToolbarPanel.TabIndex = 7;
-            this.ToolbarPanel.Visible = false;
             // 
             // Toolbar
             // 
@@ -3594,7 +3597,7 @@ namespace CodeWalker
             this.SubtitleLabel.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.SubtitleLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.SubtitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SubtitleLabel.Location = new System.Drawing.Point(455, 555);
+            this.SubtitleLabel.Location = new System.Drawing.Point(498, 682);
             this.SubtitleLabel.Name = "SubtitleLabel";
             this.SubtitleLabel.Size = new System.Drawing.Size(83, 18);
             this.SubtitleLabel.TabIndex = 8;
@@ -3612,7 +3615,7 @@ namespace CodeWalker
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.MidnightBlue;
-            this.ClientSize = new System.Drawing.Size(984, 711);
+            this.ClientSize = new System.Drawing.Size(1071, 838);
             this.Controls.Add(this.ToolbarPanel);
             this.Controls.Add(this.SelectedMarkerPanel);
             this.Controls.Add(this.ConsolePanel);
