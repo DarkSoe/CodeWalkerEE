@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Threading;
-using System.Diagnostics;
-using System.Linq;
+﻿using CodeWalker.GameFiles;
+using CodeWalker.Project;
+using CodeWalker.Properties;
+using CodeWalker.Rendering;
+using CodeWalker.Rendering.UI;
+using CodeWalker.Tools;
+using CodeWalker.World;
 using SharpDX;
 using SharpDX.XInput;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 using Device = SharpDX.Direct3D11.Device;
 using DeviceContext = SharpDX.Direct3D11.DeviceContext;
-using CodeWalker.World;
-using CodeWalker.Project;
-using CodeWalker.Rendering;
-using CodeWalker.GameFiles;
-using CodeWalker.Properties;
-using CodeWalker.Tools;
 
 namespace CodeWalker
 {
@@ -211,6 +212,14 @@ namespace CodeWalker
 
         bool initedOk = false;
 
+        // Events
+        public event Action RendererInitialized;
+        public event Action<string> StatusChanged;
+        public event Action<string> StatChanged;
+        public event Action<string> MouseLabelChanged;
+        public event Action EnableCacheDependetButtons;
+        public event Action<bool> UpdateUndoButton;
+        public event Action<bool> UpdateRedoButton;
 
         public WorldForm()
         {
@@ -229,11 +238,16 @@ namespace CodeWalker
             InitRenderer();
 
             GTAFolder.UpdateEnhancedFormTitle(this);
+
+            Toolbar.Renderer = new LightGreyMenuRenderer();
+            Toolbar.ForeColor = System.Drawing.Color.FromArgb(230, 230, 230);
+            Toolbar.BackColor = System.Drawing.Color.FromArgb(36, 36, 36);
         }
 
         public void InitRenderer()
         {
             initedOk = Renderer.Init();
+            //RendererInitialized?.Invoke();
         }
 
 
@@ -246,7 +260,6 @@ namespace CodeWalker
                 Close();
                 return;
             }
-
 
             MouseWheel += WorldForm_MouseWheel;
 
@@ -2125,7 +2138,6 @@ namespace CodeWalker
             ToolbarMoveButton.ToolTipText = string.Format("Move ({0})", kb.EditPosition);
             ToolbarRotateButton.ToolTipText = string.Format("Rotate ({0})", kb.EditRotation);
             ToolbarScaleButton.ToolTipText = string.Format("Scale ({0})", kb.EditScale);
-            ShowToolbarCheckBox.Text = string.Format("Show Toolbar ({0})", kb.ToggleToolbar);
         }
 
 
@@ -4394,13 +4406,14 @@ namespace CodeWalker
             UpdateDlcListComboBox(gameFileCache.DlcNameList);
 
             EnableCacheDependentUI();
+            RendererInitialized?.Invoke();
 
 
 #if !DEBUG
             try
             {
 #endif
-                LoadWorld();
+            LoadWorld();
 #if !DEBUG
             }
             catch (Exception ex)
@@ -4477,15 +4490,16 @@ namespace CodeWalker
             {
                 if (InvokeRequired)
                 {
-                    BeginInvoke(new Action(() => { UpdateStatus(text); }));
+                    BeginInvoke(new Action(() => UpdateStatus(text)));
                 }
                 else
                 {
-                    StatusLabel.Text = text;
+                    StatusChanged?.Invoke(text);
                 }
             }
             catch { }
         }
+
         private void UpdateMousedLabel(string text)
         {
             try
@@ -4496,7 +4510,7 @@ namespace CodeWalker
                 }
                 else
                 {
-                    MousedLabel.Text = text;
+                    MouseLabelChanged?.Invoke(text);
                 }
             }
             catch { }
@@ -4831,7 +4845,6 @@ namespace CodeWalker
             BoundsDepthClipCheckBox.Checked = s.BoundsDepthClip;
             BoundsRangeTrackBar.Value = s.BoundsRange;
             ErrorConsoleCheckBox.Checked = s.ShowErrorConsole;
-            StatusBarCheckBox.Checked = s.ShowStatusBar;
             SnapGridSizeUpDown.Value = (decimal)s.SnapGridSize;
             SetRotationSnapping(s.SnapRotationDegrees);
             TimeOfDayTrackBar.Value = s.TimeOfDay;
@@ -4881,7 +4894,6 @@ namespace CodeWalker
             s.BoundsDepthClip = BoundsDepthClipCheckBox.Checked;
             s.BoundsRange = BoundsRangeTrackBar.Value;
             s.ShowErrorConsole = ErrorConsoleCheckBox.Checked;
-            s.ShowStatusBar = StatusBarCheckBox.Checked;
             s.SnapRotationDegrees = (float)SnapAngleUpDown.Value;
             s.SnapGridSize = (float)SnapGridSizeUpDown.Value;
             s.LODLights = LODLightsCheckBox.Checked;
@@ -4980,7 +4992,7 @@ namespace CodeWalker
                 UpdateUndoUI();
             }
         }
-        private void Undo()
+        public void Undo()
         {
             if (UndoSteps.Count == 0) return;
             var s = UndoSteps.Pop();
@@ -4995,7 +5007,8 @@ namespace CodeWalker
 
             UpdateUndoUI();
         }
-        private void Redo()
+
+        public void Redo()
         {
             if (RedoSteps.Count == 0) return;
             var s = RedoSteps.Pop();
@@ -5012,7 +5025,7 @@ namespace CodeWalker
         }
         private void UpdateUndoUI()
         {
-            ToolbarUndoButton.DropDownItems.Clear();
+            /*ToolbarUndoButton.DropDownItems.Clear();
             ToolbarRedoButton.DropDownItems.Clear();
             int i = 0;
             foreach (var step in UndoSteps)
@@ -5033,7 +5046,10 @@ namespace CodeWalker
                 if (i >= 10) break;
             }
             ToolbarUndoButton.Enabled = (UndoSteps.Count > 0);
-            ToolbarRedoButton.Enabled = (RedoSteps.Count > 0);
+            ToolbarRedoButton.Enabled = (RedoSteps.Count > 0);*/
+
+            UpdateUndoButton?.Invoke((UndoSteps.Count > 0));
+            UpdateRedoButton?.Invoke((RedoSteps.Count > 0));
         }
 
 
@@ -5048,8 +5064,8 @@ namespace CodeWalker
                 }
                 else
                 {
-                    ToolbarNewButton.Enabled = true;
-                    ToolbarOpenButton.Enabled = true;
+                    EnableCacheDependetButtons?.Invoke();
+
                     ToolbarProjectWindowButton.Enabled = true;
                     ToolsMenuProjectWindow.Enabled = true;
                     ToolsMenuCutsceneViewer.Enabled = true;
@@ -5168,7 +5184,7 @@ namespace CodeWalker
         }
 
 
-        private void New()
+        public void New()
         {
             ShowProjectForm();
 
@@ -5181,42 +5197,42 @@ namespace CodeWalker
                 ProjectForm.NewProject();
             }
         }
-        private void NewProject()
+        public void NewProject()
         {
             ShowProjectForm();
             ProjectForm.NewProject();
         }
-        private void NewYmap()
+        public void NewYmap()
         {
             ShowProjectForm();
             ProjectForm.NewYmap();
         }
-        private void NewYtyp()
+        public void NewYtyp()
         {
             ShowProjectForm();
             ProjectForm.NewYtyp();
         }
-        private void NewYbn()
+        public void NewYbn()
         {
             ShowProjectForm();
             ProjectForm.NewYbn();
         }
-        private void NewYnd()
+        public void NewYnd()
         {
             ShowProjectForm();
             ProjectForm.NewYnd();
         }
-        private void NewTrainTrack()
+        public void NewTrainTrack()
         {
             ShowProjectForm();
             ProjectForm.NewTrainTrack();
         }
-        private void NewScenario()
+        public void NewScenario()
         {
             ShowProjectForm();
             ProjectForm.NewScenario();
         }
-        private void Open()
+        public void Open()
         {
             ShowProjectForm();
 
@@ -5229,27 +5245,27 @@ namespace CodeWalker
                 ProjectForm.OpenProject();
             }
         }
-        private void OpenProject()
+        public void OpenProject()
         {
             ShowProjectForm();
             ProjectForm.OpenProject();
         }
-        private void OpenFiles()
+        public void OpenFiles()
         {
             ShowProjectForm();
             ProjectForm.OpenFiles();
         }
-        private void OpenFolder()
+        public void OpenFolder()
         {
             ShowProjectForm();
             ProjectForm.OpenFolder();
         }
-        private void Save()
+        public void Save()
         {
             if (ProjectForm == null) return;
             ProjectForm.Save();
         }
-        private void SaveAll()
+        public void SaveAll()
         {
             if (ProjectForm == null) return;
             ProjectForm.SaveAll();
@@ -5996,11 +6012,7 @@ namespace CodeWalker
         private void ToggleToolbar()
         {
             ToolbarPanel.Visible = !ToolbarPanel.Visible;
-            ShowToolbarCheckBox.Checked = ToolbarPanel.Visible;
         }
-
-
-
 
         public void ShowSubtitle(string text, float duration)
         {
@@ -6119,16 +6131,21 @@ namespace CodeWalker
         private void StatsUpdateTimer_Tick(object sender, EventArgs e)
         {
 
-            StatsLabel.Text = Renderer.GetStatusText();
+            try
+            {
+                string stats = Renderer?.GetStatusText() ?? string.Empty;
+                StatChanged?.Invoke(stats);
+            }
+            catch (Exception ex) { }
 
-            if (Renderer.timerunning)
+            /*if (Renderer.timerunning)
             {
                 float fv = Renderer.timeofday * 60.0f;
                 TimeOfDayTrackBar.Value = (int)fv;
                 UpdateTimeOfDayLabel();
             }
 
-            CameraPositionTextBox.Text = FloatUtil.GetVector3StringFormat(camera.Position, "0.##");
+            CameraPositionTextBox.Text = FloatUtil.GetVector3StringFormat(camera.Position, "0.##");*/
         }
 
         private void WorldForm_Load(object sender, EventArgs e)
@@ -7126,11 +7143,6 @@ namespace CodeWalker
             ShowSettingsForm();
         }
 
-        private void StatusBarCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            StatusStrip.Visible = StatusBarCheckBox.Checked;
-        }
-
         private void RenderModeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             TextureSamplerComboBox.Enabled = false;
@@ -7517,11 +7529,6 @@ namespace CodeWalker
         private void SelectionWidgetCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             ShowWidget = SelectionWidgetCheckBox.Checked;
-        }
-
-        private void ShowToolbarCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            ToolbarPanel.Visible = ShowToolbarCheckBox.Checked;
         }
 
         private void ToolbarNewButton_ButtonClick(object sender, EventArgs e)
@@ -8032,6 +8039,11 @@ namespace CodeWalker
             if (!initedOk) return;
 
             Renderer.BuffersResized(ClientSize.Width, ClientSize.Height);
+        }
+
+        public void ExicApplication()
+        {
+            SaveSettings();
         }
     }
 
