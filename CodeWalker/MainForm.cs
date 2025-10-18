@@ -1,5 +1,7 @@
-﻿using CodeWalker.Rendering;
+﻿using CodeWalker.GameFiles;
+using CodeWalker.Rendering;
 using CodeWalker.Rendering.UI;
+using CodeWalker.Tools;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -315,7 +317,17 @@ namespace CodeWalker
 
         private void EnableFilesButton()
         {
+            // Files Buttons
             fileToolStripMenuItem.Enabled = true;
+
+            // Tools
+            audioExplorerToolStripMenuItem.Enabled = true;
+            cutsceneViewerToolStripMenuItem.Enabled = true;
+            jenkIndexToolStripMenuItem.Enabled = true;
+            binarySearchToolStripMenuItem.Enabled = true;
+
+            // Window
+            projectWindowToolStripMenuItem.Enabled = true;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -485,6 +497,106 @@ namespace CodeWalker
         private void contentBrowserToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CreateContentBrowser();
+        }
+
+        private void rPFExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExploreForm tRPF_Explorer = new ExploreForm();
+            tRPF_Explorer.Show(this);
+        }
+
+        private void audioExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AudioExplorerForm tAudioExplorer = new AudioExplorerForm(tViewport.GameFileCache);
+            tAudioExplorer.Show(this);
+        }
+
+        private void cutsceneViewerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tViewport.ShowCutsceneForm();
+        }
+
+        private void jenkGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            JenkGenForm tJenkGeneratorForm = new JenkGenForm();
+            tJenkGeneratorForm.Show(this);
+        }
+
+        private void jenkIndexToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            JenkIndForm tJenkIndexForm = new JenkIndForm(tViewport.GameFileCache);
+            tJenkIndexForm.Show(this);
+        }
+
+        private void worldSearchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tViewport.ShowSearchForm();
+        }
+
+        private void binarySearchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BinarySearchForm tBinarySearchForm = new BinarySearchForm(tViewport.GameFileCache);
+            tBinarySearchForm.Show(this);
+        }
+
+        private void extractScriptsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExtractScriptsForm tExtractScriptsForm = new ExtractScriptsForm();
+            tExtractScriptsForm.Show(this);
+        }
+
+        private void extractTexturesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExtractTexForm tExtractTexturesForm = new ExtractTexForm();
+            tExtractTexturesForm.Show(this);
+        }
+
+        private void extractRawFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExtractRawForm tExtractRawForm = new ExtractRawForm();
+            tExtractRawForm.Show(this);
+        }
+
+        private void extractShadersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ExtractShadersForm tExtractShadersForm = new ExtractShadersForm();
+            tExtractShadersForm.Show(this);
+        }
+
+        private void configurateGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var result = GTAFolder.UpdateGTAFolder(false, false);
+            if (result)
+            {
+                MessageBox.Show("Please restart CodeWalker to use the new folder.");
+            }
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tViewport.ShowSettingsForm();
+        }
+
+        private void rPFBrowserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BrowseForm tRPFBrowserForm = new BrowseForm();
+            tRPFBrowserForm.Show(this);
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutForm tAboutForm = new AboutForm();
+            tAboutForm.Show(this);
+        }
+
+        private void selectionInfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tViewport.ShowInfoForm();
+        }
+
+        private void projectWindowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            tViewport.ShowProjectForm();
         }
     }
 }

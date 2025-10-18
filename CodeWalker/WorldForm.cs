@@ -1,5 +1,6 @@
 ﻿using CodeWalker.GameFiles;
 using CodeWalker.Project;
+using CodeWalker.Project.Panels;
 using CodeWalker.Properties;
 using CodeWalker.Rendering;
 using CodeWalker.Rendering.UI;
@@ -10,11 +11,13 @@ using SharpDX.XInput;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 using Device = SharpDX.Direct3D11.Device;
 using DeviceContext = SharpDX.Direct3D11.DeviceContext;
 
@@ -212,6 +215,8 @@ namespace CodeWalker
 
         bool initedOk = false;
 
+        public ProjectExplorerPanel ProjectExplorer;
+
         // Events
         public event Action RendererInitialized;
         public event Action<string> StatusChanged;
@@ -284,7 +289,7 @@ namespace CodeWalker
             SelectionModeComboBox.SelectedIndex = 0; //Entity mode
             ShowSelectedExtensionTab(false);
 
-            toolspanellastwidth = ToolsPanel.Width * 2; //default expanded size
+            toolspanellastwidth = panel_sidebar.Width * 2; //default expanded size
 
 
             Icons = new List<MapIcon>();
@@ -326,8 +331,24 @@ namespace CodeWalker
 
             Input.Init();
 
-
             Renderer.Start();
+
+            // Recolor the Splitter of the Sidebar.
+            split_sidebar.Paint += (s, e) =>
+            {
+                var sc = s as SplitContainer;
+                var g = e.Graphics;
+                var brush = new SolidBrush(System.Drawing.Color.FromArgb(48, 48, 48));
+
+                if (sc.Orientation == Orientation.Vertical)
+                {
+                    g.FillRectangle(brush, sc.SplitterDistance, 0, sc.SplitterWidth, sc.Height);
+                }
+                else
+                {
+                    g.FillRectangle(brush, 0, sc.SplitterDistance, sc.Width, sc.SplitterWidth);
+                }
+            };
         }
 
 
@@ -4072,7 +4093,7 @@ namespace CodeWalker
         }
 
 
-        private void ShowInfoForm()
+        public void ShowInfoForm()
         {
             if (InfoForm == null)
             {
@@ -4089,7 +4110,6 @@ namespace CodeWalker
                 }
                 InfoForm.Focus();
             }
-            ToolbarInfoWindowButton.Checked = true;
         }
         public void OnInfoFormSelectionModeChanged(string mode, bool enableSelect)
         {
@@ -4101,10 +4121,9 @@ namespace CodeWalker
         {
             //called by the WorldInfoForm when it's closed.
             InfoForm = null;
-            ToolbarInfoWindowButton.Checked = false;
         }
 
-        private void ShowProjectForm()
+        public void ShowProjectForm()
         {
             if (ProjectForm == null)
             {
@@ -4120,15 +4139,13 @@ namespace CodeWalker
                 }
                 ProjectForm.Focus();
             }
-            ToolbarProjectWindowButton.Checked = true;
         }
         public void OnProjectFormClosed()
         {
             ProjectForm = null;
-            ToolbarProjectWindowButton.Checked = false;
         }
 
-        private void ShowSearchForm()
+        public void ShowSearchForm()
         {
             if (SearchForm == null)
             {
@@ -4151,7 +4168,7 @@ namespace CodeWalker
             //ToolbarSearchWindowButton.Checked = false;
         }
 
-        private void ShowCutsceneForm()
+        public void ShowCutsceneForm()
         {
             if (CutsceneForm == null)
             {
@@ -4821,7 +4838,6 @@ namespace CodeWalker
         {
             var s = Settings.Default;
             WindowState = s.WindowMaximized ? FormWindowState.Maximized : WindowState;
-            FullScreenCheckBox.Checked = s.FullScreen;
             WireframeCheckBox.Checked = s.Wireframe;
             DeferredShadingCheckBox.Checked = s.Deferred;
             HDRRenderingCheckBox.Checked = s.HDR;
@@ -4870,7 +4886,6 @@ namespace CodeWalker
         {
             var s = Settings.Default;
             s.WindowMaximized = (WindowState == FormWindowState.Maximized);
-            s.FullScreen = FullScreenCheckBox.Checked;
             s.Wireframe = WireframeCheckBox.Checked;
             s.Deferred = DeferredShadingCheckBox.Checked;
             s.HDR = HDRRenderingCheckBox.Checked;
@@ -4937,7 +4952,7 @@ namespace CodeWalker
             MessageBox.Show("All settings have been reset to their default values. Please restart CodeWalker.");
         }
 
-        private void ShowSettingsForm(string tab = "")
+        public void ShowSettingsForm(string tab = "")
         {
             if (SettingsForm == null)
             {
@@ -5052,8 +5067,6 @@ namespace CodeWalker
             UpdateRedoButton?.Invoke((RedoSteps.Count > 0));
         }
 
-
-
         private void EnableCacheDependentUI()
         {
             try
@@ -5065,13 +5078,7 @@ namespace CodeWalker
                 else
                 {
                     EnableCacheDependetButtons?.Invoke();
-
-                    ToolbarProjectWindowButton.Enabled = true;
-                    ToolsMenuProjectWindow.Enabled = true;
-                    ToolsMenuCutsceneViewer.Enabled = true;
-                    ToolsMenuAudioExplorer.Enabled = true;
-                    ToolsMenuBinarySearch.Enabled = true;
-                    ToolsMenuJenkInd.Enabled = true;
+                    ShowProjectExplorer();
                 }
             }
             catch { }
@@ -5646,7 +5653,6 @@ namespace CodeWalker
         private void SetMouseSelect(bool enable)
         {
             MouseSelectEnabled = enable;
-            MouseSelectCheckBox.Checked = enable;
             ToolbarSelectButton.Checked = enable;
 
             if (InfoForm != null)
@@ -6170,11 +6176,6 @@ namespace CodeWalker
                 case MouseButtons.Right: MouseRButtonDown = true; break;
             }
 
-            if (!ToolsPanelShowButton.Focused)
-            {
-                ToolsPanelShowButton.Focus(); //make sure no textboxes etc are focused!
-            }
-
             MouseDownPoint = e.Location;
             MouseLastPoint = MouseDownPoint;
             Input.CtrlPressed = (ModifierKeys & Keys.Control) > 0;
@@ -6584,9 +6585,6 @@ namespace CodeWalker
                         case Keys.V:
                             PasteItem();
                             break;
-                        case Keys.U:
-                            ToolsPanelShowButton.Visible = !ToolsPanelShowButton.Visible;
-                            break;
                     }
                 }
             }
@@ -6684,18 +6682,6 @@ namespace CodeWalker
         private void YmapsTextBox_TextChanged(object sender, EventArgs e)
         {
             ymaplist = YmapsTextBox.Text.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-        }
-
-        private void ToolsPanelHideButton_Click(object sender, EventArgs e)
-        {
-            ToolsPanel.Visible = false;
-            ToolsPanelShowButton.Focus();
-        }
-
-        private void ToolsPanelShowButton_Click(object sender, EventArgs e)
-        {
-            ToolsPanel.Visible = true;
-            ToolsPanelHideButton.Focus();
         }
 
         private void WireframeCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -6943,11 +6929,6 @@ namespace CodeWalker
             Renderer.renderboundsmaxdist = fv * fv;
         }
 
-        private void MouseSelectCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            SetMouseSelect(MouseSelectCheckBox.Checked);
-        }
-
         private void SelectionBoundsCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             ShowSelectionBounds = SelectionBoundsCheckBox.Checked;
@@ -6972,17 +6953,17 @@ namespace CodeWalker
         {
             toolspanelexpanded = !toolspanelexpanded;
 
-            int oldwidth = ToolsPanel.Width;
-            if (toolspanelexpanded)
+            int oldwidth = panel_sidebar.Width;
+            /*if (toolspanelexpanded)
             {
                 ToolsPanelExpandButton.Text = ">>";
             }
             else
             {
                 ToolsPanelExpandButton.Text = "<<";
-            }
-            ToolsPanel.Width = toolspanellastwidth; //or extended width
-            ToolsPanel.Left -= (toolspanellastwidth - oldwidth);
+            }*/
+            panel_sidebar.Width = toolspanellastwidth; //or extended width
+            panel_sidebar.Left -= (toolspanellastwidth - oldwidth);
             toolspanellastwidth = oldwidth;
         }
 
@@ -6991,9 +6972,9 @@ namespace CodeWalker
             if (e.Button == MouseButtons.Left)
             {
                 toolsPanelResizing = true;
-                toolsPanelResizeStartX = e.X + ToolsPanel.Left;
-                toolsPanelResizeStartLeft = ToolsPanel.Left;
-                toolsPanelResizeStartRight = ToolsPanel.Right;
+                toolsPanelResizeStartX = e.X + panel_sidebar.Left;
+                toolsPanelResizeStartLeft = panel_sidebar.Left;
+                toolsPanelResizeStartRight = panel_sidebar.Right;
             }
         }
 
@@ -7006,16 +6987,11 @@ namespace CodeWalker
         {
             if (toolsPanelResizing)
             {
-                int rx = e.X + ToolsPanel.Left;
+                int rx = e.X + panel_sidebar.Left;
                 int dx = rx - toolsPanelResizeStartX;
-                ToolsPanel.Left = toolsPanelResizeStartLeft + dx;
-                ToolsPanel.Width = toolsPanelResizeStartRight - toolsPanelResizeStartLeft - dx;
+                panel_sidebar.Left = toolsPanelResizeStartLeft + dx;
+                panel_sidebar.Width = toolsPanelResizeStartRight - toolsPanelResizeStartLeft - dx;
             }
-        }
-
-        private void FullScreenCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
-            SetFullscreen(FullScreenCheckBox.Checked);
         }
 
         private void ControlSettingsButton_Click(object sender, EventArgs e)
@@ -7036,17 +7012,6 @@ namespace CodeWalker
         private void SaveSettingsButton_Click(object sender, EventArgs e)
         {
             SaveSettings();
-        }
-
-        private void AboutButton_Click(object sender, EventArgs e)
-        {
-            AboutForm f = new AboutForm();
-            f.Show(this);
-        }
-
-        private void ToolsButton_Click(object sender, EventArgs e)
-        {
-            ToolsMenu.Show(ToolsButton, 0, ToolsButton.Height);
         }
 
         private void ToolsMenuConfigureGame_Click(object sender, EventArgs e)
@@ -7809,16 +7774,16 @@ namespace CodeWalker
 
         private void ToolbarRotationSnappingCustomButton_Click(object sender, EventArgs e)
         {
-            ToolsPanel.Visible = true;
-            ToolsTabControl.SelectedTab = OptionsTabPage;
+            panel_sidebar.Visible = true;
+            panel_advanced_settings.SelectedTab = OptionsTabPage;
             OptionsTabControl.SelectedTab = OptionsHelpersTabPage;
             SnapAngleUpDown.Focus();
         }
 
         private void ToolbarSnapGridSizeButton_Click(object sender, EventArgs e)
         {
-            ToolsPanel.Visible = true;
-            ToolsTabControl.SelectedTab = OptionsTabPage;
+            panel_sidebar.Visible = true;
+            panel_advanced_settings.SelectedTab = OptionsTabPage;
             OptionsTabControl.SelectedTab = OptionsHelpersTabPage;
             SnapGridSizeUpDown.Focus();
         }
@@ -8044,6 +8009,118 @@ namespace CodeWalker
         public void ExicApplication()
         {
             SaveSettings();
+        }
+
+        private void btn_performance_Click(object sender, EventArgs e)
+        {
+            if (panel_settings.Visible)
+                panel_settings.Visible = false;
+
+            if (panel_rendering.Visible)
+                panel_rendering.Visible = false;
+
+            if (panel_light_settings.Visible)
+                panel_light_settings.Visible = false;
+
+            panel_performance.Visible = !panel_performance.Visible;
+        }
+
+        private void btn_settings_Click(object sender, EventArgs e)
+        {
+            if (panel_performance.Visible)
+                panel_performance.Visible = false;
+
+            if (panel_rendering.Visible)
+                panel_rendering.Visible = false;
+
+            if (panel_light_settings.Visible)
+                panel_light_settings.Visible = false;
+
+            panel_settings.Visible = !panel_settings.Visible;
+        }
+
+        private void btn_rendering_Click(object sender, EventArgs e)
+        {
+            if (panel_performance.Visible)
+                panel_performance.Visible = false;
+
+            if (panel_settings.Visible)
+                panel_settings.Visible = false;
+
+            if (panel_light_settings.Visible)
+                panel_light_settings.Visible = false;
+
+            panel_rendering.Visible = !panel_rendering.Visible;
+        }
+
+        private void btn_lightSettings_Click(object sender, EventArgs e)
+        {
+            if (panel_performance.Visible)
+                panel_performance.Visible = false;
+
+            if (panel_settings.Visible)
+                panel_settings.Visible = false;
+
+            if (panel_rendering.Visible)
+                panel_rendering.Visible = false;
+
+            panel_light_settings.Visible = !panel_light_settings.Visible;
+        }
+
+        private void panel_rendering_MouseLeave(object sender, EventArgs e)
+        {
+            //panel_rendering.Visible = false;
+        }
+
+        private void panel_light_settings_MouseLeave(object sender, EventArgs e)
+        {
+            //panel_light_settings.Visible = false;
+        }
+
+        private void panel_performance_MouseLeave(object sender, EventArgs e)
+        {
+            //panel_performance.Visible = false;
+        }
+
+        private void panel_settings_MouseLeave(object sender, EventArgs e)
+        {
+            //panel_settings.Visible = false;
+        }
+
+        private void btn_settings_more_Click(object sender, EventArgs e)
+        {
+            if (panel_settings.Visible)
+                panel_settings.Visible = false;
+
+            panel_advancedSettings.Visible = true;
+        }
+
+        private void btn_advancedSettings_close_Click(object sender, EventArgs e)
+        {
+            panel_advancedSettings.Visible = false;
+            panel_settings.Visible = true;
+        }
+
+        public void ShowProjectExplorer()
+        {
+            if ((ProjectExplorer == null) || (ProjectExplorer.IsDisposed) || (ProjectExplorer.Disposing))
+            {
+                ProjectExplorer = new ProjectExplorerPanel(null);
+                //ProjectExplorer.OnItemSelected += ProjectExplorer_OnItemSelected;
+                //ProjectExplorer.OnItemActivated += ProjectExplorer_OnItemActivated;
+                ProjectExplorer.SetTheme(new VS2015DarkTheme());
+                ProjectExplorer.TopLevel = false;
+                ProjectExplorer.FormBorderStyle = FormBorderStyle.None;
+                ProjectExplorer.Dock = DockStyle.Fill;
+                panel_ProjectOutliner.Controls.Add(ProjectExplorer);
+                ProjectExplorer.Visible = true;
+                ProjectExplorer.Show();
+            }
+            else
+            {
+                ProjectExplorer.Visible = true;
+                ProjectExplorer.Show();
+            }
         }
     }
 
