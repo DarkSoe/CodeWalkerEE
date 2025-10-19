@@ -8920,6 +8920,19 @@ namespace CodeWalker.Project
         private void LoadProjectTree()
         {
             ProjectExplorer?.LoadProjectTree(CurrentProjectFile);
+
+            if (WorldForm != null && WorldForm.ProjectExplorer != null)
+            {
+                if (WorldForm.ProjectExplorer.ProjectForm == null)
+                {
+                    WorldForm.ProjectExplorer.ProjectForm = this;
+
+                    WorldForm.ProjectExplorer.OnItemSelected += ProjectExplorer_OnItemSelected;
+                    WorldForm.ProjectExplorer.OnItemActivated += ProjectExplorer_OnItemActivated;
+                }
+
+                WorldForm.ProjectExplorer.LoadProjectTree(CurrentProjectFile);
+            }
         }
 
 

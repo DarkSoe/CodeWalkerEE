@@ -8106,8 +8106,6 @@ namespace CodeWalker
             if ((ProjectExplorer == null) || (ProjectExplorer.IsDisposed) || (ProjectExplorer.Disposing))
             {
                 ProjectExplorer = new ProjectExplorerPanel(null);
-                //ProjectExplorer.OnItemSelected += ProjectExplorer_OnItemSelected;
-                //ProjectExplorer.OnItemActivated += ProjectExplorer_OnItemActivated;
                 ProjectExplorer.SetTheme(new VS2015DarkTheme());
                 ProjectExplorer.TopLevel = false;
                 ProjectExplorer.FormBorderStyle = FormBorderStyle.None;
