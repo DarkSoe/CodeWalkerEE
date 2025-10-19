@@ -2638,7 +2638,10 @@ namespace CodeWalker.GameFiles
         public uint TryGetParentYtdHash(uint hash)
         {
             MetaHash phash = 0;
-            textureParents.TryGetValue(hash, out phash);
+
+            if (textureParents != null)
+                textureParents.TryGetValue(hash, out phash);
+
             return phash;
         }
         public uint TryGetHDTextureHash(uint txdhash)

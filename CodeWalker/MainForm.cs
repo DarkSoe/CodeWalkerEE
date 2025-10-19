@@ -27,7 +27,7 @@ namespace CodeWalker
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HTCAPTION = 0x2;
 
-        WorldForm tViewport;
+        public WorldForm tViewport;
         ContentBrowserForm tContentBrowser;
 
         // Resizing Window
@@ -75,15 +75,15 @@ namespace CodeWalker
                 }
             };
 
+            CreateContentBrowser();
+
             tViewport.StatusChanged += UpdateStatus;
             tViewport.StatChanged += UpdateStats;
             tViewport.MouseLabelChanged += UpdateMouseLabel;
-            tViewport.EnableCacheDependetButtons += EnableFilesButton;
+            tViewport.EnableCacheDependetButtons += EnableCacheDependentThings;
             tViewport.UpdateUndoButton += UpdateUndoButton;
             tViewport.UpdateRedoButton += UpdateRedoButton;
             tViewport.RendererInitialized += RendererInitialized;
-
-            CreateContentBrowser();
         }
 
         private void CreateContentBrowser()
@@ -315,7 +315,7 @@ namespace CodeWalker
             tViewport.NewScenario();
         }
 
-        private void EnableFilesButton()
+        private void EnableCacheDependentThings()
         {
             // Files Buttons
             fileToolStripMenuItem.Enabled = true;
@@ -328,6 +328,9 @@ namespace CodeWalker
 
             // Window
             projectWindowToolStripMenuItem.Enabled = true;
+
+            // ContentBrowser
+            tContentBrowser.InitializeContentBrowser(tViewport);
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)

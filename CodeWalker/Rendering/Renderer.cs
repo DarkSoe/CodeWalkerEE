@@ -1030,8 +1030,8 @@ namespace CodeWalker.Rendering
 
         public void RenderSelectionDrawableLight(LightAttributes light, Bone bone)
         {
-            var colblu = (uint)(new Color(0, 0, 255, 255).ToRgba());
-            var colwht = (uint)(new Color(255, 255, 255, 255).ToRgba());
+            var colblu = (uint)(new SharpDX.Color(0, 0, 255, 255).ToRgba());
+            var colwht = (uint)(new SharpDX.Color(255, 255, 255, 255).ToRgba());
 
             var pos = light.Position;
             var dir = light.Direction;
@@ -3957,7 +3957,7 @@ namespace CodeWalker.Rendering
             return rndbl;
         }
 
-
+        
 
 
     }

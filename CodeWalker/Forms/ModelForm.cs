@@ -4,19 +4,24 @@ using CodeWalker.Rendering;
 using CodeWalker.Utils;
 using CodeWalker.World;
 using SharpDX;
+using SharpDX.Direct2D1;
 using SharpDX.Direct3D11;
+using SharpDX.DXGI;
 using SharpDX.XInput;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Shapes;
 
 namespace CodeWalker.Forms
 {
@@ -205,7 +210,7 @@ namespace CodeWalker.Forms
         }
 
 
-        public void InitScene(Device device)
+        public void InitScene(SharpDX.Direct3D11.Device device)
         {
             int width = ClientSize.Width;
             int height = ClientSize.Height;
@@ -261,7 +266,7 @@ namespace CodeWalker.Forms
         {
             Renderer.BuffersResized(w, h);
         }
-        public void RenderScene(DeviceContext context)
+        public void RenderScene(SharpDX.Direct3D11.DeviceContext context)
         {
             float elapsed = (float)frametimer.Elapsed.TotalSeconds;
             frametimer.Restart();
@@ -510,10 +515,10 @@ namespace CodeWalker.Forms
                 gridVerts.Clear();
 
                 float s = gridSize * gridCount * 0.5f;
-                uint cblack = (uint)Color.Black.ToRgba();
-                uint cgray = (uint)Color.DimGray.ToRgba();
-                uint cred = (uint)Color.DarkRed.ToRgba();
-                uint cgrn = (uint)Color.DarkGreen.ToRgba();
+                uint cblack = (uint)SharpDX.Color.Black.ToRgba();
+                uint cgray = (uint)SharpDX.Color.DimGray.ToRgba();
+                uint cred = (uint)SharpDX.Color.DarkRed.ToRgba();
+                uint cgrn = (uint)SharpDX.Color.DarkGreen.ToRgba();
                 int interval = 10;
 
                 for (int i = 0; i <= gridCount; i++)
@@ -544,7 +549,7 @@ namespace CodeWalker.Forms
             }
         }
 
-        private void RenderGrid(DeviceContext context)
+        private void RenderGrid(SharpDX.Direct3D11.DeviceContext context)
         {
             if (!enableGrid) return;
 
@@ -1705,7 +1710,7 @@ namespace CodeWalker.Forms
                 }
                 SaveFileDialog.FileName = FileName;
 
-                var fileExt = Path.GetExtension(FileName);
+                var fileExt = System.IO.Path.GetExtension(FileName);
                 if ((fileExt.Length > 1) && fileExt.StartsWith("."))
                 {
                     fileExt = fileExt.Substring(1);
@@ -1808,7 +1813,7 @@ namespace CodeWalker.Forms
                 {
                     File.WriteAllBytes(fn, fileBytes);
 
-                    fileName = Path.GetFileName(fn);
+                    fileName = System.IO.Path.GetFileName(fn);
 
                     exploreForm?.RefreshMainListViewInvoke(); //update the file details in explorer...
 
@@ -2699,6 +2704,18 @@ namespace CodeWalker.Forms
             {
                 SetRotationSnapping((float)SnapAngleUpDown.Value);
             }
+        }
+
+        public Renderer GetRenderer()
+        {
+            return Renderer;
+        }
+
+        public System.Drawing.Bitmap GetFormAsImage(int width, int height)
+        {
+            System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(width, height);
+            this.DrawToBitmap(bmp, new System.Drawing.Rectangle(System.Drawing.Point.Empty, this.Size));
+            return bmp;
         }
     }
 }
