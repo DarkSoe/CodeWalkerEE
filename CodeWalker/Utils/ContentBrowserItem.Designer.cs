@@ -28,19 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.img_PropImage = new System.Windows.Forms.PictureBox();
             this.label_Name = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.img_PropImage)).BeginInit();
+            this.panel_RenderImage = new System.Windows.Forms.Panel();
             this.SuspendLayout();
-            // 
-            // img_PropImage
-            // 
-            this.img_PropImage.Location = new System.Drawing.Point(0, 0);
-            this.img_PropImage.Name = "img_PropImage";
-            this.img_PropImage.Size = new System.Drawing.Size(350, 350);
-            this.img_PropImage.TabIndex = 0;
-            this.img_PropImage.TabStop = false;
             // 
             // label_Name
             // 
@@ -66,26 +57,31 @@
             this.label1.Text = "DummyType";
             this.label1.Visible = false;
             // 
+            // panel_RenderImage
+            // 
+            this.panel_RenderImage.Location = new System.Drawing.Point(0, 0);
+            this.panel_RenderImage.Name = "panel_RenderImage";
+            this.panel_RenderImage.Size = new System.Drawing.Size(350, 350);
+            this.panel_RenderImage.TabIndex = 3;
+            // 
             // ContentBrowserItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
+            this.Controls.Add(this.panel_RenderImage);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label_Name);
-            this.Controls.Add(this.img_PropImage);
             this.Name = "ContentBrowserItem";
             this.Size = new System.Drawing.Size(350, 500);
-            ((System.ComponentModel.ISupportInitialize)(this.img_PropImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox img_PropImage;
         private System.Windows.Forms.Label label_Name;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel panel_RenderImage;
     }
 }

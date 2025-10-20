@@ -239,7 +239,7 @@ namespace CodeWalker.Utils
                 tSkeleton = ydr.Drawable.Skeleton;
             }
 
-            tThumbnailThread.Start();
+            //tThumbnailThread.Start();
         }
 
         private void MoveCameraToView(Vector3 pos, float rad)

@@ -30,9 +30,10 @@ namespace CodeWalker
 
         List<ContentPropItem> PropList = new List<ContentPropItem>();
         List<ContentPropItem> FilteredPropList = new List<ContentPropItem>();
+        List<ContentBrowserItem> ItemContainerPool = new List<ContentBrowserItem>();
 
         private int CurrentPage = 0;
-        private const int PageSize = 1;
+        private const int PageSize = 40;
 
         //Events
         public event Action<string> PropDragged;
@@ -70,6 +71,20 @@ namespace CodeWalker
             if (WorldForm != null && WorldForm.GameFileCache != null)
                 GameFileCache = WorldForm.GameFileCache;
 
+            panel_ContentBrowser.SuspendLayout();
+            panel_ContentBrowser.Controls.Clear();
+            ItemContainerPool.Clear();
+
+            for (int i = 0; i < PageSize; i++)
+            {
+                var item = new ContentBrowserItem();
+                item.Visible = false;
+                panel_ContentBrowser.Controls.Add(item);
+                ItemContainerPool.Add(item);
+            }
+
+            panel_ContentBrowser.ResumeLayout();
+
             _ = LoadPropsFromCacheAsync();
         }
 
@@ -96,7 +111,6 @@ namespace CodeWalker
 
         public async Task LoadPropsFromCacheAsync()
         {
-            panel_ContentBrowser.Controls.Clear();
             PropList.Clear();
 
             var props = await Task.Run(() =>
@@ -125,22 +139,25 @@ namespace CodeWalker
         {
             if (FilteredPropList.Count == 0) return;
 
-            panel_ContentBrowser.Controls.Clear();
             label_currentPage.Text = (pageIndex + 1).ToString();
 
             var pageItems = FilteredPropList
                 .Skip(pageIndex * PageSize)
-                .Take(PageSize);
+                .Take(PageSize)
+                .ToList();
 
-            foreach (var prop in pageItems)
+            for (int i = 0; i < ItemContainerPool.Count; i++)
             {
-                if (!prop.HasThumbnail())
+                if (i < pageItems.Count())
                 {
-                    RenderPropToBitmap(prop);
+                    var tCurrContainer = ItemContainerPool[i];
+                    tCurrContainer.SetProp(pageItems[i]);
+                    tCurrContainer.Visible = true;
                 }
-
-                var itemControl = new ContentBrowserItem(prop);
-                panel_ContentBrowser.Controls.Add(itemControl);
+                else
+                {
+                    ItemContainerPool[i].Visible = false;
+                }
             }
         }
 
@@ -193,23 +210,6 @@ namespace CodeWalker
                 e.SuppressKeyPress = true;
                 btn_search.PerformClick();
             }
-        }
-
-        private void RenderPropToBitmap(ContentPropItem aItem)
-        {
-            int width = 350;
-            int height = 350;
-
-            var tOffscreenRenderer = new OffscreenRenderer();
-            tOffscreenRenderer.TopLevel = true;
-            tOffscreenRenderer.FormBorderStyle = FormBorderStyle.None;
-            tOffscreenRenderer.ClientSize = new Size(width, height);
-            tOffscreenRenderer.Visible = true;
-            tOffscreenRenderer.FilePath = aItem.YdrFile.FilePath;
-            tOffscreenRenderer.SaveFilePath = aItem.ThumbnailPath;
-            tOffscreenRenderer.Location = new Point(0, 0);
-            tOffscreenRenderer.Show();
-            tOffscreenRenderer.LoadModel(aItem.YdrFile);
         }
     }
 }

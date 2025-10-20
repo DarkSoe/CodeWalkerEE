@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -14,7 +15,8 @@ namespace CodeWalker.Utils
 {
     public partial class ContentBrowserItem : UserControl
     {
-        public ContentPropItem PropItem { get; set; }
+        public ContentPropItem tPropItem { get; set; }
+        public OffscreenRenderer tOffscreenRenderer { get; set; }
 
         public ContentBrowserItem()
         {
@@ -25,10 +27,25 @@ namespace CodeWalker.Utils
         {
             InitializeComponent();
 
-            PropItem = aPropItem;
-
+            /*tPropItem = aPropItem;
             label_Name.Text = aPropItem.GetCleanName();
-            img_PropImage.ImageLocation = Path.ChangeExtension(aPropItem.ThumbnailPath, ".jpg");
+
+            var tOffscreenRenderer = new OffscreenRenderer();
+            tOffscreenRenderer.TopLevel = false;
+            tOffscreenRenderer.FormBorderStyle = FormBorderStyle.None;
+            tOffscreenRenderer.ClientSize = new Size(350, 350);
+            tOffscreenRenderer.FilePath = tPropItem.YdrFile.FilePath;
+            tOffscreenRenderer.SaveFilePath = tPropItem.ThumbnailPath;
+            tOffscreenRenderer.Visible = true;
+            tOffscreenRenderer.Show();
+            tOffscreenRenderer.LoadModel(tPropItem.YdrFile);
+            panel_RenderImage.Controls.Add(tOffscreenRenderer);*/
+        }
+
+        public void SetProp(ContentPropItem aPropItem)
+        {
+            tPropItem = aPropItem;
+            label_Name.Text = aPropItem.GetCleanName();
         }
     }
 }
