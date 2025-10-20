@@ -1,4 +1,5 @@
-﻿using CodeWalker.GameFiles;
+﻿using CodeWalker.Forms;
+using CodeWalker.GameFiles;
 using CodeWalker.Properties;
 using CodeWalker.Rendering;
 using CodeWalker.World;
@@ -11,6 +12,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -321,6 +323,71 @@ namespace CodeWalker.Utils
             }
 
             return bmp;
+        }
+
+        public void ViewModel(ContentPropItem aPropItem)
+        {
+            byte[] data = null;
+            string name = "";
+            string path = "";
+            string extension = "";
+
+            string tGtaPath = GTAFolder.GetCurrentGTAFolderWithTrailingSlash();
+            string tFullFilePath = tGtaPath + aPropItem.FilePath;
+
+            RpfFileEntry tRpfFileEntry = aPropItem.YdrFile.RpfFileEntry;
+            if (tRpfFileEntry != null)
+            {
+                RpfFile tRpfFile = tRpfFileEntry.File;
+                if (tRpfFile == null) return;
+
+                data = tRpfFile.ExtractFile(tRpfFileEntry);
+                name = new FileInfo(tFullFilePath).Name;
+                path = tFullFilePath;
+                extension = new FileInfo(tFullFilePath).Extension;
+            }
+
+            if (data == null) return;
+
+            if (tRpfFileEntry == null)
+            {
+                //this should only happen when opening a file from filesystem...
+                tRpfFileEntry = CreateFileEntry(name, path, ref data);
+                extension = new FileInfo(tFullFilePath).Extension;
+            }
+
+            switch (extension)
+            {
+                case ".ydr":
+                    var tYdr = RpfFile.GetFile<YdrFile>(tRpfFileEntry, data);
+                    LoadModel(tYdr);
+                    break;
+            }
+        }
+
+        private RpfFileEntry CreateFileEntry(string name, string path, ref byte[] data)
+        {
+            //this should only really be used when loading a file from the filesystem.
+            RpfFileEntry e = null;
+            uint rsc7 = (data?.Length > 4) ? BitConverter.ToUInt32(data, 0) : 0;
+            if (rsc7 == 0x37435352) //RSC7 header present! create RpfResourceFileEntry and decompress data...
+            {
+                e = RpfFile.CreateResourceFileEntry(ref data, 0);//"version" should be loadable from the header in the data..
+                data = ResourceBuilder.Decompress(data);
+            }
+            else
+            {
+                var be = new RpfBinaryFileEntry();
+                be.FileSize = (uint)data?.Length;
+                be.FileUncompressedSize = be.FileSize;
+                e = be;
+            }
+            e.Name = name;
+            e.NameLower = name?.ToLowerInvariant();
+            e.NameHash = JenkHash.GenHash(e.NameLower);
+            e.ShortNameHash = JenkHash.GenHash(Path.GetFileNameWithoutExtension(e.NameLower));
+            e.Path = path;
+            return e;
         }
     }
 }

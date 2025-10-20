@@ -21,31 +21,67 @@ namespace CodeWalker.Utils
         public ContentBrowserItem()
         {
             InitializeComponent();
+
+            if (tOffscreenRenderer == null)
+            {
+                tOffscreenRenderer = new OffscreenRenderer();
+                tOffscreenRenderer.TopLevel = false;
+                tOffscreenRenderer.FormBorderStyle = FormBorderStyle.None;
+                tOffscreenRenderer.ClientSize = new Size(350, 350);
+                tOffscreenRenderer.Location = new Point(0, 0);
+                tOffscreenRenderer.Visible = false;
+                tOffscreenRenderer.Show();
+
+                panel_RenderImage.Controls.Add(tOffscreenRenderer);
+            }
         }
 
         public ContentBrowserItem(ContentPropItem aPropItem)
         {
             InitializeComponent();
 
-            /*tPropItem = aPropItem;
+            tPropItem = aPropItem;
             label_Name.Text = aPropItem.GetCleanName();
 
-            var tOffscreenRenderer = new OffscreenRenderer();
-            tOffscreenRenderer.TopLevel = false;
-            tOffscreenRenderer.FormBorderStyle = FormBorderStyle.None;
-            tOffscreenRenderer.ClientSize = new Size(350, 350);
+            if (tOffscreenRenderer == null)
+            {
+                tOffscreenRenderer = new OffscreenRenderer();
+                tOffscreenRenderer.TopLevel = false;
+                tOffscreenRenderer.FormBorderStyle = FormBorderStyle.None;
+                tOffscreenRenderer.ClientSize = new Size(350, 350);
+                tOffscreenRenderer.Location = new Point(0, 0);
+                tOffscreenRenderer.Visible = true;
+                tOffscreenRenderer.Show();
+
+                panel_RenderImage.Controls.Add(tOffscreenRenderer);
+            }
+
             tOffscreenRenderer.FilePath = tPropItem.YdrFile.FilePath;
             tOffscreenRenderer.SaveFilePath = tPropItem.ThumbnailPath;
-            tOffscreenRenderer.Visible = true;
-            tOffscreenRenderer.Show();
-            tOffscreenRenderer.LoadModel(tPropItem.YdrFile);
-            panel_RenderImage.Controls.Add(tOffscreenRenderer);*/
+            tOffscreenRenderer.ViewModel(tPropItem);
         }
 
         public void SetProp(ContentPropItem aPropItem)
         {
             tPropItem = aPropItem;
             label_Name.Text = aPropItem.GetCleanName();
+
+            if (tOffscreenRenderer == null)
+            {
+                tOffscreenRenderer = new OffscreenRenderer();
+                tOffscreenRenderer.TopLevel = false;
+                tOffscreenRenderer.FormBorderStyle = FormBorderStyle.None;
+                tOffscreenRenderer.ClientSize = new Size(350, 350);
+                tOffscreenRenderer.Location = new Point(0, 0);
+                tOffscreenRenderer.Visible = true;
+                tOffscreenRenderer.Show();
+
+                panel_RenderImage.Controls.Add(tOffscreenRenderer);
+            }
+            
+            tOffscreenRenderer.FilePath = tPropItem.YdrFile.FilePath;
+            tOffscreenRenderer.SaveFilePath = tPropItem.ThumbnailPath;
+            tOffscreenRenderer.ViewModel(tPropItem);
         }
     }
 }

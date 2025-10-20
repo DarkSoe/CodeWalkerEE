@@ -21,11 +21,12 @@ namespace CodeWalker.Utils
 
         public string ThumbnailPath { get; set; }
 
+        public Archetype Archetype { get; set; }
+
         public ContentPropItem(string aName, YdrFile aYdrFile)
         {
             Name = aName;
             YdrFile = aYdrFile;
-            FilePath = aYdrFile.FilePath;
 
             var codeWalkerDir = AppDomain.CurrentDomain.BaseDirectory;
             var thumbnailDir = Path.Combine(codeWalkerDir, "thumbnails");

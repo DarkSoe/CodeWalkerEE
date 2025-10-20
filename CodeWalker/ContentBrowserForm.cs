@@ -32,6 +32,9 @@ namespace CodeWalker
         List<ContentPropItem> FilteredPropList = new List<ContentPropItem>();
         List<ContentBrowserItem> ItemContainerPool = new List<ContentBrowserItem>();
 
+        Archetype tCurrentArchetype = null;
+        bool tUpdateArchetypeStatus = true;
+
         private int CurrentPage = 0;
         private const int PageSize = 40;
 
@@ -122,9 +125,24 @@ namespace CodeWalker
                     var entry = kvp.Value;
 
                     var ydr = GameFileCache.GetYdr(hash);
-                    if (ydr == null) continue;
+                    if (ydr != null)
+                    {
+                        var tRpfFileEntry = ydr.RpfFileEntry;
+                        var tModelHash = tRpfFileEntry?.ShortNameHash ?? 0;
+                        if (tModelHash != 0)
+                        {
+                            var tModelArchetype = TryGetArchetype(tModelHash);
+                            if (tModelArchetype != null)
+                            {
+                                ContentPropItem tProp = new ContentPropItem(entry.Name, ydr);
+                                tProp.Archetype = tModelArchetype;
+                                tProp.FilePath = entry.Path;
 
-                    list.Add(new ContentPropItem(entry.Name, ydr));
+                                list.Add(tProp);
+                            }
+                        }                            
+                    }
+                    
                 }
                 return list;
             });
@@ -210,6 +228,21 @@ namespace CodeWalker
                 e.SuppressKeyPress = true;
                 btn_search.PerformClick();
             }
+        }
+
+        private Archetype TryGetArchetype(uint hash)
+        {
+            if ((GameFileCache == null) || (!GameFileCache.IsInited)) return null;
+
+            var arch = GameFileCache.GetArchetype(hash);
+
+            if ((arch != null) && (arch != tCurrentArchetype) && (tUpdateArchetypeStatus))
+            {
+                tCurrentArchetype = arch;
+                tUpdateArchetypeStatus = false;
+            }
+
+            return arch;
         }
     }
 }
