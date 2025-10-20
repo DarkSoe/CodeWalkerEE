@@ -276,7 +276,7 @@ namespace CodeWalker.Utils
             {
                 if (tRenderer.RenderedDrawables.Count >= 1)
                 {
-                    Bitmap tBmp = GetFormAsImage(350, 350);
+                    Bitmap tBmp = CaptureWindowBitmap();
                     SaveThumbnailAsJpeg(tBmp, SaveFilePath);
 
                     break;
@@ -309,6 +309,18 @@ namespace CodeWalker.Utils
             {
                 this.Close();
             }));
+        }
+
+        public Bitmap CaptureWindowBitmap()
+        {
+            Bitmap bmp = new Bitmap(this.Size.Width, this.Size.Height, PixelFormat.Format32bppArgb);
+
+            using (Graphics g = Graphics.FromImage(bmp))
+            {
+                g.CopyFromScreen(this.Location, System.Drawing.Point.Empty, this.Size);
+            }
+
+            return bmp;
         }
     }
 }

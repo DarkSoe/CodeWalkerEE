@@ -288,9 +288,6 @@ namespace CodeWalker.Rendering
 
             shaders.EnsureShaderTextures(gameFileCache, renderableCache);
 
-
-
-
             SelectionLineVerts.Clear();
             SelectionTriVerts.Clear();
             WhiteBoxes.Clear();

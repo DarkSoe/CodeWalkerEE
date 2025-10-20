@@ -207,7 +207,7 @@ namespace CodeWalker
             tOffscreenRenderer.Visible = true;
             tOffscreenRenderer.FilePath = aItem.YdrFile.FilePath;
             tOffscreenRenderer.SaveFilePath = aItem.ThumbnailPath;
-            //tOffscreenRenderer.Location = new Point(-500000, -500000);
+            tOffscreenRenderer.Location = new Point(0, 0);
             tOffscreenRenderer.Show();
             tOffscreenRenderer.LoadModel(aItem.YdrFile);
         }
