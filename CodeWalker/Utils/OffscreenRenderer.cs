@@ -241,7 +241,10 @@ namespace CodeWalker.Utils
                 tSkeleton = ydr.Drawable.Skeleton;
             }
 
-            //tThumbnailThread.Start();
+            if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Stopped)
+                tThumbnailThread = new Thread(new ThreadStart(Thread_CheckForRenderProp));
+
+            tThumbnailThread.Start();
         }
 
         private void MoveCameraToView(Vector3 pos, float rad)
@@ -278,8 +281,9 @@ namespace CodeWalker.Utils
             {
                 if (tRenderer.RenderedDrawables.Count >= 1)
                 {
-                    Bitmap tBmp = CaptureWindowBitmap();
-                    SaveThumbnailAsJpeg(tBmp, SaveFilePath);
+                    //Bitmap tBmp = CaptureWindowBitmap();
+                    //SaveThumbnailAsJpeg(tBmp, SaveFilePath);
+                    tRenderer.
 
                     break;
                 }
@@ -351,7 +355,6 @@ namespace CodeWalker.Utils
 
             if (tRpfFileEntry == null)
             {
-                //this should only happen when opening a file from filesystem...
                 tRpfFileEntry = CreateFileEntry(name, path, ref data);
                 extension = new FileInfo(tFullFilePath).Extension;
             }
@@ -367,12 +370,11 @@ namespace CodeWalker.Utils
 
         private RpfFileEntry CreateFileEntry(string name, string path, ref byte[] data)
         {
-            //this should only really be used when loading a file from the filesystem.
             RpfFileEntry e = null;
             uint rsc7 = (data?.Length > 4) ? BitConverter.ToUInt32(data, 0) : 0;
             if (rsc7 == 0x37435352) //RSC7 header present! create RpfResourceFileEntry and decompress data...
             {
-                e = RpfFile.CreateResourceFileEntry(ref data, 0);//"version" should be loadable from the header in the data..
+                e = RpfFile.CreateResourceFileEntry(ref data, 0);
                 data = ResourceBuilder.Decompress(data);
             }
             else
@@ -389,5 +391,6 @@ namespace CodeWalker.Utils
             e.Path = path;
             return e;
         }
+
     }
 }
