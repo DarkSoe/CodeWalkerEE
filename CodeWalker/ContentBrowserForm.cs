@@ -32,7 +32,7 @@ namespace CodeWalker
         List<ContentPropItem> FilteredPropList = new List<ContentPropItem>();
 
         private int CurrentPage = 0;
-        private const int PageSize = 40;
+        private const int PageSize = 1;
 
         //Events
         public event Action<string> PropDragged;
@@ -136,8 +136,7 @@ namespace CodeWalker
             {
                 if (!prop.HasThumbnail())
                 {
-                    var bmp = RenderPropToBitmap(prop.YdrFile);
-                    SaveThumbnailAsJpeg(bmp, prop.ThumbnailPath);
+                    RenderPropToBitmap(prop);
                 }
 
                 var itemControl = new ContentBrowserItem(prop);
@@ -196,44 +195,21 @@ namespace CodeWalker
             }
         }
 
-        private Bitmap RenderPropToBitmap(YdrFile aYdr)
+        private void RenderPropToBitmap(ContentPropItem aItem)
         {
             int width = 350;
             int height = 350;
 
-            var modelForm = new ModelForm();
-            modelForm.TopLevel = true;
-            modelForm.FormBorderStyle = FormBorderStyle.None;
-            modelForm.ClientSize = new Size(width, height);
-            modelForm.Visible = true;
-            modelForm.FilePath = aYdr.FilePath;
-            modelForm.Location = new Point(-500000, -500000);
-            modelForm.Show();
-            modelForm.LoadModel(aYdr);
-      
-            Bitmap bmp = modelForm.GetFormAsImage(width, height);
-
-            modelForm.Close();
-
-            return bmp;
-        }
-
-        private void SaveThumbnailAsJpeg(Bitmap bmp, string path, long quality = 85L)
-        {
-            var codec = ImageCodecInfo.GetImageEncoders()
-                .FirstOrDefault(c => c.FormatID == ImageFormat.Jpeg.Guid);
-
-            if (codec != null)
-            {
-                var encoder = new EncoderParameters(1);
-                encoder.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, quality);
-
-                bmp.Save(path, codec, encoder);
-            }
-            else
-            {
-                bmp.Save(path, ImageFormat.Jpeg);
-            }
+            var tOffscreenRenderer = new OffscreenRenderer();
+            tOffscreenRenderer.TopLevel = true;
+            tOffscreenRenderer.FormBorderStyle = FormBorderStyle.None;
+            tOffscreenRenderer.ClientSize = new Size(width, height);
+            tOffscreenRenderer.Visible = true;
+            tOffscreenRenderer.FilePath = aItem.YdrFile.FilePath;
+            tOffscreenRenderer.SaveFilePath = aItem.ThumbnailPath;
+            //tOffscreenRenderer.Location = new Point(-500000, -500000);
+            tOffscreenRenderer.Show();
+            tOffscreenRenderer.LoadModel(aItem.YdrFile);
         }
     }
 }
