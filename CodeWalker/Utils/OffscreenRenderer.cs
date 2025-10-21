@@ -269,6 +269,9 @@ namespace CodeWalker.Utils
             tCamera.TargetDistance = rad * 1.6f;
             tCamera.CurrentDistance = rad * 1.6f;
 
+            tCamera.TargetRotation.X = (float)(Math.PI / 4);
+            tCamera.TargetRotation.Y = (float)(Math.PI / 4);
+
             tCamera.UpdateProj = true;
         }
 
