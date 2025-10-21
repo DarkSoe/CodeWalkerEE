@@ -22,7 +22,7 @@ namespace CodeWalker.Utils
         {
             InitializeComponent();
 
-            if (tOffscreenRenderer == null)
+            /*if (tOffscreenRenderer == null)
             {
                 tOffscreenRenderer = new OffscreenRenderer();
                 tOffscreenRenderer.TopLevel = false;
@@ -33,7 +33,7 @@ namespace CodeWalker.Utils
                 tOffscreenRenderer.Show();
 
                 panel_RenderImage.Controls.Add(tOffscreenRenderer);
-            }
+            }*/
         }
 
         public ContentBrowserItem(ContentPropItem aPropItem)
@@ -43,7 +43,7 @@ namespace CodeWalker.Utils
             tPropItem = aPropItem;
             label_Name.Text = aPropItem.GetCleanName();
 
-            if (tOffscreenRenderer == null)
+            /*if (tOffscreenRenderer == null)
             {
                 tOffscreenRenderer = new OffscreenRenderer();
                 tOffscreenRenderer.TopLevel = false;
@@ -58,7 +58,7 @@ namespace CodeWalker.Utils
 
             tOffscreenRenderer.FilePath = tPropItem.YdrFile.FilePath;
             tOffscreenRenderer.SaveFilePath = tPropItem.ThumbnailPath;
-            tOffscreenRenderer.ViewModel(tPropItem);
+            tOffscreenRenderer.ViewModel(tPropItem);*/
         }
 
         public void SetProp(ContentPropItem aPropItem)
@@ -66,7 +66,7 @@ namespace CodeWalker.Utils
             tPropItem = aPropItem;
             label_Name.Text = aPropItem.GetCleanName();
 
-            if (tOffscreenRenderer == null)
+           /* if (tOffscreenRenderer == null)
             {
                 tOffscreenRenderer = new OffscreenRenderer();
                 tOffscreenRenderer.TopLevel = false;
@@ -81,7 +81,8 @@ namespace CodeWalker.Utils
             
             tOffscreenRenderer.FilePath = tPropItem.YdrFile.FilePath;
             tOffscreenRenderer.SaveFilePath = tPropItem.ThumbnailPath;
-            tOffscreenRenderer.ViewModel(tPropItem);
+            tOffscreenRenderer.tPauseRendering = false;
+            tOffscreenRenderer.ViewModel(tPropItem);*/
         }
     }
 }

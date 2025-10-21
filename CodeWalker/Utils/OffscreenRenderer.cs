@@ -2,6 +2,7 @@
 using CodeWalker.GameFiles;
 using CodeWalker.Properties;
 using CodeWalker.Rendering;
+using CodeWalker.Tools;
 using CodeWalker.World;
 using SharpDX;
 using SharpDX.Direct3D11;
@@ -29,7 +30,7 @@ namespace CodeWalker.Utils
         Thread tThumbnailThread;
 
         volatile bool tFormOpen = false;
-        volatile bool tPauseRendering = false;
+        public bool tPauseRendering = false;
 
         private Renderer tRenderer = null;
         Vector3 tRrevWorldPos = new Vector3(0, 0, 0);
@@ -72,6 +73,11 @@ namespace CodeWalker.Utils
         }
 
         public Form Form { get { return this; } }
+
+        ContentPropItem tCurrPropItem;
+
+        // Events
+        public event Action StatusReady;
 
         public OffscreenRenderer()
         {
@@ -118,7 +124,7 @@ namespace CodeWalker.Utils
             try
             {
                 tRenderer.DeviceCreated(device, width, height);
-                InitOffscreenTarget();
+                //InitOffscreenTarget();
             }
             catch (Exception ex)
             {
@@ -155,7 +161,7 @@ namespace CodeWalker.Utils
             if (!Monitor.TryEnter(tRenderer.RenderSyncRoot, 50))
             { return; }
 
-            context.OutputMerger.SetRenderTargets(offscreenRTV);
+            //context.OutputMerger.SetRenderTargets(offscreenRTV);
 
             tRenderer.Update(elapsed, 0, 0);
             tRenderer.BeginRender(context);
@@ -248,10 +254,11 @@ namespace CodeWalker.Utils
                 tSkeleton = ydr.Drawable.Skeleton;
             }
 
-            //if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Stopped)
-            //    tThumbnailThread = new Thread(new ThreadStart(Thread_CheckForRenderProp));
+            if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Stopped)
+                tThumbnailThread = new Thread(new ThreadStart(Thread_CheckForRenderProp));
 
-            //tThumbnailThread.Start();
+            if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Unstarted)
+                tThumbnailThread.Start();
         }
 
         private void MoveCameraToView(Vector3 pos, float rad)
@@ -288,10 +295,12 @@ namespace CodeWalker.Utils
             {
                 if (tRenderer.RenderedDrawables.Count >= 1)
                 {
-                    Bitmap tBmp = CaptureOffscreenTexture(); //CaptureWindowBitmap();
-                    SaveThumbnailAsJpeg(tBmp, SaveFilePath);
+                    Bitmap tBmp = CaptureWindowBitmap();
+                    SaveThumbnailAsJpeg(tBmp, tCurrPropItem.ThumbnailPath);
+                    Thread.Sleep(500);
 
-                    break;
+                    StatusReady();
+                    Thread.Sleep(500);
                 }
                 else
                 {
@@ -317,10 +326,10 @@ namespace CodeWalker.Utils
                 bmp.Save(path, ImageFormat.Jpeg);
             }
 
-            this.Invoke((MethodInvoker)(() =>
+            /*this.Invoke((MethodInvoker)(() =>
             {
                 this.Close();
-            }));
+            }));*/
         }
 
         public Bitmap CaptureWindowBitmap()
@@ -329,14 +338,24 @@ namespace CodeWalker.Utils
 
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                g.CopyFromScreen(this.Location, System.Drawing.Point.Empty, this.Size);
+                ContentThumbnailGenerator tForm = Application.OpenForms.OfType<ContentThumbnailGenerator>().FirstOrDefault();
+                System.Drawing.Point tLocation = new System.Drawing.Point(0, 0);
+
+                this.Invoke((MethodInvoker)(() =>
+                {
+                    tLocation = tForm.GetRendererLocation();
+                }));
+                
+                g.CopyFromScreen(tLocation, System.Drawing.Point.Empty, new Size(350, 350));
             }
 
             return bmp;
         }
 
-        public void ViewModel(ContentPropItem aPropItem)
+        public void ViewModel(ContentPropItem aPropItem, bool RestartTimer = false)
         {
+            tCurrPropItem = aPropItem;
+
             byte[] data = null;
             string name = "";
             string path = "";
@@ -371,6 +390,19 @@ namespace CodeWalker.Utils
                     var tYdr = RpfFile.GetFile<YdrFile>(tRpfFileEntry, data);
                     LoadModel(tYdr);
                     break;
+            }
+
+            if (RestartTimer)
+            {
+                if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Stopped)
+                {
+                    tThumbnailThread = new Thread(new ThreadStart(Thread_CheckForRenderProp));
+                    tThumbnailThread.Start();
+                }
+                    
+
+                if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Unstarted)
+                    tThumbnailThread.Start();
             }
         }
 

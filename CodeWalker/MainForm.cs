@@ -12,8 +12,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace CodeWalker
 {
@@ -325,6 +323,7 @@ namespace CodeWalker
             cutsceneViewerToolStripMenuItem.Enabled = true;
             jenkIndexToolStripMenuItem.Enabled = true;
             binarySearchToolStripMenuItem.Enabled = true;
+            thumbnailGeneratorToolStripMenuItem.Enabled = true;
 
             // Window
             projectWindowToolStripMenuItem.Enabled = true;
@@ -600,6 +599,12 @@ namespace CodeWalker
         private void projectWindowToolStripMenuItem_Click(object sender, EventArgs e)
         {
             tViewport.ShowProjectForm();
+        }
+
+        private void thumbnailGeneratorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ContentThumbnailGenerator tContentThumbnailGenerator = new ContentThumbnailGenerator();
+            tContentThumbnailGenerator.Show();
         }
     }
 }

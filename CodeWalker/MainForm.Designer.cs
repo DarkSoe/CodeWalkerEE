@@ -98,6 +98,8 @@
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.MousedLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.StatsLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.thumbnailGeneratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -163,7 +165,7 @@
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(2, 2);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(56, 54);
             this.panel1.TabIndex = 0;
@@ -172,7 +174,7 @@
             // 
             this.pictureBox1.Image = global::CodeWalker.Properties.Resources.CodeWalker_Icon;
             this.pictureBox1.Location = new System.Drawing.Point(10, 11);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(33, 32);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -214,7 +216,7 @@
             this.BTN_Exit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN_Exit.Image = global::CodeWalker.Properties.Resources.BTN_Exit;
             this.BTN_Exit.Location = new System.Drawing.Point(969, 0);
-            this.BTN_Exit.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTN_Exit.Margin = new System.Windows.Forms.Padding(2);
             this.BTN_Exit.Name = "BTN_Exit";
             this.BTN_Exit.Size = new System.Drawing.Size(33, 21);
             this.BTN_Exit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -240,7 +242,7 @@
             this.MenuStrip_MainMenu.Location = new System.Drawing.Point(5, 3);
             this.MenuStrip_MainMenu.Name = "MenuStrip_MainMenu";
             this.MenuStrip_MainMenu.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.MenuStrip_MainMenu.Size = new System.Drawing.Size(305, 24);
+            this.MenuStrip_MainMenu.Size = new System.Drawing.Size(425, 24);
             this.MenuStrip_MainMenu.TabIndex = 2;
             this.MenuStrip_MainMenu.Text = "menuStrip1";
             // 
@@ -480,7 +482,9 @@
             this.extractScriptsToolStripMenuItem,
             this.extractTexturesToolStripMenuItem,
             this.extractRawFilesToolStripMenuItem,
-            this.extractShadersToolStripMenuItem});
+            this.extractShadersToolStripMenuItem,
+            this.toolStripSeparator7,
+            this.thumbnailGeneratorToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 22);
             this.toolsToolStripMenuItem.Text = "Tools";
@@ -488,7 +492,7 @@
             // rPFExplorerToolStripMenuItem
             // 
             this.rPFExplorerToolStripMenuItem.Name = "rPFExplorerToolStripMenuItem";
-            this.rPFExplorerToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.rPFExplorerToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.rPFExplorerToolStripMenuItem.Text = "RPF Explorer";
             this.rPFExplorerToolStripMenuItem.Click += new System.EventHandler(this.rPFExplorerToolStripMenuItem_Click);
             // 
@@ -496,7 +500,7 @@
             // 
             this.rPFBrowserToolStripMenuItem.Enabled = false;
             this.rPFBrowserToolStripMenuItem.Name = "rPFBrowserToolStripMenuItem";
-            this.rPFBrowserToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.rPFBrowserToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.rPFBrowserToolStripMenuItem.Text = "RPF Browser";
             this.rPFBrowserToolStripMenuItem.Visible = false;
             this.rPFBrowserToolStripMenuItem.Click += new System.EventHandler(this.rPFBrowserToolStripMenuItem_Click);
@@ -505,7 +509,7 @@
             // 
             this.audioExplorerToolStripMenuItem.Enabled = false;
             this.audioExplorerToolStripMenuItem.Name = "audioExplorerToolStripMenuItem";
-            this.audioExplorerToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.audioExplorerToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.audioExplorerToolStripMenuItem.Text = "Audio Explorer";
             this.audioExplorerToolStripMenuItem.Click += new System.EventHandler(this.audioExplorerToolStripMenuItem_Click);
             // 
@@ -513,19 +517,19 @@
             // 
             this.cutsceneViewerToolStripMenuItem.Enabled = false;
             this.cutsceneViewerToolStripMenuItem.Name = "cutsceneViewerToolStripMenuItem";
-            this.cutsceneViewerToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.cutsceneViewerToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.cutsceneViewerToolStripMenuItem.Text = "Cutscene Viewer";
             this.cutsceneViewerToolStripMenuItem.Click += new System.EventHandler(this.cutsceneViewerToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(158, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(184, 6);
             // 
             // jenkGeneratorToolStripMenuItem
             // 
             this.jenkGeneratorToolStripMenuItem.Name = "jenkGeneratorToolStripMenuItem";
-            this.jenkGeneratorToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.jenkGeneratorToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.jenkGeneratorToolStripMenuItem.Text = "Jenk Generator";
             this.jenkGeneratorToolStripMenuItem.Click += new System.EventHandler(this.jenkGeneratorToolStripMenuItem_Click);
             // 
@@ -533,19 +537,19 @@
             // 
             this.jenkIndexToolStripMenuItem.Enabled = false;
             this.jenkIndexToolStripMenuItem.Name = "jenkIndexToolStripMenuItem";
-            this.jenkIndexToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.jenkIndexToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.jenkIndexToolStripMenuItem.Text = "Jenk Index";
             this.jenkIndexToolStripMenuItem.Click += new System.EventHandler(this.jenkIndexToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(158, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(184, 6);
             // 
             // worldSearchToolStripMenuItem
             // 
             this.worldSearchToolStripMenuItem.Name = "worldSearchToolStripMenuItem";
-            this.worldSearchToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.worldSearchToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.worldSearchToolStripMenuItem.Text = "World Search";
             this.worldSearchToolStripMenuItem.Click += new System.EventHandler(this.worldSearchToolStripMenuItem_Click);
             // 
@@ -553,40 +557,40 @@
             // 
             this.binarySearchToolStripMenuItem.Enabled = false;
             this.binarySearchToolStripMenuItem.Name = "binarySearchToolStripMenuItem";
-            this.binarySearchToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.binarySearchToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.binarySearchToolStripMenuItem.Text = "Binary Search";
             this.binarySearchToolStripMenuItem.Click += new System.EventHandler(this.binarySearchToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(158, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(184, 6);
             // 
             // extractScriptsToolStripMenuItem
             // 
             this.extractScriptsToolStripMenuItem.Name = "extractScriptsToolStripMenuItem";
-            this.extractScriptsToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.extractScriptsToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.extractScriptsToolStripMenuItem.Text = "Extract Scripts";
             this.extractScriptsToolStripMenuItem.Click += new System.EventHandler(this.extractScriptsToolStripMenuItem_Click);
             // 
             // extractTexturesToolStripMenuItem
             // 
             this.extractTexturesToolStripMenuItem.Name = "extractTexturesToolStripMenuItem";
-            this.extractTexturesToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.extractTexturesToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.extractTexturesToolStripMenuItem.Text = "Extract Textures";
             this.extractTexturesToolStripMenuItem.Click += new System.EventHandler(this.extractTexturesToolStripMenuItem_Click);
             // 
             // extractRawFilesToolStripMenuItem
             // 
             this.extractRawFilesToolStripMenuItem.Name = "extractRawFilesToolStripMenuItem";
-            this.extractRawFilesToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.extractRawFilesToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.extractRawFilesToolStripMenuItem.Text = "Extract Raw Files";
             this.extractRawFilesToolStripMenuItem.Click += new System.EventHandler(this.extractRawFilesToolStripMenuItem_Click);
             // 
             // extractShadersToolStripMenuItem
             // 
             this.extractShadersToolStripMenuItem.Name = "extractShadersToolStripMenuItem";
-            this.extractShadersToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.extractShadersToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.extractShadersToolStripMenuItem.Text = "Extract Shaders";
             this.extractShadersToolStripMenuItem.Click += new System.EventHandler(this.extractShadersToolStripMenuItem_Click);
             // 
@@ -625,7 +629,7 @@
             this.BTN_Minimize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN_Minimize.Image = global::CodeWalker.Properties.Resources.BTN_Minimize;
             this.BTN_Minimize.Location = new System.Drawing.Point(904, 0);
-            this.BTN_Minimize.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTN_Minimize.Margin = new System.Windows.Forms.Padding(2);
             this.BTN_Minimize.Name = "BTN_Minimize";
             this.BTN_Minimize.Size = new System.Drawing.Size(33, 21);
             this.BTN_Minimize.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -640,7 +644,7 @@
             this.BTN_Fullscreen.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BTN_Fullscreen.Image = global::CodeWalker.Properties.Resources.BTN_Fullscreen;
             this.BTN_Fullscreen.Location = new System.Drawing.Point(937, 0);
-            this.BTN_Fullscreen.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTN_Fullscreen.Margin = new System.Windows.Forms.Padding(2);
             this.BTN_Fullscreen.Name = "BTN_Fullscreen";
             this.BTN_Fullscreen.Size = new System.Drawing.Size(33, 21);
             this.BTN_Fullscreen.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -670,7 +674,7 @@
             this.btn_tab_contentbrowser.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_tab_contentbrowser.ForeColor = System.Drawing.SystemColors.Control;
             this.btn_tab_contentbrowser.Location = new System.Drawing.Point(140, 0);
-            this.btn_tab_contentbrowser.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_tab_contentbrowser.Margin = new System.Windows.Forms.Padding(2);
             this.btn_tab_contentbrowser.Name = "btn_tab_contentbrowser";
             this.btn_tab_contentbrowser.Size = new System.Drawing.Size(133, 29);
             this.btn_tab_contentbrowser.TabIndex = 0;
@@ -688,7 +692,7 @@
             this.btn_tab_viewport.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_tab_viewport.ForeColor = System.Drawing.SystemColors.Control;
             this.btn_tab_viewport.Location = new System.Drawing.Point(5, 0);
-            this.btn_tab_viewport.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_tab_viewport.Margin = new System.Windows.Forms.Padding(2);
             this.btn_tab_viewport.Name = "btn_tab_viewport";
             this.btn_tab_viewport.Size = new System.Drawing.Size(133, 29);
             this.btn_tab_viewport.TabIndex = 0;
@@ -714,7 +718,7 @@
             this.ResizingBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
             this.ResizingBox.Image = global::CodeWalker.Properties.Resources.Scaling;
             this.ResizingBox.Location = new System.Drawing.Point(1049, 610);
-            this.ResizingBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ResizingBox.Margin = new System.Windows.Forms.Padding(2);
             this.ResizingBox.Name = "ResizingBox";
             this.ResizingBox.Size = new System.Drawing.Size(13, 13);
             this.ResizingBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -775,6 +779,19 @@
             this.StatsLabel.Size = new System.Drawing.Size(75, 17);
             this.StatsLabel.Text = "0 geometries";
             // 
+            // thumbnailGeneratorToolStripMenuItem
+            // 
+            this.thumbnailGeneratorToolStripMenuItem.Enabled = false;
+            this.thumbnailGeneratorToolStripMenuItem.Name = "thumbnailGeneratorToolStripMenuItem";
+            this.thumbnailGeneratorToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
+            this.thumbnailGeneratorToolStripMenuItem.Text = "Thumbnail Generator";
+            this.thumbnailGeneratorToolStripMenuItem.Click += new System.EventHandler(this.thumbnailGeneratorToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(184, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -785,7 +802,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MenuStrip_MainMenu;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(1063, 681);
             this.Name = "MainForm";
             this.Text = "MainForm";
@@ -884,5 +901,7 @@
         private System.Windows.Forms.ToolStripMenuItem rPFBrowserToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectionInfoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem thumbnailGeneratorToolStripMenuItem;
     }
 }
