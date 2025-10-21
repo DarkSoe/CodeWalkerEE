@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace CodeWalker
 {
@@ -36,7 +37,7 @@ namespace CodeWalker
         bool tUpdateArchetypeStatus = true;
 
         private int CurrentPage = 0;
-        private const int PageSize = 10;
+        private const int PageSize = 40;
 
         //Events
         public event Action<string> PropDragged;
@@ -124,12 +125,23 @@ namespace CodeWalker
                     var hash = kvp.Key;
                     var entry = kvp.Value;
 
-                    var ydr = GameFileCache.GetYdr(hash);
+                    YdrFile ydr = GameFileCache.GetYdr(hash);
                     if (ydr != null)
                     {
-                        var tRpfFileEntry = ydr.RpfFileEntry;
+                        RpfFileEntry tRpfFileEntry = ydr.RpfFileEntry;
                         var tModelHash = tRpfFileEntry?.ShortNameHash ?? 0;
-                        if (tModelHash != 0)
+
+                        string tGtaPath = GTAFolder.GetCurrentGTAFolderWithTrailingSlash();
+                        string tFullFilePath = tGtaPath + tRpfFileEntry.Path;
+
+                        int tFileVersion = 0;
+                        if (tRpfFileEntry is RpfResourceFileEntry)
+                        {
+                            var resf = tRpfFileEntry as RpfResourceFileEntry;
+                            tFileVersion = resf.Version;
+                        }
+
+                        if (tModelHash != 0 /*&& tFileVersion > 164*/) // Seems like everything below 165 is to old and cant be read anymore from CodeWalker
                         {
                             var tModelArchetype = TryGetArchetype(tModelHash);
                             if (tModelArchetype != null)
@@ -150,6 +162,7 @@ namespace CodeWalker
             PropList.AddRange(props);
 
             FilteredPropList = new List<ContentPropItem>(PropList);
+            PropList.Reverse();
             PopulatePage(0);
         }
 

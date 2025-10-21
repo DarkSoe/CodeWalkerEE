@@ -31,6 +31,9 @@
             this.label_Name = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel_RenderImage = new System.Windows.Forms.Panel();
+            this.img_thumbnail = new System.Windows.Forms.PictureBox();
+            this.panel_RenderImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.img_thumbnail)).BeginInit();
             this.SuspendLayout();
             // 
             // label_Name
@@ -59,10 +62,20 @@
             // 
             // panel_RenderImage
             // 
+            this.panel_RenderImage.Controls.Add(this.img_thumbnail);
             this.panel_RenderImage.Location = new System.Drawing.Point(0, 0);
             this.panel_RenderImage.Name = "panel_RenderImage";
             this.panel_RenderImage.Size = new System.Drawing.Size(350, 350);
             this.panel_RenderImage.TabIndex = 3;
+            // 
+            // img_thumbnail
+            // 
+            this.img_thumbnail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.img_thumbnail.Location = new System.Drawing.Point(0, 0);
+            this.img_thumbnail.Name = "img_thumbnail";
+            this.img_thumbnail.Size = new System.Drawing.Size(350, 350);
+            this.img_thumbnail.TabIndex = 0;
+            this.img_thumbnail.TabStop = false;
             // 
             // ContentBrowserItem
             // 
@@ -74,6 +87,8 @@
             this.Controls.Add(this.label_Name);
             this.Name = "ContentBrowserItem";
             this.Size = new System.Drawing.Size(350, 500);
+            this.panel_RenderImage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.img_thumbnail)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -83,5 +98,6 @@
         private System.Windows.Forms.Label label_Name;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel_RenderImage;
+        private System.Windows.Forms.PictureBox img_thumbnail;
     }
 }

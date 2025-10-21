@@ -41,7 +41,8 @@ namespace CodeWalker.Utils
             InitializeComponent();
 
             tPropItem = aPropItem;
-            label_Name.Text = aPropItem.GetCleanName();
+            label_Name.Text = tPropItem.GetCleanName();
+            img_thumbnail.ImageLocation = tPropItem.ThumbnailPath;
 
             /*if (tOffscreenRenderer == null)
             {
@@ -64,7 +65,8 @@ namespace CodeWalker.Utils
         public void SetProp(ContentPropItem aPropItem)
         {
             tPropItem = aPropItem;
-            label_Name.Text = aPropItem.GetCleanName();
+            label_Name.Text = tPropItem.GetCleanName();
+            img_thumbnail.ImageLocation = tPropItem.ThumbnailPath;
 
            /* if (tOffscreenRenderer == null)
             {

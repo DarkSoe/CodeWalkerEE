@@ -266,8 +266,8 @@ namespace CodeWalker.Utils
             rad = Math.Max(0.01f, rad);
 
             tCamera.FollowEntity.Position = pos;
-            tCamera.TargetDistance = rad * 2f; //1.6f;
-            tCamera.CurrentDistance = rad * 2f; //1.6f;
+            tCamera.TargetDistance = rad * 2.1f; //1.6f;
+            tCamera.CurrentDistance = rad * 2.1f; //1.6f;
 
             tCamera.TargetRotation.X = (float)(Math.PI / 4);
             tCamera.TargetRotation.Y = (float)(Math.PI / 4);

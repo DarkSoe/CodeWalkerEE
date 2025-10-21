@@ -48,6 +48,7 @@ namespace CodeWalker.Tools
             tOffscreenRenderer.StatusReady += ReadyForNext;
 
             panel_Renderer.Controls.Add(tOffscreenRenderer);
+            panel_Renderer.Size = new Size(350, 350);
         }
 
         public Point GetRendererLocation()
@@ -175,10 +176,14 @@ namespace CodeWalker.Tools
 
             if (tCurrProp != null && !File.Exists(tCurrProp.ThumbnailPath))
             {
-                tOffscreenRenderer.FilePath = tCurrProp.YdrFile.FilePath;
-                tOffscreenRenderer.SaveFilePath = tCurrProp.ThumbnailPath;
-                tOffscreenRenderer.tPauseRendering = false;
-                tOffscreenRenderer.ViewModel(tCurrProp, true);
+                try
+                {
+                    tOffscreenRenderer.FilePath = tCurrProp.YdrFile.FilePath;
+                    tOffscreenRenderer.SaveFilePath = tCurrProp.ThumbnailPath;
+                    tOffscreenRenderer.tPauseRendering = false;
+                    tOffscreenRenderer.ViewModel(tCurrProp, true);
+                }
+                catch (Exception ex) { ReadyForNext(); }
             }
             else
             {
