@@ -14,6 +14,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -56,6 +57,9 @@ namespace CodeWalker.Utils
         RpfFileEntry tRpfFileEntry = null;
 
         public Skeleton tSkeleton = null;
+
+        private Texture2D offscreenTexture;
+        private RenderTargetView offscreenRTV;
 
         private string fileName;
         public string FileName
@@ -114,6 +118,7 @@ namespace CodeWalker.Utils
             try
             {
                 tRenderer.DeviceCreated(device, width, height);
+                InitOffscreenTarget();
             }
             catch (Exception ex)
             {
@@ -149,6 +154,8 @@ namespace CodeWalker.Utils
 
             if (!Monitor.TryEnter(tRenderer.RenderSyncRoot, 50))
             { return; }
+
+            context.OutputMerger.SetRenderTargets(offscreenRTV);
 
             tRenderer.Update(elapsed, 0, 0);
             tRenderer.BeginRender(context);
@@ -241,10 +248,10 @@ namespace CodeWalker.Utils
                 tSkeleton = ydr.Drawable.Skeleton;
             }
 
-            if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Stopped)
-                tThumbnailThread = new Thread(new ThreadStart(Thread_CheckForRenderProp));
+            //if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Stopped)
+            //    tThumbnailThread = new Thread(new ThreadStart(Thread_CheckForRenderProp));
 
-            tThumbnailThread.Start();
+            //tThumbnailThread.Start();
         }
 
         private void MoveCameraToView(Vector3 pos, float rad)
@@ -281,9 +288,8 @@ namespace CodeWalker.Utils
             {
                 if (tRenderer.RenderedDrawables.Count >= 1)
                 {
-                    //Bitmap tBmp = CaptureWindowBitmap();
-                    //SaveThumbnailAsJpeg(tBmp, SaveFilePath);
-                    tRenderer.
+                    Bitmap tBmp = CaptureOffscreenTexture(); //CaptureWindowBitmap();
+                    SaveThumbnailAsJpeg(tBmp, SaveFilePath);
 
                     break;
                 }
@@ -390,6 +396,86 @@ namespace CodeWalker.Utils
             e.ShortNameHash = JenkHash.GenHash(Path.GetFileNameWithoutExtension(e.NameLower));
             e.Path = path;
             return e;
+        }
+
+        private void InitOffscreenTarget()
+        {
+            var device = tRenderer.Device;
+            var desc = new Texture2DDescription()
+            {
+                Width = this.ClientSize.Width,
+                Height = this.ClientSize.Height,
+                MipLevels = 1,
+                ArraySize = 1,
+                Format = SharpDX.DXGI.Format.R8G8B8A8_UNorm,
+                SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0),
+                Usage = ResourceUsage.Default,
+                BindFlags = BindFlags.RenderTarget | BindFlags.ShaderResource,
+                CpuAccessFlags = CpuAccessFlags.None,
+                OptionFlags = ResourceOptionFlags.None
+            };
+
+            offscreenTexture = new Texture2D(device, desc);
+            offscreenRTV = new RenderTargetView(device, offscreenTexture);
+        }
+
+        public Bitmap CaptureOffscreenTexture()
+        {
+            if (offscreenTexture == null || tRenderer?.Device == null)
+                return null;
+
+            var device = tRenderer.Device;
+            var context = device.ImmediateContext;
+            var desc = offscreenTexture.Description;
+
+            var stagingDesc = new Texture2DDescription()
+            {
+                Width = desc.Width,
+                Height = desc.Height,
+                MipLevels = 1,
+                ArraySize = 1,
+                Format = desc.Format,
+                SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0),
+                Usage = ResourceUsage.Staging,
+                BindFlags = BindFlags.None,
+                CpuAccessFlags = CpuAccessFlags.Read,
+                OptionFlags = ResourceOptionFlags.None
+            };
+
+            using (var staging = new Texture2D(device, stagingDesc))
+            {
+                context.CopyResource(offscreenTexture, staging);
+                var dataBox = context.MapSubresource(staging, 0, MapMode.Read, MapFlags.None);
+
+                int rowPitch = dataBox.RowPitch;
+                int width = desc.Width;
+                int height = desc.Height;
+                int bytesPerPixel = 4;
+                byte[] pixelData = new byte[height * width * bytesPerPixel];
+
+                IntPtr srcPtr = dataBox.DataPointer;
+                int destOffset = 0;
+
+                for (int y = 0; y < height; y++)
+                {
+                    Marshal.Copy(srcPtr + y * rowPitch, pixelData, destOffset, width * bytesPerPixel);
+                    destOffset += width * bytesPerPixel;
+                }
+
+                context.UnmapSubresource(staging, 0);
+                var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+
+                var bmpData = bmp.LockBits(
+                    new System.Drawing.Rectangle(0, 0, width, height),
+                    ImageLockMode.WriteOnly,
+                    PixelFormat.Format32bppArgb);
+
+                Marshal.Copy(pixelData, 0, bmpData.Scan0, pixelData.Length);
+                bmp.UnlockBits(bmpData);
+                bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
+
+                return bmp;
+            }
         }
 
     }
