@@ -32,50 +32,56 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel_Renderer = new System.Windows.Forms.Panel();
             this.btn_generateButton = new System.Windows.Forms.Button();
+            this.progress_percentage = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 14);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(12, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(504, 20);
+            this.label1.Size = new System.Drawing.Size(342, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "To generate the Thumbnails this window needs to be visible on screen.";
             // 
             // panel_Renderer
             // 
-            this.panel_Renderer.Location = new System.Drawing.Point(22, 46);
-            this.panel_Renderer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.panel_Renderer.Location = new System.Drawing.Point(15, 30);
             this.panel_Renderer.Name = "panel_Renderer";
-            this.panel_Renderer.Size = new System.Drawing.Size(350, 350);
+            this.panel_Renderer.Size = new System.Drawing.Size(233, 227);
             this.panel_Renderer.TabIndex = 1;
             // 
             // btn_generateButton
             // 
             this.btn_generateButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.btn_generateButton.Location = new System.Drawing.Point(0, 722);
-            this.btn_generateButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.btn_generateButton.Location = new System.Drawing.Point(0, 480);
             this.btn_generateButton.Name = "btn_generateButton";
-            this.btn_generateButton.Size = new System.Drawing.Size(566, 35);
+            this.btn_generateButton.Size = new System.Drawing.Size(381, 23);
             this.btn_generateButton.TabIndex = 2;
             this.btn_generateButton.Text = "Generate";
             this.btn_generateButton.UseVisualStyleBackColor = true;
             this.btn_generateButton.Click += new System.EventHandler(this.btn_generateButton_Click);
             // 
+            // progress_percentage
+            // 
+            this.progress_percentage.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progress_percentage.Location = new System.Drawing.Point(0, 457);
+            this.progress_percentage.Name = "progress_percentage";
+            this.progress_percentage.Size = new System.Drawing.Size(381, 23);
+            this.progress_percentage.TabIndex = 3;
+            // 
             // ContentThumbnailGenerator
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(566, 757);
+            this.ClientSize = new System.Drawing.Size(381, 503);
+            this.Controls.Add(this.progress_percentage);
             this.Controls.Add(this.btn_generateButton);
             this.Controls.Add(this.panel_Renderer);
             this.Controls.Add(this.label1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.MaximumSize = new System.Drawing.Size(588, 813);
-            this.MinimumSize = new System.Drawing.Size(588, 813);
+            this.MaximumSize = new System.Drawing.Size(397, 542);
+            this.MinimumSize = new System.Drawing.Size(397, 542);
             this.Name = "ContentThumbnailGenerator";
             this.Text = "ContentThumbnailGenerator";
             this.ResumeLayout(false);
@@ -88,5 +94,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel_Renderer;
         private System.Windows.Forms.Button btn_generateButton;
+        private System.Windows.Forms.ProgressBar progress_percentage;
     }
 }

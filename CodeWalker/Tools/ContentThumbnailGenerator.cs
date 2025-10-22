@@ -174,6 +174,11 @@ namespace CodeWalker.Tools
 
             var tCurrProp = tList[tCurrentIndex];
 
+            int processed = tCurrentIndex + 1;
+            double percent = (processed * 100.0) / tList.Count;
+
+            progress_percentage.Value = (int)Math.Round(percent);
+
             if (tCurrProp != null && !File.Exists(tCurrProp.ThumbnailPath))
             {
                 try
