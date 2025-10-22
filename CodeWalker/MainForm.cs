@@ -606,5 +606,21 @@ namespace CodeWalker
             ContentThumbnailGenerator tContentThumbnailGenerator = new ContentThumbnailGenerator();
             tContentThumbnailGenerator.Show();
         }
+
+        private void MainForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (tViewport != null && tViewport.Visible)
+            {
+                tViewport.WorldForm_KeyDown(sender, e);
+            }
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (tViewport != null && tViewport.Visible)
+            {
+                tViewport.WorldForm_KeyUp(sender, e);
+            }
+        }
     }
 }

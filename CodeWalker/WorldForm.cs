@@ -6489,7 +6489,7 @@ namespace CodeWalker
 
         }
 
-        private void WorldForm_KeyDown(object sender, KeyEventArgs e)
+        public void WorldForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (ActiveControl is TextBox)
             {
@@ -6619,7 +6619,7 @@ namespace CodeWalker
             }
         }
 
-        private void WorldForm_KeyUp(object sender, KeyEventArgs e)
+        public void WorldForm_KeyUp(object sender, KeyEventArgs e)
         {
             Input.KeyUp(e);
 
