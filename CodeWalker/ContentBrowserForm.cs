@@ -141,7 +141,7 @@ namespace CodeWalker
                             tFileVersion = resf.Version;
                         }
 
-                        if (tModelHash != 0 /*&& tFileVersion > 164*/) // Seems like everything below 165 is to old and cant be read anymore from CodeWalker
+                        if (tModelHash != 0 /*&& tFileVersion > 164*/)
                         {
                             var tModelArchetype = TryGetArchetype(tModelHash);
                             if (tModelArchetype != null)
@@ -170,7 +170,14 @@ namespace CodeWalker
         {
             if (FilteredPropList.Count == 0) return;
 
-            label_currentPage.Text = (pageIndex + 1).ToString();
+            int totalItems = FilteredPropList.Count;
+            int totalPages = (int)Math.Ceiling((double)totalItems / PageSize);
+            int currentpage = pageIndex + 1;
+
+            if (currentpage > totalPages)
+                return;
+
+            label_currentPage.Text = (currentpage + " | " + totalPages).ToString();
 
             var pageItems = FilteredPropList
                 .Skip(pageIndex * PageSize)
@@ -194,8 +201,10 @@ namespace CodeWalker
 
         private void btn_NextPage_Click(object sender, EventArgs e)
         {
-            int maxPage = (PropList.Count - 1) / PageSize;
-            if (CurrentPage < maxPage)
+            int totalItems = FilteredPropList.Count;
+            int totalPages = (int)Math.Ceiling((double)totalItems / PageSize);
+
+            if (CurrentPage < (totalPages - 1))
             {
                 CurrentPage++;
                 PopulatePage(CurrentPage);
