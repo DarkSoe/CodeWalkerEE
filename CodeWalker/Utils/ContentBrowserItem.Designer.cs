@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.label_Name = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.label_itemType = new System.Windows.Forms.Label();
             this.panel_RenderImage = new System.Windows.Forms.Panel();
             this.img_thumbnail = new System.Windows.Forms.PictureBox();
+            this.label_addEntry = new System.Windows.Forms.Label();
             this.panel_RenderImage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.img_thumbnail)).BeginInit();
             this.SuspendLayout();
@@ -41,24 +42,23 @@
             this.label_Name.AutoSize = true;
             this.label_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Name.ForeColor = System.Drawing.SystemColors.Control;
-            this.label_Name.Location = new System.Drawing.Point(3, 357);
+            this.label_Name.Location = new System.Drawing.Point(40, 357);
             this.label_Name.Name = "label_Name";
             this.label_Name.Size = new System.Drawing.Size(159, 29);
             this.label_Name.TabIndex = 1;
             this.label_Name.Text = "DummyName";
             // 
-            // label1
+            // label_itemType
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.Control;
-            this.label1.Location = new System.Drawing.Point(44, 471);
-            this.label1.MinimumSize = new System.Drawing.Size(300, 20);
-            this.label1.Name = "label1";
-            this.label1.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.label1.Size = new System.Drawing.Size(300, 20);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "DummyType";
-            this.label1.Visible = false;
+            this.label_itemType.AutoSize = true;
+            this.label_itemType.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_itemType.Location = new System.Drawing.Point(44, 471);
+            this.label_itemType.MinimumSize = new System.Drawing.Size(300, 20);
+            this.label_itemType.Name = "label_itemType";
+            this.label_itemType.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label_itemType.Size = new System.Drawing.Size(300, 20);
+            this.label_itemType.TabIndex = 2;
+            this.label_itemType.Text = "DummyType";
             // 
             // panel_RenderImage
             // 
@@ -77,13 +77,26 @@
             this.img_thumbnail.TabIndex = 0;
             this.img_thumbnail.TabStop = false;
             // 
+            // label_addEntry
+            // 
+            this.label_addEntry.AutoSize = true;
+            this.label_addEntry.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label_addEntry.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_addEntry.Location = new System.Drawing.Point(7, 357);
+            this.label_addEntry.Name = "label_addEntry";
+            this.label_addEntry.Size = new System.Drawing.Size(27, 29);
+            this.label_addEntry.TabIndex = 4;
+            this.label_addEntry.Text = "+";
+            this.label_addEntry.Click += new System.EventHandler(this.label_addEntry_Click);
+            // 
             // ContentBrowserItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
+            this.Controls.Add(this.label_addEntry);
             this.Controls.Add(this.panel_RenderImage);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.label_itemType);
             this.Controls.Add(this.label_Name);
             this.Name = "ContentBrowserItem";
             this.Size = new System.Drawing.Size(350, 500);
@@ -96,8 +109,9 @@
 
         #endregion
         private System.Windows.Forms.Label label_Name;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label_itemType;
         private System.Windows.Forms.Panel panel_RenderImage;
         private System.Windows.Forms.PictureBox img_thumbnail;
+        private System.Windows.Forms.Label label_addEntry;
     }
 }

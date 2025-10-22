@@ -1,4 +1,5 @@
-﻿using SharpDX.Direct2D1.Effects;
+﻿using CodeWalker.GameFiles;
+using SharpDX.Direct2D1.Effects;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,9 +20,19 @@ namespace CodeWalker.Utils
         public ContentPropItem tPropItem { get; set; }
         public OffscreenRenderer tOffscreenRenderer { get; set; }
 
+        public bool bIsDynamic = false;
+        public bool bIsDoor = false;
+        public bool bIsGlass = false;
+        public bool bIsLadder = false;
+        public bool bIsTree = false;
+        public bool bIsMlo = false;
+
+        WorldForm tViewport = null;
+
         public ContentBrowserItem()
         {
             InitializeComponent();
+            tViewport = Application.OpenForms.OfType<WorldForm>().FirstOrDefault();
 
             /*if (tOffscreenRenderer == null)
             {
@@ -39,10 +51,12 @@ namespace CodeWalker.Utils
         public ContentBrowserItem(ContentPropItem aPropItem)
         {
             InitializeComponent();
+            tViewport = Application.OpenForms.OfType<WorldForm>().FirstOrDefault();
 
             tPropItem = aPropItem;
             label_Name.Text = tPropItem.GetCleanName();
             img_thumbnail.ImageLocation = tPropItem.ThumbnailPath;
+            ApplyArchetypeFlags(tPropItem.Archetype);
 
             /*if (tOffscreenRenderer == null)
             {
@@ -67,24 +81,79 @@ namespace CodeWalker.Utils
             tPropItem = aPropItem;
             label_Name.Text = tPropItem.GetCleanName();
             img_thumbnail.ImageLocation = tPropItem.ThumbnailPath;
+            ApplyArchetypeFlags(tPropItem.Archetype);
 
-           /* if (tOffscreenRenderer == null)
-            {
-                tOffscreenRenderer = new OffscreenRenderer();
-                tOffscreenRenderer.TopLevel = false;
-                tOffscreenRenderer.FormBorderStyle = FormBorderStyle.None;
-                tOffscreenRenderer.ClientSize = new Size(350, 350);
-                tOffscreenRenderer.Location = new Point(0, 0);
-                tOffscreenRenderer.Visible = true;
-                tOffscreenRenderer.Show();
 
-                panel_RenderImage.Controls.Add(tOffscreenRenderer);
-            }
-            
-            tOffscreenRenderer.FilePath = tPropItem.YdrFile.FilePath;
-            tOffscreenRenderer.SaveFilePath = tPropItem.ThumbnailPath;
-            tOffscreenRenderer.tPauseRendering = false;
-            tOffscreenRenderer.ViewModel(tPropItem);*/
+            /* if (tOffscreenRenderer == null)
+             {
+                 tOffscreenRenderer = new OffscreenRenderer();
+                 tOffscreenRenderer.TopLevel = false;
+                 tOffscreenRenderer.FormBorderStyle = FormBorderStyle.None;
+                 tOffscreenRenderer.ClientSize = new Size(350, 350);
+                 tOffscreenRenderer.Location = new Point(0, 0);
+                 tOffscreenRenderer.Visible = true;
+                 tOffscreenRenderer.Show();
+
+                 panel_RenderImage.Controls.Add(tOffscreenRenderer);
+             }
+
+             tOffscreenRenderer.FilePath = tPropItem.YdrFile.FilePath;
+             tOffscreenRenderer.SaveFilePath = tPropItem.ThumbnailPath;
+             tOffscreenRenderer.tPauseRendering = false;
+             tOffscreenRenderer.ViewModel(tPropItem);*/
+        }
+
+        public void ApplyArchetypeFlags(Archetype archetype)
+        {
+            if (archetype?.BaseArchetypeDef == null) return;
+
+            uint flags = archetype.BaseArchetypeDef.flags;
+
+            bIsDoor = (flags & 0x04000000) != 0;
+            bIsGlass = (flags & 0x00040000) != 0;
+            bIsLadder = (flags & 0x00008000) != 0;
+            bIsDynamic = (flags & 0x20000000) != 0;
+            bIsTree = (flags & 0x00000010) != 0;
+            bIsMlo = (flags & 0x00000002) != 0;
+
+            string tFlagString = "";
+
+            if (bIsDynamic)
+                tFlagString = AddFlagText(tFlagString, "Dynamic");
+
+            if (bIsGlass)
+                tFlagString = AddFlagText(tFlagString, "Glass");
+
+            if (bIsLadder)
+                tFlagString = AddFlagText(tFlagString, "Ladder");
+
+            if (bIsDoor)
+                tFlagString = AddFlagText(tFlagString, "Door");
+
+            if (bIsTree)
+                tFlagString = AddFlagText(tFlagString, "Tree");
+
+            if (bIsMlo)
+                tFlagString = AddFlagText(tFlagString, "MLO");
+
+            label_itemType.Text = tFlagString;
+        }
+
+        public string AddFlagText(string tCurrFlagText, string tAddText)
+        {
+            string tCurr = tCurrFlagText;
+
+            if (tCurr != "")
+                tCurr += ", ";
+
+            tCurr += tAddText;
+
+            return tCurr;
+        }
+
+        private void label_addEntry_Click(object sender, EventArgs e)
+        {
+            tViewport.AddItem(tPropItem);
         }
     }
 }

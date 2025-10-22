@@ -5,6 +5,7 @@ using CodeWalker.Properties;
 using CodeWalker.Rendering;
 using CodeWalker.Rendering.UI;
 using CodeWalker.Tools;
+using CodeWalker.Utils;
 using CodeWalker.World;
 using SharpDX;
 using SharpDX.XInput;
@@ -5293,6 +5294,24 @@ namespace CodeWalker
                 case MapSelectionMode.Audio: ProjectForm.NewAudioAmbientZone(); break; //.NewAudioEmitter // how to add emitters as well? project window
             }
         }
+
+        public void AddItem(ContentPropItem aPropItem)
+        {
+            YmapEntityDef CurrentEntity = null;
+
+            if (ProjectForm == null) return;
+
+            if (SelectionMode == MapSelectionMode.Entity)
+            {
+                ProjectForm.NewEntity();
+
+                CurrentEntity = SelectedItem.EntityDef as YmapEntityDef;
+                CurrentEntity.SetArchetype(aPropItem.Archetype);
+
+                ProjectForm.SetYmapHasChanged(true);
+            }
+        }
+
         private void CopyItem()
         {
             CopiedItem = SelectedItem;
