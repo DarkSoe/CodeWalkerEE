@@ -1,4 +1,5 @@
 ﻿using CodeWalker.GameFiles;
+using CodeWalker.Utils;
 using SharpDX;
 using System;
 using System.Windows.Forms;
@@ -795,5 +796,9 @@ namespace CodeWalker.Project.Panels
             }
         }
 
+        public void SetNewArchetype(ContentPropItem aPropItem)
+        {
+            EntityArchetypeTextBox.Text = aPropItem.GetCleanName();
+        }
     }
 }

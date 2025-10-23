@@ -5297,19 +5297,29 @@ namespace CodeWalker
 
         public void AddItem(ContentPropItem aPropItem)
         {
-            YmapEntityDef CurrentEntity = null;
+            Thread tAddItemThread = new Thread(() => Thread_AddItem(aPropItem));
+            tAddItemThread.Start();
+        }
 
-            if (ProjectForm == null) return;
-
-            if (SelectionMode == MapSelectionMode.Entity)
+        public void Thread_AddItem(ContentPropItem aPropItem)
+        {
+            this.Invoke((MethodInvoker)(() =>
             {
-                ProjectForm.NewEntity();
+                if (ProjectForm == null) return;
 
-                CurrentEntity = SelectedItem.EntityDef as YmapEntityDef;
-                CurrentEntity.SetArchetype(aPropItem.Archetype);
+                if (SelectionMode == MapSelectionMode.Entity)
+                {
+                    ProjectForm.NewEntity();
 
-                ProjectForm.SetYmapHasChanged(true);
-            }
+                    Thread.Sleep(200);
+
+                    EditYmapEntityPanel tPanel = Application.OpenForms.OfType<EditYmapEntityPanel>().FirstOrDefault();
+                    if (tPanel != null)
+                    {
+                        tPanel.SetNewArchetype(aPropItem);
+                    }
+                }
+            }));
         }
 
         private void CopyItem()
