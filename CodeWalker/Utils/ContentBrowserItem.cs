@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -29,10 +30,22 @@ namespace CodeWalker.Utils
 
         WorldForm tViewport = null;
 
+        public ToolTip Add_toolTip;
+        public ToolTip Clipboard_toolTip;
+        public ToolTip Browser_toolTip;
+
         public ContentBrowserItem()
         {
             InitializeComponent();
             tViewport = Application.OpenForms.OfType<WorldForm>().FirstOrDefault();
+
+            Add_toolTip = new ToolTip();
+            Clipboard_toolTip = new ToolTip();
+            Browser_toolTip = new ToolTip();
+
+            Add_toolTip.SetToolTip(label_addEntry, "Add this as new Entity to the YMap");
+            Clipboard_toolTip.SetToolTip(img_save_clipboard, "Save Plebmasters Link to Clipboard");
+            Browser_toolTip.SetToolTip(img_plep_link, "Open Plebmaster-page of this Prop in Browser");
 
             /*if (tOffscreenRenderer == null)
             {
@@ -58,6 +71,14 @@ namespace CodeWalker.Utils
             img_thumbnail.ImageLocation = tPropItem.ThumbnailPath;
             ApplyArchetypeFlags(tPropItem.Archetype);
 
+            Add_toolTip = new ToolTip();
+            Clipboard_toolTip = new ToolTip();
+            Browser_toolTip = new ToolTip();
+
+            Add_toolTip.SetToolTip(label_addEntry, "Add this as new Entity to the YMap");
+            Clipboard_toolTip.SetToolTip(img_save_clipboard, "Save Plebmasters Link to Clipboard");
+            Browser_toolTip.SetToolTip(img_plep_link, "Open Plebmaster-page of this Prop in Browser");
+
             /*if (tOffscreenRenderer == null)
             {
                 tOffscreenRenderer = new OffscreenRenderer();
@@ -82,6 +103,14 @@ namespace CodeWalker.Utils
             label_Name.Text = tPropItem.GetCleanName();
             img_thumbnail.ImageLocation = tPropItem.ThumbnailPath;
             ApplyArchetypeFlags(tPropItem.Archetype);
+
+            Add_toolTip = new ToolTip();
+            Clipboard_toolTip = new ToolTip();
+            Browser_toolTip = new ToolTip();
+
+            Add_toolTip.SetToolTip(label_addEntry, "Add this as new Entity to the YMap");
+            Clipboard_toolTip.SetToolTip(img_save_clipboard, "Save Plebmasters Link to Clipboard");
+            Browser_toolTip.SetToolTip(img_plep_link, "Open Plebmaster-page of this Prop in Browser");
 
 
             /* if (tOffscreenRenderer == null)
@@ -154,6 +183,22 @@ namespace CodeWalker.Utils
         private void label_addEntry_Click(object sender, EventArgs e)
         {
             tViewport.AddItem(tPropItem);
+        }
+
+        private void img_plep_link_Click(object sender, EventArgs e)
+        {
+            string url = "https://forge.plebmasters.de/objects/" + tPropItem.GetCleanName();
+            System.Diagnostics.Process.Start(new ProcessStartInfo
+            {
+                FileName = url,
+                UseShellExecute = true
+            });
+        }
+
+        private void img_save_clipboard_Click(object sender, EventArgs e)
+        {
+            string url = "https://forge.plebmasters.de/objects/" + tPropItem.GetCleanName();
+            Clipboard.SetText(url);
         }
     }
 }

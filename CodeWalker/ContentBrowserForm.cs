@@ -37,7 +37,7 @@ namespace CodeWalker
         bool tUpdateArchetypeStatus = true;
 
         private int CurrentPage = 0;
-        private const int PageSize = 50;
+        private const int PageSize = 65;
 
         //Events
         public event Action<string> PropDragged;

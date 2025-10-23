@@ -31,9 +31,13 @@
             this.label_Name = new System.Windows.Forms.Label();
             this.label_itemType = new System.Windows.Forms.Label();
             this.panel_RenderImage = new System.Windows.Forms.Panel();
-            this.img_thumbnail = new System.Windows.Forms.PictureBox();
             this.label_addEntry = new System.Windows.Forms.Label();
+            this.img_save_clipboard = new System.Windows.Forms.PictureBox();
+            this.img_plep_link = new System.Windows.Forms.PictureBox();
+            this.img_thumbnail = new System.Windows.Forms.PictureBox();
             this.panel_RenderImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.img_save_clipboard)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_plep_link)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img_thumbnail)).BeginInit();
             this.SuspendLayout();
             // 
@@ -68,15 +72,6 @@
             this.panel_RenderImage.Size = new System.Drawing.Size(350, 350);
             this.panel_RenderImage.TabIndex = 3;
             // 
-            // img_thumbnail
-            // 
-            this.img_thumbnail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.img_thumbnail.Location = new System.Drawing.Point(0, 0);
-            this.img_thumbnail.Name = "img_thumbnail";
-            this.img_thumbnail.Size = new System.Drawing.Size(350, 350);
-            this.img_thumbnail.TabIndex = 0;
-            this.img_thumbnail.TabStop = false;
-            // 
             // label_addEntry
             // 
             this.label_addEntry.AutoSize = true;
@@ -89,11 +84,44 @@
             this.label_addEntry.Text = "+";
             this.label_addEntry.Click += new System.EventHandler(this.label_addEntry_Click);
             // 
+            // img_save_clipboard
+            // 
+            this.img_save_clipboard.Image = global::CodeWalker.Properties.Resources.clipboard;
+            this.img_save_clipboard.Location = new System.Drawing.Point(270, 431);
+            this.img_save_clipboard.Name = "img_save_clipboard";
+            this.img_save_clipboard.Size = new System.Drawing.Size(32, 32);
+            this.img_save_clipboard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.img_save_clipboard.TabIndex = 6;
+            this.img_save_clipboard.TabStop = false;
+            this.img_save_clipboard.Click += new System.EventHandler(this.img_save_clipboard_Click);
+            // 
+            // img_plep_link
+            // 
+            this.img_plep_link.Image = global::CodeWalker.Properties.Resources.plepicon;
+            this.img_plep_link.Location = new System.Drawing.Point(308, 431);
+            this.img_plep_link.Name = "img_plep_link";
+            this.img_plep_link.Size = new System.Drawing.Size(32, 32);
+            this.img_plep_link.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.img_plep_link.TabIndex = 5;
+            this.img_plep_link.TabStop = false;
+            this.img_plep_link.Click += new System.EventHandler(this.img_plep_link_Click);
+            // 
+            // img_thumbnail
+            // 
+            this.img_thumbnail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.img_thumbnail.Location = new System.Drawing.Point(0, 0);
+            this.img_thumbnail.Name = "img_thumbnail";
+            this.img_thumbnail.Size = new System.Drawing.Size(350, 350);
+            this.img_thumbnail.TabIndex = 0;
+            this.img_thumbnail.TabStop = false;
+            // 
             // ContentBrowserItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
+            this.Controls.Add(this.img_save_clipboard);
+            this.Controls.Add(this.img_plep_link);
             this.Controls.Add(this.label_addEntry);
             this.Controls.Add(this.panel_RenderImage);
             this.Controls.Add(this.label_itemType);
@@ -101,6 +129,8 @@
             this.Name = "ContentBrowserItem";
             this.Size = new System.Drawing.Size(350, 500);
             this.panel_RenderImage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.img_save_clipboard)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_plep_link)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.img_thumbnail)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -113,5 +143,7 @@
         private System.Windows.Forms.Panel panel_RenderImage;
         private System.Windows.Forms.PictureBox img_thumbnail;
         private System.Windows.Forms.Label label_addEntry;
+        private System.Windows.Forms.PictureBox img_plep_link;
+        private System.Windows.Forms.PictureBox img_save_clipboard;
     }
 }

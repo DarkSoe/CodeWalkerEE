@@ -93,6 +93,16 @@ namespace CodeWalker.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap clipboard {
+            get {
+                object obj = ResourceManager.GetObject("clipboard", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CodeWalker_Icon {
             get {
                 object obj = ResourceManager.GetObject("CodeWalker-Icon", resourceCulture);
@@ -136,6 +146,16 @@ namespace CodeWalker.Properties {
         internal static System.Drawing.Bitmap Performance {
             get {
                 object obj = ResourceManager.GetObject("Performance", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap plepicon {
+            get {
+                object obj = ResourceManager.GetObject("plepicon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
