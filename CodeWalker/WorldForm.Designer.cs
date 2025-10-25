@@ -372,11 +372,10 @@ namespace CodeWalker
             // 
             // panel_sidebar
             // 
-            this.panel_sidebar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel_sidebar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
             this.panel_sidebar.Controls.Add(this.split_sidebar);
-            this.panel_sidebar.Location = new System.Drawing.Point(1210, 0);
+            this.panel_sidebar.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel_sidebar.Location = new System.Drawing.Point(1208, 0);
             this.panel_sidebar.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel_sidebar.Name = "panel_sidebar";
             this.panel_sidebar.Size = new System.Drawing.Size(398, 1182);
@@ -445,7 +444,7 @@ namespace CodeWalker
             this.SelectionTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.SelectionTabControl.Name = "SelectionTabControl";
             this.SelectionTabControl.SelectedIndex = 0;
-            this.SelectionTabControl.Size = new System.Drawing.Size(380, 532);
+            this.SelectionTabControl.Size = new System.Drawing.Size(380, 531);
             this.SelectionTabControl.TabIndex = 28;
             // 
             // SelectionEntityTabPage
@@ -455,7 +454,7 @@ namespace CodeWalker
             this.SelectionEntityTabPage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SelectionEntityTabPage.Name = "SelectionEntityTabPage";
             this.SelectionEntityTabPage.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.SelectionEntityTabPage.Size = new System.Drawing.Size(372, 499);
+            this.SelectionEntityTabPage.Size = new System.Drawing.Size(372, 498);
             this.SelectionEntityTabPage.TabIndex = 0;
             this.SelectionEntityTabPage.Text = "Entity";
             this.SelectionEntityTabPage.UseVisualStyleBackColor = true;
@@ -469,7 +468,7 @@ namespace CodeWalker
             this.SelEntityPropertyGrid.Name = "SelEntityPropertyGrid";
             this.SelEntityPropertyGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.SelEntityPropertyGrid.ReadOnly = true;
-            this.SelEntityPropertyGrid.Size = new System.Drawing.Size(364, 489);
+            this.SelEntityPropertyGrid.Size = new System.Drawing.Size(364, 488);
             this.SelEntityPropertyGrid.TabIndex = 35;
             this.SelEntityPropertyGrid.ToolbarVisible = false;
             // 
@@ -480,7 +479,7 @@ namespace CodeWalker
             this.SelectionArchetypeTabPage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SelectionArchetypeTabPage.Name = "SelectionArchetypeTabPage";
             this.SelectionArchetypeTabPage.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.SelectionArchetypeTabPage.Size = new System.Drawing.Size(372, 499);
+            this.SelectionArchetypeTabPage.Size = new System.Drawing.Size(372, 498);
             this.SelectionArchetypeTabPage.TabIndex = 1;
             this.SelectionArchetypeTabPage.Text = "Archetype";
             this.SelectionArchetypeTabPage.UseVisualStyleBackColor = true;
@@ -494,7 +493,7 @@ namespace CodeWalker
             this.SelArchetypePropertyGrid.Name = "SelArchetypePropertyGrid";
             this.SelArchetypePropertyGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.SelArchetypePropertyGrid.ReadOnly = true;
-            this.SelArchetypePropertyGrid.Size = new System.Drawing.Size(364, 489);
+            this.SelArchetypePropertyGrid.Size = new System.Drawing.Size(364, 488);
             this.SelArchetypePropertyGrid.TabIndex = 36;
             this.SelArchetypePropertyGrid.ToolbarVisible = false;
             // 
@@ -504,7 +503,7 @@ namespace CodeWalker
             this.SelectionDrawableTabPage.Location = new System.Drawing.Point(4, 29);
             this.SelectionDrawableTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.SelectionDrawableTabPage.Name = "SelectionDrawableTabPage";
-            this.SelectionDrawableTabPage.Size = new System.Drawing.Size(372, 499);
+            this.SelectionDrawableTabPage.Size = new System.Drawing.Size(372, 498);
             this.SelectionDrawableTabPage.TabIndex = 2;
             this.SelectionDrawableTabPage.Text = "Drawable";
             this.SelectionDrawableTabPage.UseVisualStyleBackColor = true;
@@ -519,7 +518,7 @@ namespace CodeWalker
             this.tabControl3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(372, 499);
+            this.tabControl3.Size = new System.Drawing.Size(372, 498);
             this.tabControl3.TabIndex = 28;
             // 
             // tabPage11
@@ -528,7 +527,7 @@ namespace CodeWalker
             this.tabPage11.Location = new System.Drawing.Point(4, 29);
             this.tabPage11.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Size = new System.Drawing.Size(364, 466);
+            this.tabPage11.Size = new System.Drawing.Size(364, 465);
             this.tabPage11.TabIndex = 0;
             this.tabPage11.Text = "Info";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -542,7 +541,7 @@ namespace CodeWalker
             this.SelDrawablePropertyGrid.Name = "SelDrawablePropertyGrid";
             this.SelDrawablePropertyGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.SelDrawablePropertyGrid.ReadOnly = true;
-            this.SelDrawablePropertyGrid.Size = new System.Drawing.Size(364, 466);
+            this.SelDrawablePropertyGrid.Size = new System.Drawing.Size(364, 465);
             this.SelDrawablePropertyGrid.TabIndex = 37;
             this.SelDrawablePropertyGrid.ToolbarVisible = false;
             // 
@@ -599,7 +598,7 @@ namespace CodeWalker
             this.SelectionExtensionTabPage.Location = new System.Drawing.Point(4, 29);
             this.SelectionExtensionTabPage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.SelectionExtensionTabPage.Name = "SelectionExtensionTabPage";
-            this.SelectionExtensionTabPage.Size = new System.Drawing.Size(372, 499);
+            this.SelectionExtensionTabPage.Size = new System.Drawing.Size(372, 498);
             this.SelectionExtensionTabPage.TabIndex = 3;
             this.SelectionExtensionTabPage.Text = "Ext";
             this.SelectionExtensionTabPage.UseVisualStyleBackColor = true;
@@ -613,7 +612,7 @@ namespace CodeWalker
             this.SelExtensionPropertyGrid.Name = "SelExtensionPropertyGrid";
             this.SelExtensionPropertyGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.SelExtensionPropertyGrid.ReadOnly = true;
-            this.SelExtensionPropertyGrid.Size = new System.Drawing.Size(372, 499);
+            this.SelExtensionPropertyGrid.Size = new System.Drawing.Size(372, 498);
             this.SelExtensionPropertyGrid.TabIndex = 36;
             this.SelExtensionPropertyGrid.ToolbarVisible = false;
             // 
@@ -1405,19 +1404,18 @@ namespace CodeWalker
             // 
             // ToolbarPanel
             // 
-            this.ToolbarPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.ToolbarPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
             this.ToolbarPanel.Controls.Add(this.btn_lightSettings);
             this.ToolbarPanel.Controls.Add(this.btn_rendering);
             this.ToolbarPanel.Controls.Add(this.btn_settings);
             this.ToolbarPanel.Controls.Add(this.btn_performance);
             this.ToolbarPanel.Controls.Add(this.Toolbar);
+            this.ToolbarPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.ToolbarPanel.Location = new System.Drawing.Point(0, 0);
             this.ToolbarPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ToolbarPanel.MinimumSize = new System.Drawing.Size(820, 38);
             this.ToolbarPanel.Name = "ToolbarPanel";
-            this.ToolbarPanel.Size = new System.Drawing.Size(1210, 40);
+            this.ToolbarPanel.Size = new System.Drawing.Size(1208, 40);
             this.ToolbarPanel.TabIndex = 7;
             // 
             // btn_lightSettings
@@ -1427,7 +1425,7 @@ namespace CodeWalker
             this.btn_lightSettings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_lightSettings.FlatAppearance.BorderSize = 0;
             this.btn_lightSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_lightSettings.Location = new System.Drawing.Point(1090, 5);
+            this.btn_lightSettings.Location = new System.Drawing.Point(1088, 5);
             this.btn_lightSettings.Name = "btn_lightSettings";
             this.btn_lightSettings.Size = new System.Drawing.Size(28, 29);
             this.btn_lightSettings.TabIndex = 14;
@@ -1441,7 +1439,7 @@ namespace CodeWalker
             this.btn_rendering.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_rendering.FlatAppearance.BorderSize = 0;
             this.btn_rendering.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_rendering.Location = new System.Drawing.Point(1053, 3);
+            this.btn_rendering.Location = new System.Drawing.Point(1051, 3);
             this.btn_rendering.Name = "btn_rendering";
             this.btn_rendering.Size = new System.Drawing.Size(28, 29);
             this.btn_rendering.TabIndex = 13;
@@ -1455,7 +1453,7 @@ namespace CodeWalker
             this.btn_settings.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_settings.FlatAppearance.BorderSize = 0;
             this.btn_settings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_settings.Location = new System.Drawing.Point(1168, 5);
+            this.btn_settings.Location = new System.Drawing.Point(1166, 5);
             this.btn_settings.Name = "btn_settings";
             this.btn_settings.Size = new System.Drawing.Size(28, 29);
             this.btn_settings.TabIndex = 10;
@@ -1469,7 +1467,7 @@ namespace CodeWalker
             this.btn_performance.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_performance.FlatAppearance.BorderSize = 0;
             this.btn_performance.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_performance.Location = new System.Drawing.Point(1130, 5);
+            this.btn_performance.Location = new System.Drawing.Point(1128, 5);
             this.btn_performance.Name = "btn_performance";
             this.btn_performance.Size = new System.Drawing.Size(28, 29);
             this.btn_performance.TabIndex = 7;

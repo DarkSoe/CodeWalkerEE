@@ -39,9 +39,9 @@
             this.btn_NextPage = new System.Windows.Forms.Button();
             this.label_currentPage = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.check_Favorites = new System.Windows.Forms.CheckBox();
             this.btn_search = new System.Windows.Forms.Button();
             this.textBox_search = new System.Windows.Forms.TextBox();
-            this.check_Favorites = new System.Windows.Forms.CheckBox();
             this.panel_ContentBrowser.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -60,6 +60,7 @@
             this.panel_ContentBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_ContentBrowser.Location = new System.Drawing.Point(3, 83);
             this.panel_ContentBrowser.Name = "panel_ContentBrowser";
+            this.panel_ContentBrowser.Padding = new System.Windows.Forms.Padding(12);
             this.panel_ContentBrowser.Size = new System.Drawing.Size(972, 478);
             this.panel_ContentBrowser.TabIndex = 0;
             // 
@@ -68,7 +69,7 @@
             this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 20;
-            this.listBox1.Location = new System.Drawing.Point(3, 3);
+            this.listBox1.Location = new System.Drawing.Point(15, 15);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(722, 0);
             this.listBox1.TabIndex = 0;
@@ -159,6 +160,18 @@
             this.panel2.Size = new System.Drawing.Size(972, 74);
             this.panel2.TabIndex = 2;
             // 
+            // check_Favorites
+            // 
+            this.check_Favorites.AutoSize = true;
+            this.check_Favorites.ForeColor = System.Drawing.SystemColors.Control;
+            this.check_Favorites.Location = new System.Drawing.Point(9, 25);
+            this.check_Favorites.Name = "check_Favorites";
+            this.check_Favorites.Size = new System.Drawing.Size(132, 24);
+            this.check_Favorites.TabIndex = 4;
+            this.check_Favorites.Text = "only Favorites";
+            this.check_Favorites.UseVisualStyleBackColor = true;
+            this.check_Favorites.CheckStateChanged += new System.EventHandler(this.check_Favorites_CheckStateChanged);
+            // 
             // btn_search
             // 
             this.btn_search.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -185,18 +198,6 @@
             this.textBox_search.Size = new System.Drawing.Size(300, 35);
             this.textBox_search.TabIndex = 2;
             this.textBox_search.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_search_KeyDown);
-            // 
-            // check_Favorites
-            // 
-            this.check_Favorites.AutoSize = true;
-            this.check_Favorites.ForeColor = System.Drawing.SystemColors.Control;
-            this.check_Favorites.Location = new System.Drawing.Point(9, 25);
-            this.check_Favorites.Name = "check_Favorites";
-            this.check_Favorites.Size = new System.Drawing.Size(132, 24);
-            this.check_Favorites.TabIndex = 4;
-            this.check_Favorites.Text = "only Favorites";
-            this.check_Favorites.UseVisualStyleBackColor = true;
-            this.check_Favorites.CheckStateChanged += new System.EventHandler(this.check_Favorites_CheckStateChanged);
             // 
             // ContentBrowserForm
             // 
