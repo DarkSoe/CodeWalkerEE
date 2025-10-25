@@ -28,24 +28,33 @@ namespace CodeWalker.Utils
         public bool bIsTree = false;
         public bool bIsMlo = false;
 
+        public bool bIsFavorite = false;
+
         WorldForm tViewport = null;
+        ContentBrowserForm tContentBrowser = null;
 
         public ToolTip Add_toolTip;
         public ToolTip Clipboard_toolTip;
         public ToolTip Browser_toolTip;
+        public ToolTip Favorite_toolTip;
 
         public ContentBrowserItem()
         {
             InitializeComponent();
             tViewport = Application.OpenForms.OfType<WorldForm>().FirstOrDefault();
+            tContentBrowser = Application.OpenForms.OfType<ContentBrowserForm>().FirstOrDefault();
 
             Add_toolTip = new ToolTip();
             Clipboard_toolTip = new ToolTip();
             Browser_toolTip = new ToolTip();
+            Favorite_toolTip = new ToolTip();
 
             Add_toolTip.SetToolTip(label_addEntry, "Add this as new Entity to the YMap");
             Clipboard_toolTip.SetToolTip(img_save_clipboard, "Save Plebmasters Link to Clipboard");
             Browser_toolTip.SetToolTip(img_plep_link, "Open Plebmaster-page of this Prop in Browser");
+            Favorite_toolTip.SetToolTip(img_fav, "Set as Favorite");
+
+
 
             /*if (tOffscreenRenderer == null)
             {
@@ -74,10 +83,23 @@ namespace CodeWalker.Utils
             Add_toolTip = new ToolTip();
             Clipboard_toolTip = new ToolTip();
             Browser_toolTip = new ToolTip();
+            Favorite_toolTip = new ToolTip();
 
             Add_toolTip.SetToolTip(label_addEntry, "Add this as new Entity to the YMap");
             Clipboard_toolTip.SetToolTip(img_save_clipboard, "Save Plebmasters Link to Clipboard");
             Browser_toolTip.SetToolTip(img_plep_link, "Open Plebmaster-page of this Prop in Browser");
+            Favorite_toolTip.SetToolTip(img_fav, "Set as Favorite");
+
+            if (tPropItem.IsFavorite)
+            {
+                img_fav.Image = Properties.Resources.FavButton;
+                Favorite_toolTip.SetToolTip(img_fav, "Remove from Favorites");
+            }
+            else
+            {
+                img_fav.Image = Properties.Resources.NoFavButton;
+                Favorite_toolTip.SetToolTip(img_fav, "Add to Favorites");
+            }
 
             /*if (tOffscreenRenderer == null)
             {
@@ -103,6 +125,17 @@ namespace CodeWalker.Utils
             label_Name.Text = tPropItem.GetCleanName();
             img_thumbnail.ImageLocation = tPropItem.ThumbnailPath;
             ApplyArchetypeFlags(tPropItem.Archetype);
+
+            if (tPropItem.IsFavorite)
+            {
+                img_fav.Image = Properties.Resources.FavButton;
+                Favorite_toolTip.SetToolTip(img_fav, "Remove from Favorites");
+            }
+            else
+            {
+                img_fav.Image = Properties.Resources.NoFavButton;
+                Favorite_toolTip.SetToolTip(img_fav, "Add to Favorites");
+            }
 
             /* if (tOffscreenRenderer == null)
              {
@@ -190,6 +223,31 @@ namespace CodeWalker.Utils
         {
             string url = "https://forge.plebmasters.de/objects/" + tPropItem.GetCleanName();
             Clipboard.SetText(url);
+        }
+
+        private void img_fav_Click(object sender, EventArgs e)
+        {
+            tPropItem.IsFavorite = !tPropItem.IsFavorite;
+
+            if (tPropItem.IsFavorite)
+            {
+                img_fav.Image = Properties.Resources.FavButton;
+                Favorite_toolTip.SetToolTip(img_fav, "Remove from Favorites");
+
+                tContentBrowser.AddToFavorites(tPropItem.Name);
+            }
+            else
+            {
+                img_fav.Image = Properties.Resources.NoFavButton;
+                Favorite_toolTip.SetToolTip(img_fav, "Add to Favorites");
+
+                tContentBrowser.RemoveFromFavorites(tPropItem.Name);
+            }
+
+            if (tContentBrowser.IsFavFilterChecked())
+            {
+                tContentBrowser.PerformSearchClick();
+            }
         }
     }
 }

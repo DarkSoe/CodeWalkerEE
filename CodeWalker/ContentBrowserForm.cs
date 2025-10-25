@@ -3,6 +3,7 @@ using CodeWalker.GameFiles;
 using CodeWalker.Rendering;
 using CodeWalker.Utils;
 using CodeWalker.World;
+using SharpDX.Direct2D1;
 using SharpDX.Direct3D11;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
+using System.Xml;
+using Newtonsoft.Json;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace CodeWalker
@@ -32,6 +35,7 @@ namespace CodeWalker
         List<ContentPropItem> PropList = new List<ContentPropItem>();
         List<ContentPropItem> FilteredPropList = new List<ContentPropItem>();
         List<ContentBrowserItem> ItemContainerPool = new List<ContentBrowserItem>();
+        List<string> FavoriteList = new List<string>();
 
         Archetype tCurrentArchetype = null;
         bool tUpdateArchetypeStatus = true;
@@ -78,6 +82,7 @@ namespace CodeWalker
             panel_ContentBrowser.SuspendLayout();
             panel_ContentBrowser.Controls.Clear();
             ItemContainerPool.Clear();
+            FavoriteList.Clear();
 
             for (int i = 0; i < PageSize; i++)
             {
@@ -116,6 +121,7 @@ namespace CodeWalker
         public async Task LoadPropsFromCacheAsync()
         {
             PropList.Clear();
+            LoadFavoriteList();
 
             var props = await Task.Run(() =>
             {
@@ -149,6 +155,9 @@ namespace CodeWalker
                                 ContentPropItem tProp = new ContentPropItem(entry.Name, ydr);
                                 tProp.Archetype = tModelArchetype;
                                 tProp.FilePath = entry.Path;
+
+                                if (FavoriteList.Contains(entry.Name))
+                                    tProp.IsFavorite = true;
 
                                 list.Add(tProp);
                             }
@@ -229,14 +238,27 @@ namespace CodeWalker
         {
             if (string.IsNullOrWhiteSpace(search))
             {
-                FilteredPropList = new List<ContentPropItem>(PropList);
+                if (check_Favorites.Checked)
+                {
+                    FilteredPropList = PropList.Where(p =>
+                        p.IsFavorite
+                    )
+                    .ToList();
+                }
+                else
+                {
+                    FilteredPropList = new List<ContentPropItem>(PropList);
+                }
             }
             else
             {
                 string lower = search.ToLowerInvariant();
-                FilteredPropList = PropList
-                    .Where(p => p.Name.ToLowerInvariant().Contains(lower))
-                    .ToList();
+
+                FilteredPropList = PropList.Where(p => 
+                    p.Name.ToLowerInvariant().Contains(lower) &&
+                    (!check_Favorites.Checked || p.IsFavorite)
+                )
+                .ToList();
             }
 
             CurrentPage = 0;
@@ -265,6 +287,62 @@ namespace CodeWalker
             }
 
             return arch;
+        }
+
+        private void check_Favorites_CheckStateChanged(object sender, EventArgs e)
+        {
+            btn_search.PerformClick();
+        }
+
+        private void LoadFavoriteList()
+        {
+            FavoriteList.Clear();
+
+            try
+            {
+                var codeWalkerDir = AppDomain.CurrentDomain.BaseDirectory;
+                var favpath = Path.Combine(codeWalkerDir, "favorites.json");
+
+                var favlist = JsonConvert.DeserializeObject<List<string>>(File.ReadAllText(favpath));
+                FavoriteList = new List<string>(favlist);
+            }
+            catch (Exception e) { }
+        }
+
+        private void SaveFavoriteList()
+        {
+            var codeWalkerDir = AppDomain.CurrentDomain.BaseDirectory;
+            var favpath = Path.Combine(codeWalkerDir, "favorites.json");
+
+            File.WriteAllText(favpath, JsonConvert.SerializeObject(FavoriteList, Newtonsoft.Json.Formatting.Indented));
+        }
+
+        public void AddToFavorites(string aName)
+        {
+            if (!FavoriteList.Contains(aName))
+            {
+                FavoriteList.Add(aName);
+            }    
+
+            SaveFavoriteList();
+        }
+
+        public void RemoveFromFavorites(string aName)
+        {
+            if (FavoriteList.Contains(aName))
+                FavoriteList.Remove(aName);
+
+            SaveFavoriteList();
+        }
+
+        public bool IsFavFilterChecked()
+        {
+            return check_Favorites.Checked;
+        }
+
+        public void PerformSearchClick()
+        {
+            btn_search.PerformClick();
         }
     }
 }

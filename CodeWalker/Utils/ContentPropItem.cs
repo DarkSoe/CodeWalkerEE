@@ -23,6 +23,8 @@ namespace CodeWalker.Utils
 
         public Archetype Archetype { get; set; }
 
+        public bool IsFavorite { get; set; }
+
         public ContentPropItem(string aName, YdrFile aYdrFile)
         {
             Name = aName;

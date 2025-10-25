@@ -123,6 +123,16 @@ namespace CodeWalker.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FavButton {
+            get {
+                object obj = ResourceManager.GetObject("FavButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LightBulb {
             get {
                 object obj = ResourceManager.GetObject("LightBulb", resourceCulture);
@@ -136,6 +146,16 @@ namespace CodeWalker.Properties {
         internal static System.Drawing.Bitmap LightGreyTabButton {
             get {
                 object obj = ResourceManager.GetObject("LightGreyTabButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap NoFavButton {
+            get {
+                object obj = ResourceManager.GetObject("NoFavButton", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

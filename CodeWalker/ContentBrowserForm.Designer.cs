@@ -32,15 +32,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ContentBrowserForm));
             this.timer_justUndocked = new System.Windows.Forms.Timer(this.components);
             this.panel_ContentBrowser = new System.Windows.Forms.FlowLayoutPanel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.listBox1 = new System.Windows.Forms.ListBox();
-            this.label_currentPage = new System.Windows.Forms.Label();
-            this.btn_NextPage = new System.Windows.Forms.Button();
-            this.btn_PrevPage = new System.Windows.Forms.Button();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.textBox_search = new System.Windows.Forms.TextBox();
+            this.btn_PrevPage = new System.Windows.Forms.Button();
+            this.btn_NextPage = new System.Windows.Forms.Button();
+            this.label_currentPage = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btn_search = new System.Windows.Forms.Button();
+            this.textBox_search = new System.Windows.Forms.TextBox();
+            this.check_Favorites = new System.Windows.Forms.CheckBox();
             this.panel_ContentBrowser.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -62,6 +63,16 @@
             this.panel_ContentBrowser.Size = new System.Drawing.Size(972, 478);
             this.panel_ContentBrowser.TabIndex = 0;
             // 
+            // listBox1
+            // 
+            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 20;
+            this.listBox1.Location = new System.Drawing.Point(3, 3);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(722, 0);
+            this.listBox1.TabIndex = 0;
+            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(36)))), ((int)(((byte)(36)))));
@@ -80,45 +91,16 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(978, 644);
             this.tableLayoutPanel1.TabIndex = 1;
             // 
-            // listBox1
+            // panel1
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 20;
-            this.listBox1.Location = new System.Drawing.Point(3, 3);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(722, 0);
-            this.listBox1.TabIndex = 0;
-            // 
-            // label_currentPage
-            // 
-            this.label_currentPage.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.label_currentPage.AutoSize = true;
-            this.label_currentPage.ForeColor = System.Drawing.SystemColors.Control;
-            this.label_currentPage.Location = new System.Drawing.Point(430, 30);
-            this.label_currentPage.MaximumSize = new System.Drawing.Size(140, 20);
-            this.label_currentPage.MinimumSize = new System.Drawing.Size(140, 20);
-            this.label_currentPage.Name = "label_currentPage";
-            this.label_currentPage.Size = new System.Drawing.Size(140, 20);
-            this.label_currentPage.TabIndex = 0;
-            this.label_currentPage.Text = "1";
-            this.label_currentPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // btn_NextPage
-            // 
-            this.btn_NextPage.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btn_NextPage.BackColor = System.Drawing.Color.DimGray;
-            this.btn_NextPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_NextPage.ForeColor = System.Drawing.SystemColors.Control;
-            this.btn_NextPage.Location = new System.Drawing.Point(576, 15);
-            this.btn_NextPage.MaximumSize = new System.Drawing.Size(50, 50);
-            this.btn_NextPage.MinimumSize = new System.Drawing.Size(50, 50);
-            this.btn_NextPage.Name = "btn_NextPage";
-            this.btn_NextPage.Size = new System.Drawing.Size(50, 50);
-            this.btn_NextPage.TabIndex = 1;
-            this.btn_NextPage.Text = ">";
-            this.btn_NextPage.UseVisualStyleBackColor = false;
-            this.btn_NextPage.Click += new System.EventHandler(this.btn_NextPage_Click);
+            this.panel1.Controls.Add(this.btn_PrevPage);
+            this.panel1.Controls.Add(this.btn_NextPage);
+            this.panel1.Controls.Add(this.label_currentPage);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(3, 567);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(972, 74);
+            this.panel1.TabIndex = 1;
             // 
             // btn_PrevPage
             // 
@@ -136,32 +118,39 @@
             this.btn_PrevPage.UseVisualStyleBackColor = false;
             this.btn_PrevPage.Click += new System.EventHandler(this.btn_PrevPage_Click);
             // 
-            // panel1
+            // btn_NextPage
             // 
-            this.panel1.Controls.Add(this.btn_PrevPage);
-            this.panel1.Controls.Add(this.btn_NextPage);
-            this.panel1.Controls.Add(this.label_currentPage);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(3, 567);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(972, 74);
-            this.panel1.TabIndex = 1;
+            this.btn_NextPage.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btn_NextPage.BackColor = System.Drawing.Color.DimGray;
+            this.btn_NextPage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_NextPage.ForeColor = System.Drawing.SystemColors.Control;
+            this.btn_NextPage.Location = new System.Drawing.Point(576, 15);
+            this.btn_NextPage.MaximumSize = new System.Drawing.Size(50, 50);
+            this.btn_NextPage.MinimumSize = new System.Drawing.Size(50, 50);
+            this.btn_NextPage.Name = "btn_NextPage";
+            this.btn_NextPage.Size = new System.Drawing.Size(50, 50);
+            this.btn_NextPage.TabIndex = 1;
+            this.btn_NextPage.Text = ">";
+            this.btn_NextPage.UseVisualStyleBackColor = false;
+            this.btn_NextPage.Click += new System.EventHandler(this.btn_NextPage_Click);
             // 
-            // textBox_search
+            // label_currentPage
             // 
-            this.textBox_search.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.textBox_search.BackColor = System.Drawing.Color.DimGray;
-            this.textBox_search.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_search.ForeColor = System.Drawing.SystemColors.Control;
-            this.textBox_search.Location = new System.Drawing.Point(291, 19);
-            this.textBox_search.Name = "textBox_search";
-            this.textBox_search.Size = new System.Drawing.Size(300, 35);
-            this.textBox_search.TabIndex = 2;
-            this.textBox_search.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_search_KeyDown);
+            this.label_currentPage.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.label_currentPage.AutoSize = true;
+            this.label_currentPage.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_currentPage.Location = new System.Drawing.Point(430, 30);
+            this.label_currentPage.MaximumSize = new System.Drawing.Size(140, 20);
+            this.label_currentPage.MinimumSize = new System.Drawing.Size(140, 20);
+            this.label_currentPage.Name = "label_currentPage";
+            this.label_currentPage.Size = new System.Drawing.Size(140, 20);
+            this.label_currentPage.TabIndex = 0;
+            this.label_currentPage.Text = "1";
+            this.label_currentPage.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.check_Favorites);
             this.panel2.Controls.Add(this.btn_search);
             this.panel2.Controls.Add(this.textBox_search);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -183,6 +172,31 @@
             this.btn_search.Text = "search";
             this.btn_search.UseVisualStyleBackColor = false;
             this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
+            // 
+            // textBox_search
+            // 
+            this.textBox_search.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.textBox_search.BackColor = System.Drawing.Color.DimGray;
+            this.textBox_search.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_search.ForeColor = System.Drawing.SystemColors.Control;
+            this.textBox_search.Location = new System.Drawing.Point(291, 19);
+            this.textBox_search.Name = "textBox_search";
+            this.textBox_search.Size = new System.Drawing.Size(300, 35);
+            this.textBox_search.TabIndex = 2;
+            this.textBox_search.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_search_KeyDown);
+            // 
+            // check_Favorites
+            // 
+            this.check_Favorites.AutoSize = true;
+            this.check_Favorites.ForeColor = System.Drawing.SystemColors.Control;
+            this.check_Favorites.Location = new System.Drawing.Point(9, 25);
+            this.check_Favorites.Name = "check_Favorites";
+            this.check_Favorites.Size = new System.Drawing.Size(132, 24);
+            this.check_Favorites.TabIndex = 4;
+            this.check_Favorites.Text = "only Favorites";
+            this.check_Favorites.UseVisualStyleBackColor = true;
+            this.check_Favorites.CheckStateChanged += new System.EventHandler(this.check_Favorites_CheckStateChanged);
             // 
             // ContentBrowserForm
             // 
@@ -217,5 +231,6 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btn_search;
         private System.Windows.Forms.TextBox textBox_search;
+        private System.Windows.Forms.CheckBox check_Favorites;
     }
 }
