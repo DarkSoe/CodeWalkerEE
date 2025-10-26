@@ -28,6 +28,9 @@ namespace CodeWalker
         public WorldForm tViewport;
         ContentBrowserForm tContentBrowser;
 
+        DateTime Last_Panel_MainWindow_Click = DateTime.MinValue;
+        const int DoubleClickThreshold = 300;
+
         // Resizing Window
         private bool resizing = false;
         private Point resizeStartMouse;
@@ -178,6 +181,16 @@ namespace CodeWalker
         {
             ReleaseCapture();
             SendMessage(Handle, 0xA1, 0x2, 0);
+
+            DateTime now = DateTime.Now;
+            TimeSpan diff = now - Last_Panel_MainWindow_Click;
+
+            if (diff.TotalMilliseconds <= DoubleClickThreshold)
+            {
+                BTN_Fullscreen_Click(sender, e);
+            }
+
+            Last_Panel_MainWindow_Click = now;
         }
 
         private void UpdateStatus(string text)
@@ -205,15 +218,6 @@ namespace CodeWalker
             }
 
             StatsLabel.Text = stattext;
-
-            /*if (Renderer.timerunning)
-            {
-                float fv = Renderer.timeofday * 60.0f;
-                TimeOfDayTrackBar.Value = (int)fv;
-                UpdateTimeOfDayLabel();
-            }
-
-            CameraPositionTextBox.Text = FloatUtil.GetVector3StringFormat(camera.Position, "0.##");*/
         }
 
         private void UpdateMouseLabel(string text)

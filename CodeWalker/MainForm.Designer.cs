@@ -239,7 +239,6 @@
             this.aboutToolStripMenuItem});
             this.MenuStrip_MainMenu.Location = new System.Drawing.Point(8, 5);
             this.MenuStrip_MainMenu.Name = "MenuStrip_MainMenu";
-            this.MenuStrip_MainMenu.Padding = new System.Windows.Forms.Padding(6, 2, 0, 2);
             this.MenuStrip_MainMenu.Size = new System.Drawing.Size(453, 33);
             this.MenuStrip_MainMenu.TabIndex = 2;
             this.MenuStrip_MainMenu.Text = "menuStrip1";

@@ -1,6 +1,7 @@
 ﻿using CodeWalker.GameFiles;
 using System;
 using System.IO;
+using System.Security.AccessControl;
 
 namespace CodeWalker.Utils
 {
