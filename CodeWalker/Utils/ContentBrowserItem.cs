@@ -249,5 +249,11 @@ namespace CodeWalker.Utils
                 tContentBrowser.PerformSearchClick();
             }
         }
+
+        private void ContentBrowserItem_Click(object sender, EventArgs e)
+        {
+            string url = tPropItem.GetCleanName();
+            Clipboard.SetText(url);
+        }
     }
 }

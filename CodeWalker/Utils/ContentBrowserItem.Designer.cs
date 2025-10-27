@@ -31,16 +31,18 @@
             this.label_Name = new System.Windows.Forms.Label();
             this.label_itemType = new System.Windows.Forms.Label();
             this.panel_RenderImage = new System.Windows.Forms.Panel();
+            this.img_fav = new System.Windows.Forms.PictureBox();
+            this.img_thumbnail = new System.Windows.Forms.PictureBox();
             this.label_addEntry = new System.Windows.Forms.Label();
             this.img_save_clipboard = new System.Windows.Forms.PictureBox();
             this.img_plep_link = new System.Windows.Forms.PictureBox();
-            this.img_fav = new System.Windows.Forms.PictureBox();
-            this.img_thumbnail = new System.Windows.Forms.PictureBox();
+            this.img_save_name = new System.Windows.Forms.PictureBox();
             this.panel_RenderImage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.img_save_clipboard)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.img_plep_link)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img_fav)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.img_thumbnail)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_save_clipboard)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_plep_link)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_save_name)).BeginInit();
             this.SuspendLayout();
             // 
             // label_Name
@@ -74,6 +76,26 @@
             this.panel_RenderImage.Name = "panel_RenderImage";
             this.panel_RenderImage.Size = new System.Drawing.Size(350, 350);
             this.panel_RenderImage.TabIndex = 3;
+            // 
+            // img_fav
+            // 
+            this.img_fav.Image = global::CodeWalker.Properties.Resources.NoFavButton;
+            this.img_fav.Location = new System.Drawing.Point(308, 7);
+            this.img_fav.Name = "img_fav";
+            this.img_fav.Size = new System.Drawing.Size(32, 32);
+            this.img_fav.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.img_fav.TabIndex = 7;
+            this.img_fav.TabStop = false;
+            this.img_fav.Click += new System.EventHandler(this.img_fav_Click);
+            // 
+            // img_thumbnail
+            // 
+            this.img_thumbnail.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.img_thumbnail.Location = new System.Drawing.Point(0, 0);
+            this.img_thumbnail.Name = "img_thumbnail";
+            this.img_thumbnail.Size = new System.Drawing.Size(350, 350);
+            this.img_thumbnail.TabIndex = 0;
+            this.img_thumbnail.TabStop = false;
             // 
             // label_addEntry
             // 
@@ -109,31 +131,22 @@
             this.img_plep_link.TabStop = false;
             this.img_plep_link.Click += new System.EventHandler(this.img_plep_link_Click);
             // 
-            // img_fav
+            // img_save_name
             // 
-            this.img_fav.Image = global::CodeWalker.Properties.Resources.NoFavButton;
-            this.img_fav.Location = new System.Drawing.Point(308, 7);
-            this.img_fav.Name = "img_fav";
-            this.img_fav.Size = new System.Drawing.Size(32, 32);
-            this.img_fav.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.img_fav.TabIndex = 7;
-            this.img_fav.TabStop = false;
-            this.img_fav.Click += new System.EventHandler(this.img_fav_Click);
-            // 
-            // img_thumbnail
-            // 
-            this.img_thumbnail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.img_thumbnail.Location = new System.Drawing.Point(0, 0);
-            this.img_thumbnail.Name = "img_thumbnail";
-            this.img_thumbnail.Size = new System.Drawing.Size(350, 350);
-            this.img_thumbnail.TabIndex = 0;
-            this.img_thumbnail.TabStop = false;
+            this.img_save_name.Image = global::CodeWalker.Properties.Resources.clipboard;
+            this.img_save_name.Location = new System.Drawing.Point(3, 389);
+            this.img_save_name.Name = "img_save_name";
+            this.img_save_name.Size = new System.Drawing.Size(32, 32);
+            this.img_save_name.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.img_save_name.TabIndex = 7;
+            this.img_save_name.TabStop = false;
             // 
             // ContentBrowserItem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gray;
+            this.Controls.Add(this.img_save_name);
             this.Controls.Add(this.img_save_clipboard);
             this.Controls.Add(this.img_plep_link);
             this.Controls.Add(this.label_addEntry);
@@ -142,11 +155,13 @@
             this.Controls.Add(this.label_Name);
             this.Name = "ContentBrowserItem";
             this.Size = new System.Drawing.Size(350, 500);
+            this.Click += new System.EventHandler(this.ContentBrowserItem_Click);
             this.panel_RenderImage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.img_save_clipboard)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.img_plep_link)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.img_fav)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.img_thumbnail)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_save_clipboard)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_plep_link)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.img_save_name)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,5 +176,6 @@
         private System.Windows.Forms.PictureBox img_plep_link;
         private System.Windows.Forms.PictureBox img_save_clipboard;
         private System.Windows.Forms.PictureBox img_fav;
+        private System.Windows.Forms.PictureBox img_save_name;
     }
 }
