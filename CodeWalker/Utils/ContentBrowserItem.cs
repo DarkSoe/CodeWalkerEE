@@ -255,10 +255,10 @@ namespace CodeWalker.Utils
             }
         }
 
-        private void ContentBrowserItem_Click(object sender, EventArgs e)
+        private void img_save_name_Click(object sender, EventArgs e)
         {
-            string url = tPropItem.GetCleanName();
-            Clipboard.SetText(url);
+            string tName = tPropItem.GetCleanName();
+            Clipboard.SetText(tName);
         }
     }
 }

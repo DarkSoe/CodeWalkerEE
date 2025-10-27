@@ -134,12 +134,13 @@
             // img_save_name
             // 
             this.img_save_name.Image = global::CodeWalker.Properties.Resources.clipboard;
-            this.img_save_name.Location = new System.Drawing.Point(3, 389);
+            this.img_save_name.Location = new System.Drawing.Point(4, 389);
             this.img_save_name.Name = "img_save_name";
             this.img_save_name.Size = new System.Drawing.Size(32, 32);
             this.img_save_name.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.img_save_name.TabIndex = 7;
             this.img_save_name.TabStop = false;
+            this.img_save_name.Click += new System.EventHandler(this.img_save_name_Click);
             // 
             // ContentBrowserItem
             // 
@@ -155,7 +156,6 @@
             this.Controls.Add(this.label_Name);
             this.Name = "ContentBrowserItem";
             this.Size = new System.Drawing.Size(350, 500);
-            this.Click += new System.EventHandler(this.ContentBrowserItem_Click);
             this.panel_RenderImage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.img_fav)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.img_thumbnail)).EndInit();
