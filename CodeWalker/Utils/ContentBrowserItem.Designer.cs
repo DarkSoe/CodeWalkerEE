@@ -50,7 +50,7 @@
             this.label_Name.AutoSize = true;
             this.label_Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label_Name.ForeColor = System.Drawing.SystemColors.Control;
-            this.label_Name.Location = new System.Drawing.Point(40, 357);
+            this.label_Name.Location = new System.Drawing.Point(3, 355);
             this.label_Name.Name = "label_Name";
             this.label_Name.Size = new System.Drawing.Size(159, 29);
             this.label_Name.TabIndex = 1;
@@ -102,7 +102,7 @@
             this.label_addEntry.AutoSize = true;
             this.label_addEntry.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label_addEntry.ForeColor = System.Drawing.SystemColors.Control;
-            this.label_addEntry.Location = new System.Drawing.Point(7, 357);
+            this.label_addEntry.Location = new System.Drawing.Point(3, 391);
             this.label_addEntry.Name = "label_addEntry";
             this.label_addEntry.Size = new System.Drawing.Size(27, 29);
             this.label_addEntry.TabIndex = 4;
@@ -134,7 +134,7 @@
             // img_save_name
             // 
             this.img_save_name.Image = global::CodeWalker.Properties.Resources.clipboard;
-            this.img_save_name.Location = new System.Drawing.Point(4, 389);
+            this.img_save_name.Location = new System.Drawing.Point(36, 388);
             this.img_save_name.Name = "img_save_name";
             this.img_save_name.Size = new System.Drawing.Size(32, 32);
             this.img_save_name.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;

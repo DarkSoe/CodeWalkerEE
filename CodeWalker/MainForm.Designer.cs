@@ -100,6 +100,7 @@
             this.StatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.MousedLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.StatsLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.label_CodeWalkerVersion = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             this.panelHeader.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -665,6 +666,7 @@
             // panel_WindowTabs
             // 
             this.panel_WindowTabs.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(21)))), ((int)(((byte)(21)))), ((int)(((byte)(21)))));
+            this.panel_WindowTabs.Controls.Add(this.label_CodeWalkerVersion);
             this.panel_WindowTabs.Controls.Add(this.btn_tab_contentbrowser);
             this.panel_WindowTabs.Controls.Add(this.btn_tab_viewport);
             this.panel_WindowTabs.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -785,6 +787,17 @@
             this.StatsLabel.Size = new System.Drawing.Size(116, 25);
             this.StatsLabel.Text = "0 geometries";
             // 
+            // label_CodeWalkerVersion
+            // 
+            this.label_CodeWalkerVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_CodeWalkerVersion.AutoSize = true;
+            this.label_CodeWalkerVersion.ForeColor = System.Drawing.SystemColors.Control;
+            this.label_CodeWalkerVersion.Location = new System.Drawing.Point(1300, 12);
+            this.label_CodeWalkerVersion.Name = "label_CodeWalkerVersion";
+            this.label_CodeWalkerVersion.Size = new System.Drawing.Size(192, 20);
+            this.label_CodeWalkerVersion.TabIndex = 3;
+            this.label_CodeWalkerVersion.Text = "CodeWalker30 dev48 ee1";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -816,6 +829,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.BTN_Minimize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BTN_Fullscreen)).EndInit();
             this.panel_WindowTabs.ResumeLayout(false);
+            this.panel_WindowTabs.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ResizingBox)).EndInit();
@@ -898,5 +912,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem thumbnailGeneratorToolStripMenuItem;
+        private System.Windows.Forms.Label label_CodeWalkerVersion;
     }
 }
