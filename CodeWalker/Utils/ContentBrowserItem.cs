@@ -37,6 +37,7 @@ namespace CodeWalker.Utils
         public ToolTip Clipboard_toolTip;
         public ToolTip Browser_toolTip;
         public ToolTip Favorite_toolTip;
+        public ToolTip NameClipboard_toolTip;
 
         public ContentBrowserItem()
         {
@@ -48,11 +49,13 @@ namespace CodeWalker.Utils
             Clipboard_toolTip = new ToolTip();
             Browser_toolTip = new ToolTip();
             Favorite_toolTip = new ToolTip();
+            NameClipboard_toolTip = new ToolTip();
 
             Add_toolTip.SetToolTip(label_addEntry, "Add this as new Entity to the YMap");
             Clipboard_toolTip.SetToolTip(img_save_clipboard, "Save Plebmasters Link to Clipboard");
             Browser_toolTip.SetToolTip(img_plep_link, "Open Plebmaster-page of this Prop in Browser");
             Favorite_toolTip.SetToolTip(img_fav, "Set as Favorite");
+            NameClipboard_toolTip.SetToolTip(img_save_name, "Save Name to Clipboard");
 
 
 
@@ -84,11 +87,13 @@ namespace CodeWalker.Utils
             Clipboard_toolTip = new ToolTip();
             Browser_toolTip = new ToolTip();
             Favorite_toolTip = new ToolTip();
+            NameClipboard_toolTip = new ToolTip();
 
             Add_toolTip.SetToolTip(label_addEntry, "Add this as new Entity to the YMap");
             Clipboard_toolTip.SetToolTip(img_save_clipboard, "Save Plebmasters Link to Clipboard");
             Browser_toolTip.SetToolTip(img_plep_link, "Open Plebmaster-page of this Prop in Browser");
             Favorite_toolTip.SetToolTip(img_fav, "Set as Favorite");
+            NameClipboard_toolTip.SetToolTip(img_save_name, "Save Name to Clipboard");
 
             if (tPropItem.IsFavorite)
             {
