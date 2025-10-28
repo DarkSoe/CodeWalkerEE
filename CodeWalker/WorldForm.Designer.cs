@@ -38,6 +38,8 @@ namespace CodeWalker
             this.panel_ProjectOutliner = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label_Outliner = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.SelectionNameTextBox = new System.Windows.Forms.TextBox();
             this.SelectionTabControl = new System.Windows.Forms.TabControl();
             this.SelectionEntityTabPage = new System.Windows.Forms.TabPage();
             this.SelEntityPropertyGrid = new CodeWalker.WinForms.ReadOnlyPropertyGrid();
@@ -53,7 +55,6 @@ namespace CodeWalker
             this.SelDrawableTexturesTreeView = new CodeWalker.WinForms.TreeViewFix();
             this.SelectionExtensionTabPage = new System.Windows.Forms.TabPage();
             this.SelExtensionPropertyGrid = new CodeWalker.WinForms.ReadOnlyPropertyGrid();
-            this.SelectionNameTextBox = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label35 = new System.Windows.Forms.Label();
             this.ViewTabControl = new System.Windows.Forms.TabControl();
@@ -272,13 +273,13 @@ namespace CodeWalker
             this.panel_light_settings = new System.Windows.Forms.Panel();
             this.panel_advancedSettings = new System.Windows.Forms.Panel();
             this.btn_advancedSettings_close = new System.Windows.Forms.PictureBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel_sidebar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.split_sidebar)).BeginInit();
             this.split_sidebar.Panel1.SuspendLayout();
             this.split_sidebar.Panel2.SuspendLayout();
             this.split_sidebar.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SelectionTabControl.SuspendLayout();
             this.SelectionEntityTabPage.SuspendLayout();
             this.SelectionArchetypeTabPage.SuspendLayout();
@@ -321,7 +322,6 @@ namespace CodeWalker
             this.panel_light_settings.SuspendLayout();
             this.panel_advancedSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.btn_advancedSettings_close)).BeginInit();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ModelComboBox
@@ -386,7 +386,7 @@ namespace CodeWalker
             this.split_sidebar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.split_sidebar.ForeColor = System.Drawing.SystemColors.Control;
             this.split_sidebar.Location = new System.Drawing.Point(0, 0);
-            this.split_sidebar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.split_sidebar.Margin = new System.Windows.Forms.Padding(2);
             this.split_sidebar.Name = "split_sidebar";
             this.split_sidebar.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -408,7 +408,7 @@ namespace CodeWalker
             // 
             this.panel_ProjectOutliner.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel_ProjectOutliner.Location = new System.Drawing.Point(0, 26);
-            this.panel_ProjectOutliner.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_ProjectOutliner.Margin = new System.Windows.Forms.Padding(2);
             this.panel_ProjectOutliner.Name = "panel_ProjectOutliner";
             this.panel_ProjectOutliner.Size = new System.Drawing.Size(265, 333);
             this.panel_ProjectOutliner.TabIndex = 1;
@@ -419,7 +419,7 @@ namespace CodeWalker
             this.panel1.Controls.Add(this.label_Outliner);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(265, 26);
             this.panel1.TabIndex = 0;
@@ -433,6 +433,32 @@ namespace CodeWalker
             this.label_Outliner.Size = new System.Drawing.Size(79, 13);
             this.label_Outliner.TabIndex = 0;
             this.label_Outliner.Text = "Project Outliner";
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.SelectionNameTextBox, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.SelectionTabControl, 0, 1);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 26);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(265, 380);
+            this.tableLayoutPanel1.TabIndex = 29;
+            // 
+            // SelectionNameTextBox
+            // 
+            this.SelectionNameTextBox.BackColor = System.Drawing.Color.White;
+            this.SelectionNameTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.SelectionNameTextBox.Location = new System.Drawing.Point(3, 3);
+            this.SelectionNameTextBox.Name = "SelectionNameTextBox";
+            this.SelectionNameTextBox.ReadOnly = true;
+            this.SelectionNameTextBox.Size = new System.Drawing.Size(259, 20);
+            this.SelectionNameTextBox.TabIndex = 26;
+            this.SelectionNameTextBox.Text = "Nothing selected";
             // 
             // SelectionTabControl
             // 
@@ -453,7 +479,7 @@ namespace CodeWalker
             this.SelectionEntityTabPage.Controls.Add(this.SelEntityPropertyGrid);
             this.SelectionEntityTabPage.Location = new System.Drawing.Point(4, 22);
             this.SelectionEntityTabPage.Name = "SelectionEntityTabPage";
-            this.SelectionEntityTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.SelectionEntityTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.SelectionEntityTabPage.Size = new System.Drawing.Size(257, 314);
             this.SelectionEntityTabPage.TabIndex = 0;
             this.SelectionEntityTabPage.Text = "Entity";
@@ -476,8 +502,8 @@ namespace CodeWalker
             this.SelectionArchetypeTabPage.Controls.Add(this.SelArchetypePropertyGrid);
             this.SelectionArchetypeTabPage.Location = new System.Drawing.Point(4, 22);
             this.SelectionArchetypeTabPage.Name = "SelectionArchetypeTabPage";
-            this.SelectionArchetypeTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.SelectionArchetypeTabPage.Size = new System.Drawing.Size(257, 214);
+            this.SelectionArchetypeTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.SelectionArchetypeTabPage.Size = new System.Drawing.Size(257, 314);
             this.SelectionArchetypeTabPage.TabIndex = 1;
             this.SelectionArchetypeTabPage.Text = "Archetype";
             this.SelectionArchetypeTabPage.UseVisualStyleBackColor = true;
@@ -490,7 +516,7 @@ namespace CodeWalker
             this.SelArchetypePropertyGrid.Name = "SelArchetypePropertyGrid";
             this.SelArchetypePropertyGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.SelArchetypePropertyGrid.ReadOnly = true;
-            this.SelArchetypePropertyGrid.Size = new System.Drawing.Size(251, 208);
+            this.SelArchetypePropertyGrid.Size = new System.Drawing.Size(251, 308);
             this.SelArchetypePropertyGrid.TabIndex = 36;
             this.SelArchetypePropertyGrid.ToolbarVisible = false;
             // 
@@ -500,7 +526,7 @@ namespace CodeWalker
             this.SelectionDrawableTabPage.Location = new System.Drawing.Point(4, 22);
             this.SelectionDrawableTabPage.Margin = new System.Windows.Forms.Padding(0);
             this.SelectionDrawableTabPage.Name = "SelectionDrawableTabPage";
-            this.SelectionDrawableTabPage.Size = new System.Drawing.Size(257, 214);
+            this.SelectionDrawableTabPage.Size = new System.Drawing.Size(257, 314);
             this.SelectionDrawableTabPage.TabIndex = 2;
             this.SelectionDrawableTabPage.Text = "Drawable";
             this.SelectionDrawableTabPage.UseVisualStyleBackColor = true;
@@ -514,7 +540,7 @@ namespace CodeWalker
             this.tabControl3.Location = new System.Drawing.Point(0, 0);
             this.tabControl3.Name = "tabControl3";
             this.tabControl3.SelectedIndex = 0;
-            this.tabControl3.Size = new System.Drawing.Size(257, 214);
+            this.tabControl3.Size = new System.Drawing.Size(257, 314);
             this.tabControl3.TabIndex = 28;
             // 
             // tabPage11
@@ -523,7 +549,7 @@ namespace CodeWalker
             this.tabPage11.Location = new System.Drawing.Point(4, 22);
             this.tabPage11.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage11.Name = "tabPage11";
-            this.tabPage11.Size = new System.Drawing.Size(249, 188);
+            this.tabPage11.Size = new System.Drawing.Size(249, 288);
             this.tabPage11.TabIndex = 0;
             this.tabPage11.Text = "Info";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -536,7 +562,7 @@ namespace CodeWalker
             this.SelDrawablePropertyGrid.Name = "SelDrawablePropertyGrid";
             this.SelDrawablePropertyGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.SelDrawablePropertyGrid.ReadOnly = true;
-            this.SelDrawablePropertyGrid.Size = new System.Drawing.Size(249, 188);
+            this.SelDrawablePropertyGrid.Size = new System.Drawing.Size(249, 288);
             this.SelDrawablePropertyGrid.TabIndex = 37;
             this.SelDrawablePropertyGrid.ToolbarVisible = false;
             // 
@@ -545,8 +571,8 @@ namespace CodeWalker
             this.tabPage12.Controls.Add(this.SelDrawableModelsTreeView);
             this.tabPage12.Location = new System.Drawing.Point(4, 22);
             this.tabPage12.Name = "tabPage12";
-            this.tabPage12.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage12.Size = new System.Drawing.Size(240, 298);
+            this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage12.Size = new System.Drawing.Size(249, 188);
             this.tabPage12.TabIndex = 1;
             this.tabPage12.Text = "Models";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -558,7 +584,7 @@ namespace CodeWalker
             this.SelDrawableModelsTreeView.Location = new System.Drawing.Point(3, 3);
             this.SelDrawableModelsTreeView.Name = "SelDrawableModelsTreeView";
             this.SelDrawableModelsTreeView.ShowRootLines = false;
-            this.SelDrawableModelsTreeView.Size = new System.Drawing.Size(234, 292);
+            this.SelDrawableModelsTreeView.Size = new System.Drawing.Size(243, 182);
             this.SelDrawableModelsTreeView.TabIndex = 39;
             this.SelDrawableModelsTreeView.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.SelDrawableModelsTreeView_AfterCheck);
             this.SelDrawableModelsTreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.SelDrawableModelsTreeView_NodeMouseDoubleClick);
@@ -569,7 +595,7 @@ namespace CodeWalker
             this.tabPage13.Controls.Add(this.SelDrawableTexturesTreeView);
             this.tabPage13.Location = new System.Drawing.Point(4, 22);
             this.tabPage13.Name = "tabPage13";
-            this.tabPage13.Size = new System.Drawing.Size(240, 298);
+            this.tabPage13.Size = new System.Drawing.Size(249, 188);
             this.tabPage13.TabIndex = 2;
             this.tabPage13.Text = "Textures";
             this.tabPage13.UseVisualStyleBackColor = true;
@@ -580,7 +606,7 @@ namespace CodeWalker
             this.SelDrawableTexturesTreeView.Location = new System.Drawing.Point(0, 0);
             this.SelDrawableTexturesTreeView.Name = "SelDrawableTexturesTreeView";
             this.SelDrawableTexturesTreeView.ShowRootLines = false;
-            this.SelDrawableTexturesTreeView.Size = new System.Drawing.Size(240, 298);
+            this.SelDrawableTexturesTreeView.Size = new System.Drawing.Size(249, 188);
             this.SelDrawableTexturesTreeView.TabIndex = 40;
             // 
             // SelectionExtensionTabPage
@@ -588,7 +614,7 @@ namespace CodeWalker
             this.SelectionExtensionTabPage.Controls.Add(this.SelExtensionPropertyGrid);
             this.SelectionExtensionTabPage.Location = new System.Drawing.Point(4, 22);
             this.SelectionExtensionTabPage.Name = "SelectionExtensionTabPage";
-            this.SelectionExtensionTabPage.Size = new System.Drawing.Size(257, 214);
+            this.SelectionExtensionTabPage.Size = new System.Drawing.Size(257, 314);
             this.SelectionExtensionTabPage.TabIndex = 3;
             this.SelectionExtensionTabPage.Text = "Ext";
             this.SelectionExtensionTabPage.UseVisualStyleBackColor = true;
@@ -601,20 +627,9 @@ namespace CodeWalker
             this.SelExtensionPropertyGrid.Name = "SelExtensionPropertyGrid";
             this.SelExtensionPropertyGrid.PropertySort = System.Windows.Forms.PropertySort.NoSort;
             this.SelExtensionPropertyGrid.ReadOnly = true;
-            this.SelExtensionPropertyGrid.Size = new System.Drawing.Size(257, 214);
+            this.SelExtensionPropertyGrid.Size = new System.Drawing.Size(257, 314);
             this.SelExtensionPropertyGrid.TabIndex = 36;
             this.SelExtensionPropertyGrid.ToolbarVisible = false;
-            // 
-            // SelectionNameTextBox
-            // 
-            this.SelectionNameTextBox.BackColor = System.Drawing.Color.White;
-            this.SelectionNameTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.SelectionNameTextBox.Location = new System.Drawing.Point(3, 3);
-            this.SelectionNameTextBox.Name = "SelectionNameTextBox";
-            this.SelectionNameTextBox.ReadOnly = true;
-            this.SelectionNameTextBox.Size = new System.Drawing.Size(259, 20);
-            this.SelectionNameTextBox.TabIndex = 26;
-            this.SelectionNameTextBox.Text = "Nothing selected";
             // 
             // panel2
             // 
@@ -622,7 +637,7 @@ namespace CodeWalker
             this.panel2.Controls.Add(this.label35);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(265, 26);
             this.panel2.TabIndex = 0;
@@ -656,7 +671,7 @@ namespace CodeWalker
             // 
             this.ViewWorldTabPage.Location = new System.Drawing.Point(4, 22);
             this.ViewWorldTabPage.Name = "ViewWorldTabPage";
-            this.ViewWorldTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.ViewWorldTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.ViewWorldTabPage.Size = new System.Drawing.Size(203, 80);
             this.ViewWorldTabPage.TabIndex = 0;
             this.ViewWorldTabPage.Text = "World";
@@ -666,7 +681,7 @@ namespace CodeWalker
             // 
             this.ViewYmapsTabPage.Location = new System.Drawing.Point(4, 22);
             this.ViewYmapsTabPage.Name = "ViewYmapsTabPage";
-            this.ViewYmapsTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.ViewYmapsTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.ViewYmapsTabPage.Size = new System.Drawing.Size(203, 80);
             this.ViewYmapsTabPage.TabIndex = 1;
             this.ViewYmapsTabPage.Text = "Ymaps";
@@ -1362,7 +1377,7 @@ namespace CodeWalker
             this.btn_lightSettings.FlatAppearance.BorderSize = 0;
             this.btn_lightSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_lightSettings.Location = new System.Drawing.Point(726, 3);
-            this.btn_lightSettings.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_lightSettings.Margin = new System.Windows.Forms.Padding(2);
             this.btn_lightSettings.Name = "btn_lightSettings";
             this.btn_lightSettings.Size = new System.Drawing.Size(19, 19);
             this.btn_lightSettings.TabIndex = 14;
@@ -1377,7 +1392,7 @@ namespace CodeWalker
             this.btn_rendering.FlatAppearance.BorderSize = 0;
             this.btn_rendering.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_rendering.Location = new System.Drawing.Point(702, 2);
-            this.btn_rendering.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_rendering.Margin = new System.Windows.Forms.Padding(2);
             this.btn_rendering.Name = "btn_rendering";
             this.btn_rendering.Size = new System.Drawing.Size(19, 19);
             this.btn_rendering.TabIndex = 13;
@@ -1392,7 +1407,7 @@ namespace CodeWalker
             this.btn_settings.FlatAppearance.BorderSize = 0;
             this.btn_settings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_settings.Location = new System.Drawing.Point(778, 3);
-            this.btn_settings.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_settings.Margin = new System.Windows.Forms.Padding(2);
             this.btn_settings.Name = "btn_settings";
             this.btn_settings.Size = new System.Drawing.Size(19, 19);
             this.btn_settings.TabIndex = 10;
@@ -1407,7 +1422,7 @@ namespace CodeWalker
             this.btn_performance.FlatAppearance.BorderSize = 0;
             this.btn_performance.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_performance.Location = new System.Drawing.Point(753, 3);
-            this.btn_performance.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_performance.Margin = new System.Windows.Forms.Padding(2);
             this.btn_performance.Name = "btn_performance";
             this.btn_performance.Size = new System.Drawing.Size(19, 19);
             this.btn_performance.TabIndex = 7;
@@ -1416,6 +1431,7 @@ namespace CodeWalker
             // 
             // Toolbar
             // 
+            this.Toolbar.AutoSize = false;
             this.Toolbar.Dock = System.Windows.Forms.DockStyle.None;
             this.Toolbar.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.Toolbar.ImageScalingSize = new System.Drawing.Size(24, 24);
@@ -1439,10 +1455,10 @@ namespace CodeWalker
             this.ToolbarPasteButton,
             this.toolStripLabel4,
             this.ToolbarCameraModeButton});
-            this.Toolbar.Location = new System.Drawing.Point(0, -1);
+            this.Toolbar.Location = new System.Drawing.Point(0, 0);
             this.Toolbar.Name = "Toolbar";
             this.Toolbar.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-            this.Toolbar.Size = new System.Drawing.Size(535, 31);
+            this.Toolbar.Size = new System.Drawing.Size(550, 27);
             this.Toolbar.TabIndex = 6;
             this.Toolbar.Text = "toolStrip1";
             // 
@@ -1973,7 +1989,7 @@ namespace CodeWalker
             this.panel_performance.Controls.Add(this.label16);
             this.panel_performance.Controls.Add(this.WorldLodDistTrackBar);
             this.panel_performance.Location = new System.Drawing.Point(532, 31);
-            this.panel_performance.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_performance.Margin = new System.Windows.Forms.Padding(2);
             this.panel_performance.Name = "panel_performance";
             this.panel_performance.Size = new System.Drawing.Size(240, 390);
             this.panel_performance.TabIndex = 9;
@@ -2007,7 +2023,7 @@ namespace CodeWalker
             this.panel_settings.Controls.Add(this.DlcLevelComboBox);
             this.panel_settings.Controls.Add(this.EnableDlcCheckBox);
             this.panel_settings.Location = new System.Drawing.Point(559, 31);
-            this.panel_settings.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_settings.Margin = new System.Windows.Forms.Padding(2);
             this.panel_settings.Name = "panel_settings";
             this.panel_settings.Size = new System.Drawing.Size(240, 390);
             this.panel_settings.TabIndex = 10;
@@ -2017,7 +2033,7 @@ namespace CodeWalker
             // btn_settings_more
             // 
             this.btn_settings_more.Location = new System.Drawing.Point(165, 358);
-            this.btn_settings_more.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_settings_more.Margin = new System.Windows.Forms.Padding(2);
             this.btn_settings_more.Name = "btn_settings_more";
             this.btn_settings_more.Size = new System.Drawing.Size(66, 25);
             this.btn_settings_more.TabIndex = 150;
@@ -2065,7 +2081,7 @@ namespace CodeWalker
             this.panel_rendering.Controls.Add(this.TextureSamplerComboBox);
             this.panel_rendering.Controls.Add(this.FieldOfViewTrackBar);
             this.panel_rendering.Location = new System.Drawing.Point(481, 31);
-            this.panel_rendering.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_rendering.Margin = new System.Windows.Forms.Padding(2);
             this.panel_rendering.Name = "panel_rendering";
             this.panel_rendering.Size = new System.Drawing.Size(240, 390);
             this.panel_rendering.TabIndex = 13;
@@ -2295,7 +2311,7 @@ namespace CodeWalker
             this.OptionsGeneralTabPage.Controls.Add(this.TimedEntitiesCheckBox);
             this.OptionsGeneralTabPage.Location = new System.Drawing.Point(4, 22);
             this.OptionsGeneralTabPage.Name = "OptionsGeneralTabPage";
-            this.OptionsGeneralTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.OptionsGeneralTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.OptionsGeneralTabPage.Size = new System.Drawing.Size(503, 452);
             this.OptionsGeneralTabPage.TabIndex = 0;
             this.OptionsGeneralTabPage.Text = "General";
@@ -2427,7 +2443,7 @@ namespace CodeWalker
             this.OptionsHelpersTabPage.Controls.Add(this.label8);
             this.OptionsHelpersTabPage.Location = new System.Drawing.Point(4, 22);
             this.OptionsHelpersTabPage.Name = "OptionsHelpersTabPage";
-            this.OptionsHelpersTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.OptionsHelpersTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.OptionsHelpersTabPage.Size = new System.Drawing.Size(503, 452);
             this.OptionsHelpersTabPage.TabIndex = 1;
             this.OptionsHelpersTabPage.Text = "Helpers";
@@ -3068,7 +3084,7 @@ namespace CodeWalker
             this.MarkersTabPage.Controls.Add(this.AddMarkersButton);
             this.MarkersTabPage.Location = new System.Drawing.Point(4, 22);
             this.MarkersTabPage.Name = "MarkersTabPage";
-            this.MarkersTabPage.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.MarkersTabPage.Padding = new System.Windows.Forms.Padding(3);
             this.MarkersTabPage.Size = new System.Drawing.Size(508, 476);
             this.MarkersTabPage.TabIndex = 1;
             this.MarkersTabPage.Text = "Markers";
@@ -3258,7 +3274,7 @@ namespace CodeWalker
             this.panel_light_settings.Controls.Add(this.NaturalAmbientLightCheckBox);
             this.panel_light_settings.Controls.Add(this.ArtificialAmbientLightCheckBox);
             this.panel_light_settings.Location = new System.Drawing.Point(507, 31);
-            this.panel_light_settings.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_light_settings.Margin = new System.Windows.Forms.Padding(2);
             this.panel_light_settings.Name = "panel_light_settings";
             this.panel_light_settings.Size = new System.Drawing.Size(240, 390);
             this.panel_light_settings.TabIndex = 14;
@@ -3272,7 +3288,7 @@ namespace CodeWalker
             this.panel_advancedSettings.Controls.Add(this.btn_advancedSettings_close);
             this.panel_advancedSettings.Controls.Add(this.panel_advanced_settings);
             this.panel_advancedSettings.Location = new System.Drawing.Point(265, 31);
-            this.panel_advancedSettings.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel_advancedSettings.Margin = new System.Windows.Forms.Padding(2);
             this.panel_advancedSettings.Name = "panel_advancedSettings";
             this.panel_advancedSettings.Size = new System.Drawing.Size(533, 520);
             this.panel_advancedSettings.TabIndex = 15;
@@ -3282,28 +3298,13 @@ namespace CodeWalker
             // 
             this.btn_advancedSettings_close.Image = global::CodeWalker.Properties.Resources.BTN_Exit;
             this.btn_advancedSettings_close.Location = new System.Drawing.Point(503, 3);
-            this.btn_advancedSettings_close.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_advancedSettings_close.Margin = new System.Windows.Forms.Padding(2);
             this.btn_advancedSettings_close.Name = "btn_advancedSettings_close";
             this.btn_advancedSettings_close.Size = new System.Drawing.Size(19, 19);
             this.btn_advancedSettings_close.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.btn_advancedSettings_close.TabIndex = 13;
             this.btn_advancedSettings_close.TabStop = false;
             this.btn_advancedSettings_close.Click += new System.EventHandler(this.btn_advancedSettings_close_Click);
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.SelectionNameTextBox, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.SelectionTabControl, 0, 1);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 26);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(265, 380);
-            this.tableLayoutPanel1.TabIndex = 29;
             // 
             // WorldForm
             // 
@@ -3342,6 +3343,8 @@ namespace CodeWalker
             this.split_sidebar.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.SelectionTabControl.ResumeLayout(false);
             this.SelectionEntityTabPage.ResumeLayout(false);
             this.SelectionArchetypeTabPage.ResumeLayout(false);
@@ -3366,7 +3369,6 @@ namespace CodeWalker
             this.SelectedMarkerPanel.ResumeLayout(false);
             this.SelectedMarkerPanel.PerformLayout();
             this.ToolbarPanel.ResumeLayout(false);
-            this.ToolbarPanel.PerformLayout();
             this.Toolbar.ResumeLayout(false);
             this.Toolbar.PerformLayout();
             this.panel_performance.ResumeLayout(false);
@@ -3397,8 +3399,6 @@ namespace CodeWalker
             this.panel_light_settings.PerformLayout();
             this.panel_advancedSettings.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.btn_advancedSettings_close)).EndInit();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
