@@ -1,12 +1,13 @@
 <div align="center">
     <h1>CodeWalker by dexyfex</h1>
-    This program is for viewing the contents of GTAV RPF archives.
+    This program is for viewing the contents of GTAV RPF archives.<br>
+    Editor Extensions by DarkSoe
 </div>
 
 ## Requirements:
 - PC version of GTA:V;
-- 4GB RAM (8+ recommended);
-- Windows 7 and above, x64 processor;
+- 8GB RAM (16+ recommended);
+- Windows 11 and above, x64 processor;
 - .NET framework 4.5 or newer from [Microsoft](https://www.microsoft.com/net/download/thank-you/net471);
 - DirectX 11 and Shader Model 4.0 capable graphics.
 
