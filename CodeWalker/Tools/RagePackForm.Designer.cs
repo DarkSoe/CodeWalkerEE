@@ -38,45 +38,56 @@
             this.btn_packdlc = new System.Windows.Forms.Button();
             this.text_output = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // text_contentInFolderPath
             // 
-            this.text_contentInFolderPath.Location = new System.Drawing.Point(12, 46);
+            this.text_contentInFolderPath.Location = new System.Drawing.Point(4, 5);
+            this.text_contentInFolderPath.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.text_contentInFolderPath.Name = "text_contentInFolderPath";
-            this.text_contentInFolderPath.Size = new System.Drawing.Size(581, 20);
+            this.text_contentInFolderPath.Size = new System.Drawing.Size(792, 26);
             this.text_contentInFolderPath.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 30);
+            this.label1.Location = new System.Drawing.Point(4, 40);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 13);
+            this.label1.Size = new System.Drawing.Size(137, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Content In Folder:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 118);
+            this.label2.Location = new System.Drawing.Point(4, 150);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 13);
+            this.label2.Size = new System.Drawing.Size(124, 20);
             this.label2.TabIndex = 2;
             this.label2.Text = "RPF Out Folder:";
             // 
             // text_ContentOutFolderPath
             // 
-            this.text_ContentOutFolderPath.Location = new System.Drawing.Point(12, 134);
+            this.text_ContentOutFolderPath.Location = new System.Drawing.Point(4, 5);
+            this.text_ContentOutFolderPath.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.text_ContentOutFolderPath.Name = "text_ContentOutFolderPath";
-            this.text_ContentOutFolderPath.Size = new System.Drawing.Size(581, 20);
+            this.text_ContentOutFolderPath.Size = new System.Drawing.Size(792, 26);
             this.text_ContentOutFolderPath.TabIndex = 3;
             // 
             // btn_inSelect
             // 
-            this.btn_inSelect.Location = new System.Drawing.Point(599, 46);
+            this.btn_inSelect.Location = new System.Drawing.Point(800, 0);
+            this.btn_inSelect.Margin = new System.Windows.Forms.Padding(0);
             this.btn_inSelect.Name = "btn_inSelect";
-            this.btn_inSelect.Size = new System.Drawing.Size(75, 23);
+            this.btn_inSelect.Size = new System.Drawing.Size(112, 35);
             this.btn_inSelect.TabIndex = 4;
             this.btn_inSelect.Text = "Select";
             this.btn_inSelect.UseVisualStyleBackColor = true;
@@ -84,9 +95,10 @@
             // 
             // btn_outSelect
             // 
-            this.btn_outSelect.Location = new System.Drawing.Point(599, 134);
+            this.btn_outSelect.Location = new System.Drawing.Point(800, 0);
+            this.btn_outSelect.Margin = new System.Windows.Forms.Padding(0);
             this.btn_outSelect.Name = "btn_outSelect";
-            this.btn_outSelect.Size = new System.Drawing.Size(75, 23);
+            this.btn_outSelect.Size = new System.Drawing.Size(112, 35);
             this.btn_outSelect.TabIndex = 5;
             this.btn_outSelect.Text = "Select";
             this.btn_outSelect.UseVisualStyleBackColor = true;
@@ -94,9 +106,11 @@
             // 
             // btn_packdlc
             // 
-            this.btn_packdlc.Location = new System.Drawing.Point(599, 462);
+            this.btn_packdlc.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btn_packdlc.Location = new System.Drawing.Point(963, 695);
+            this.btn_packdlc.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btn_packdlc.Name = "btn_packdlc";
-            this.btn_packdlc.Size = new System.Drawing.Size(75, 23);
+            this.btn_packdlc.Size = new System.Drawing.Size(112, 65);
             this.btn_packdlc.TabIndex = 6;
             this.btn_packdlc.Text = "Pack DLC";
             this.btn_packdlc.UseVisualStyleBackColor = true;
@@ -104,41 +118,103 @@
             // 
             // text_output
             // 
-            this.text_output.Location = new System.Drawing.Point(15, 233);
+            this.text_output.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.text_output.Location = new System.Drawing.Point(4, 295);
+            this.text_output.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.text_output.Multiline = true;
             this.text_output.Name = "text_output";
             this.text_output.ReadOnly = true;
-            this.text_output.Size = new System.Drawing.Size(659, 223);
+            this.text_output.Size = new System.Drawing.Size(1071, 390);
             this.text_output.TabIndex = 7;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 217);
+            this.label3.Location = new System.Drawing.Point(4, 260);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(42, 13);
+            this.label3.Size = new System.Drawing.Size(62, 20);
             this.label3.TabIndex = 8;
             this.label3.Text = "Output:";
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.label1, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btn_packdlc, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.text_output, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 4);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 10;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 400F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1079, 765);
+            this.tableLayoutPanel1.TabIndex = 9;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 800F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel2.Controls.Add(this.text_contentInFolderPath, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btn_inSelect, 1, 0);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 70);
+            this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 1;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1079, 40);
+            this.tableLayoutPanel2.TabIndex = 10;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 800F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.tableLayoutPanel3.Controls.Add(this.text_ContentOutFolderPath, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.btn_outSelect, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(0, 180);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(0);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1079, 40);
+            this.tableLayoutPanel3.TabIndex = 10;
+            // 
             // RagePackForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(687, 497);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.text_output);
-            this.Controls.Add(this.btn_packdlc);
-            this.Controls.Add(this.btn_outSelect);
-            this.Controls.Add(this.btn_inSelect);
-            this.Controls.Add(this.text_ContentOutFolderPath);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.text_contentInFolderPath);
+            this.ClientSize = new System.Drawing.Size(1079, 765);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "RagePackForm";
             this.Text = "RagePackForm";
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -152,5 +228,8 @@
         private System.Windows.Forms.Button btn_packdlc;
         private System.Windows.Forms.TextBox text_output;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }
