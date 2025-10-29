@@ -626,5 +626,11 @@ namespace CodeWalker
                 tViewport.WorldForm_KeyUp(sender, e);
             }
         }
+
+        private void raToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RagePackForm raForm = new RagePackForm();
+            raForm.Show();
+        }
     }
 }
