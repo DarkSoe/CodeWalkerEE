@@ -59,6 +59,11 @@ namespace CodeWalker.Utils
 
             img_thumbnail.SizeMode = PictureBoxSizeMode.Zoom;
             img_thumbnail.BackColor = Color.FromArgb(0x80, 0x80, 0x80);
+            img_thumbnail.Cursor = Cursors.Hand;
+            img_thumbnail.Click += img_thumbnail_Click;
+
+            var previewToolTip = new ToolTip();
+            previewToolTip.SetToolTip(img_thumbnail, "Open 3D preview");
         }
 
         public ContentBrowserItem(ContentPropItem aPropItem)
@@ -82,6 +87,14 @@ namespace CodeWalker.Utils
             Browser_toolTip.SetToolTip(img_plep_link, "Open Plebmaster-page of this Prop in Browser");
             Favorite_toolTip.SetToolTip(img_fav, "Set as Favorite");
             NameClipboard_toolTip.SetToolTip(img_save_name, "Save Name to Clipboard");
+
+            img_thumbnail.SizeMode = PictureBoxSizeMode.Zoom;
+            img_thumbnail.BackColor = Color.FromArgb(0x80, 0x80, 0x80);
+            img_thumbnail.Cursor = Cursors.Hand;
+            img_thumbnail.Click += img_thumbnail_Click;
+
+            var previewToolTip = new ToolTip();
+            previewToolTip.SetToolTip(img_thumbnail, "Open 3D preview");
 
             if (tPropItem.IsFavorite)
             {
@@ -189,7 +202,7 @@ namespace CodeWalker.Utils
             if (bIsMlo)
                 tFlagString = AddFlagText(tFlagString, "MLO");
 
-            label_itemType.Text = tFlagString;
+            label_itemType.Text = string.IsNullOrEmpty(tFlagString) ? "—" : tFlagString;
         }
 
         public string AddFlagText(string tCurrFlagText, string tAddText)
@@ -254,6 +267,14 @@ namespace CodeWalker.Utils
         {
             string tName = tPropItem.GetCleanName();
             Clipboard.SetText(tName);
+        }
+
+        private void img_thumbnail_Click(object sender, EventArgs e)
+        {
+            if (tPropItem == null)
+                return;
+
+            ContentObjectPreviewForm.ShowFor(tPropItem);
         }
     }
 }

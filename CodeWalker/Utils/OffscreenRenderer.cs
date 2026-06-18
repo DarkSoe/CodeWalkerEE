@@ -20,7 +20,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Media.Media3D;
 using static CodeWalker.Project.Panels.GenerateLODLightsPanel;
 
 namespace CodeWalker.Utils
@@ -47,6 +46,11 @@ namespace CodeWalker.Utils
         public string FilePath { get; set; }
         public string SaveFilePath { get; set; }
         public bool SaveThumbnailToDisk { get; set; } = true;
+        public bool PreviewMode { get; set; }
+        public float PreviewRotateSpeed { get; set; } = 0.6f;
+
+        private float previewOrbitAngle = 0f;
+        private SharpDX.Quaternion previewBaseOrientation = SharpDX.Quaternion.Identity;
 
         YdrFile Ydr = null;
         YddFile Ydd = null;
@@ -100,6 +104,7 @@ namespace CodeWalker.Utils
 
             tRenderer = new Renderer(this, tGameFileCache);
             tCamera = tRenderer.camera;
+            tCamera.FollowEntity = tCamEntity;
             tInitedOk = tRenderer.Init(1);
             ConfigureForThumbnailRendering();
 
@@ -143,8 +148,9 @@ namespace CodeWalker.Utils
             }
 
             tCamera.FollowEntity = tCamEntity;
+            previewBaseOrientation = SharpDX.Quaternion.LookAtLH(Vector3.Zero, Vector3.Up, Vector3.ForwardLH);
             tCamera.FollowEntity.Position = tRrevWorldPos;
-            tCamera.FollowEntity.Orientation = SharpDX.Quaternion.LookAtLH(Vector3.Zero, Vector3.Up, Vector3.ForwardLH);
+            tCamera.FollowEntity.Orientation = previewBaseOrientation;
             tCamera.TargetDistance = 2.0f;
             tCamera.CurrentDistance = 2.0f;
             tCamera.TargetRotation.Y = 0.2f;
@@ -172,6 +178,12 @@ namespace CodeWalker.Utils
             if (!Monitor.TryEnter(tRenderer.RenderSyncRoot, 50))
             { return; }
 
+            if (PreviewMode)
+            {
+                previewOrbitAngle += elapsed * PreviewRotateSpeed;
+                tCamEntity.Orientation = previewBaseOrientation * SharpDX.Quaternion.RotationAxis(Vector3.Up, previewOrbitAngle);
+            }
+
             tRenderer.RenderedDrawablesListEnable = true;
 
             tRenderer.Update(elapsed, 0, 0);
@@ -189,7 +201,7 @@ namespace CodeWalker.Utils
 
         private void TryCaptureThumbnail()
         {
-            if (!awaitingThumbnailCapture || SaveThumbnailToDisk)
+            if (PreviewMode || !awaitingThumbnailCapture || SaveThumbnailToDisk)
                 return;
 
             captureWaitFrames++;
@@ -306,7 +318,7 @@ namespace CodeWalker.Utils
 
             if (!ydr.Loaded || ydr.Drawable == null)
             {
-                if (!SaveThumbnailToDisk)
+                if (!SaveThumbnailToDisk && !PreviewMode)
                     ThumbnailReady?.Invoke(null);
                 return;
             }
@@ -345,7 +357,7 @@ namespace CodeWalker.Utils
                 if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Unstarted)
                     tThumbnailThread.Start();
             }
-            else
+            else if (!PreviewMode)
             {
                 BeginThumbnailCapture();
             }
@@ -363,12 +375,21 @@ namespace CodeWalker.Utils
         {
             rad = Math.Max(0.01f, rad);
 
-            tCamera.FollowEntity.Position = pos;
+            if (tCamera.FollowEntity == null)
+                tCamera.FollowEntity = tCamEntity;
+
+            tCamEntity.Position = pos;
             tCamera.TargetDistance = rad * 2.1f; //1.6f;
             tCamera.CurrentDistance = rad * 2.1f; //1.6f;
 
             tCamera.TargetRotation.X = (float)(Math.PI / 4);
             tCamera.TargetRotation.Y = (float)(Math.PI / 4);
+
+            if (PreviewMode)
+            {
+                previewOrbitAngle = 0f;
+                tCamEntity.Orientation = previewBaseOrientation;
+            }
 
             tCamera.UpdateProj = true;
         }
@@ -529,7 +550,7 @@ namespace CodeWalker.Utils
                 return;
             }
 
-            if (!SaveThumbnailToDisk)
+            if (!SaveThumbnailToDisk && !PreviewMode)
                 ThumbnailReady?.Invoke(null);
             else
                 HandlePostLoad(RestartTimer);

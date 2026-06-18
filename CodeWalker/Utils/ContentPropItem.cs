@@ -1,5 +1,6 @@
 ﻿using CodeWalker.GameFiles;
 using System;
+using System.Collections.Generic;
 
 namespace CodeWalker.Utils
 {
@@ -40,6 +41,24 @@ namespace CodeWalker.Utils
         public bool HasThumbnail()
         {
             return ContentThumbnailCache.Exists(GetCleanName());
+        }
+
+        public string GetFlagsText()
+        {
+            if (Archetype?.BaseArchetypeDef == null)
+                return "—";
+
+            uint flags = Archetype.BaseArchetypeDef.flags;
+            var parts = new List<string>();
+
+            if ((flags & 0x20000000) != 0) parts.Add("Dynamic");
+            if ((flags & 0x00040000) != 0) parts.Add("Glass");
+            if ((flags & 0x00008000) != 0) parts.Add("Ladder");
+            if ((flags & 0x04000000) != 0) parts.Add("Door");
+            if ((flags & 0x00000010) != 0) parts.Add("Tree");
+            if ((flags & 0x00000002) != 0) parts.Add("MLO");
+
+            return parts.Count > 0 ? string.Join(", ", parts) : "—";
         }
     }
 }
