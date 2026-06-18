@@ -1,7 +1,5 @@
 ﻿using CodeWalker.GameFiles;
 using System;
-using System.IO;
-using System.Security.AccessControl;
 
 namespace CodeWalker.Utils
 {
@@ -21,19 +19,11 @@ namespace CodeWalker.Utils
 
         public bool IsFavorite { get; set; }
 
-        public ContentPropItem(string aName, YdrFile aYdrFile)
+        public ContentPropItem(string aName, YdrFile aYdrFile = null)
         {
             Name = aName;
             YdrFile = aYdrFile;
-
-            var codeWalkerDir = AppDomain.CurrentDomain.BaseDirectory;
-            var thumbnailDir = Path.Combine(codeWalkerDir, "thumbnails");
-
-            if (!Directory.Exists(thumbnailDir))
-                Directory.CreateDirectory(thumbnailDir);
-
-            ThumbnailPath = Path.Combine(thumbnailDir, Name + ".jpg");
-
+            ThumbnailPath = ContentThumbnailCache.GetThumbnailPath(GetCleanName());
         }
 
         public string GetCleanName()
@@ -49,7 +39,7 @@ namespace CodeWalker.Utils
 
         public bool HasThumbnail()
         {
-            return File.Exists(ThumbnailPath);
+            return ContentThumbnailCache.Exists(GetCleanName());
         }
     }
 }

@@ -184,9 +184,9 @@ namespace CodeWalker.Rendering
         }
 
 
-        public bool Init()
+        public bool Init(int? multisampleOverride = null)
         {
-            return dxman.Init(Form, false);
+            return dxman.Init(Form, false, multisampleOverride);
         }
 
         public void Start()

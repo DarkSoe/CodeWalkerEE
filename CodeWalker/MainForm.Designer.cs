@@ -244,7 +244,7 @@
             this.MenuStrip_MainMenu.Location = new System.Drawing.Point(5, 3);
             this.MenuStrip_MainMenu.Name = "MenuStrip_MainMenu";
             this.MenuStrip_MainMenu.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.MenuStrip_MainMenu.Size = new System.Drawing.Size(425, 24);
+            this.MenuStrip_MainMenu.Size = new System.Drawing.Size(305, 24);
             this.MenuStrip_MainMenu.TabIndex = 2;
             this.MenuStrip_MainMenu.Text = "menuStrip1";
             // 
@@ -700,7 +700,7 @@
             this.label_CodeWalkerVersion.Name = "label_CodeWalkerVersion";
             this.label_CodeWalkerVersion.Size = new System.Drawing.Size(132, 13);
             this.label_CodeWalkerVersion.TabIndex = 3;
-            this.label_CodeWalkerVersion.Text = "CodeWalker30 dev48 ee1";
+            this.label_CodeWalkerVersion.Text = "CodeWalker30 dev48 ee3";
             // 
             // btn_tab_contentbrowser
             // 

@@ -46,6 +46,8 @@ namespace CodeWalker
         //Events
         public event Action<string> PropDragged;
 
+        private ContentThumbnailService ThumbnailService;
+
         public ContentBrowserForm()
         {
             InitializeComponent();
@@ -72,6 +74,13 @@ namespace CodeWalker
             }
         }
 
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            ThumbnailService?.Dispose();
+            ThumbnailService = null;
+            base.OnFormClosed(e);
+        }
+
         public void InitializeContentBrowser(WorldForm aWorldForm)
         {
             WorldForm = aWorldForm;
@@ -94,7 +103,27 @@ namespace CodeWalker
 
             panel_ContentBrowser.ResumeLayout();
 
+            ThumbnailService?.Dispose();
+            ThumbnailService = new ContentThumbnailService(this);
+
             _ = LoadPropsFromCacheAsync();
+        }
+
+        public void RequestThumbnail(ContentBrowserItem item, ContentPropItem prop)
+        {
+            if (ThumbnailService == null || item == null || prop == null)
+                return;
+
+            ThumbnailService.RequestThumbnail(prop, bmp =>
+            {
+                if (item.IsDisposed)
+                    return;
+
+                if (item.InvokeRequired)
+                    item.Invoke((Action)(() => item.ApplyThumbnail(bmp, prop)));
+                else
+                    item.ApplyThumbnail(bmp, prop);
+            });
         }
 
         private void ContentBrowserForm_Move(object sender, EventArgs e)
@@ -126,58 +155,48 @@ namespace CodeWalker
             var props = await Task.Run(() =>
             {
                 var list = new List<ContentPropItem>();
-                foreach (var kvp in GameFileCache.YdrDict)
+                var objectNames = ObjectListLoader.Load();
+
+                foreach (var objectName in objectNames)
                 {
-                    var hash = kvp.Key;
-                    var entry = kvp.Value;
+                    var archetypeHash = JenkHash.GenHash(objectName);
+                    var archetype = TryGetArchetype(archetypeHash);
 
-                    YdrFile ydr = GameFileCache.GetYdr(hash);
-                    if (ydr != null)
+                    YdrFile ydr = null;
+                    string filePath = null;
+
+                    if (GameFileCache != null && GameFileCache.IsInited)
                     {
-                        RpfFileEntry tRpfFileEntry = ydr.RpfFileEntry;
-                        var tModelHash = tRpfFileEntry?.ShortNameHash ?? 0;
-
-                        string tGtaPath = GTAFolder.GetCurrentGTAFolderWithTrailingSlash();
-                        string tFullFilePath = tGtaPath + tRpfFileEntry.Path;
-
-                        int tFileVersion = 0;
-                        if (tRpfFileEntry is RpfResourceFileEntry)
-                        {
-                            var resf = tRpfFileEntry as RpfResourceFileEntry;
-                            tFileVersion = resf.Version;
-                        }
-
-                        if (tModelHash != 0 /*&& tFileVersion > 164*/)
-                        {
-                            var tModelArchetype = TryGetArchetype(tModelHash);
-                            if (tModelArchetype != null)
-                            {
-                                ContentPropItem tProp = new ContentPropItem(entry.Name, ydr);
-                                tProp.Archetype = tModelArchetype;
-                                tProp.FilePath = entry.Path;
-
-                                if (FavoriteList.Contains(entry.Name))
-                                    tProp.IsFavorite = true;
-
-                                list.Add(tProp);
-                            }
-                        }                            
+                        var drawableHash = archetype?.Hash.Hash ?? archetypeHash;
+                        ydr = GameFileCache.GetYdr(drawableHash);
+                        if (ydr?.RpfFileEntry != null)
+                            filePath = ydr.RpfFileEntry.Path;
                     }
-                    
+
+                    var prop = new ContentPropItem(objectName, ydr);
+                    prop.Archetype = archetype;
+                    prop.FilePath = filePath;
+
+                    if (FavoriteList.Contains(objectName) || FavoriteList.Contains(objectName + ".ydr"))
+                        prop.IsFavorite = true;
+
+                    list.Add(prop);
                 }
+
                 return list;
             });
 
             PropList.AddRange(props);
 
             FilteredPropList = new List<ContentPropItem>(PropList);
-            PropList.Reverse();
             PopulatePage(0);
         }
 
         private void PopulatePage(int pageIndex)
         {
             if (FilteredPropList.Count == 0) return;
+
+            ThumbnailService?.ClearQueue();
 
             int totalItems = FilteredPropList.Count;
             int totalPages = (int)Math.Ceiling((double)totalItems / PageSize);

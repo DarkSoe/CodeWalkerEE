@@ -35,14 +35,25 @@ namespace CodeWalker.Rendering
         public int multisamplecount { get; private set; } = 4; //should be a setting..
         public int multisamplequality { get; private set; } = 0; //should be a setting...
         public Color clearcolour { get; private set; } = new Color(0.2f, 0.4f, 0.6f, 1.0f); //gross
+
+        public void SetClearColour(Color colour)
+        {
+            clearcolour = colour;
+        }
         private System.Drawing.Size beginSize;
         private ViewportF Viewport;
         private bool autoStartLoop = false;
 
-        public bool Init(DXForm form, bool autostart = true)
+        public bool Init(DXForm form, bool autostart = true, int? multisampleOverride = null)
         {
             dxform = form;
             autoStartLoop = autostart;
+
+            if (multisampleOverride.HasValue)
+            {
+                multisamplecount = multisampleOverride.Value;
+                multisamplequality = 0;
+            }
 
             try
             {

@@ -57,20 +57,8 @@ namespace CodeWalker.Utils
             Favorite_toolTip.SetToolTip(img_fav, "Set as Favorite");
             NameClipboard_toolTip.SetToolTip(img_save_name, "Save Name to Clipboard");
 
-
-
-            /*if (tOffscreenRenderer == null)
-            {
-                tOffscreenRenderer = new OffscreenRenderer();
-                tOffscreenRenderer.TopLevel = false;
-                tOffscreenRenderer.FormBorderStyle = FormBorderStyle.None;
-                tOffscreenRenderer.ClientSize = new Size(350, 350);
-                tOffscreenRenderer.Location = new Point(0, 0);
-                tOffscreenRenderer.Visible = false;
-                tOffscreenRenderer.Show();
-
-                panel_RenderImage.Controls.Add(tOffscreenRenderer);
-            }*/
+            img_thumbnail.SizeMode = PictureBoxSizeMode.Zoom;
+            img_thumbnail.BackColor = Color.FromArgb(0x80, 0x80, 0x80);
         }
 
         public ContentBrowserItem(ContentPropItem aPropItem)
@@ -126,9 +114,12 @@ namespace CodeWalker.Utils
 
         public void SetProp(ContentPropItem aPropItem)
         {
+            if (tContentBrowser == null)
+                tContentBrowser = Application.OpenForms.OfType<ContentBrowserForm>().FirstOrDefault();
+
             tPropItem = aPropItem;
             label_Name.Text = tPropItem.GetCleanName();
-            img_thumbnail.ImageLocation = tPropItem.ThumbnailPath;
+            ClearThumbnail();
             ApplyArchetypeFlags(tPropItem.Archetype);
 
             if (tPropItem.IsFavorite)
@@ -142,23 +133,27 @@ namespace CodeWalker.Utils
                 Favorite_toolTip.SetToolTip(img_fav, "Add to Favorites");
             }
 
-            /* if (tOffscreenRenderer == null)
-             {
-                 tOffscreenRenderer = new OffscreenRenderer();
-                 tOffscreenRenderer.TopLevel = false;
-                 tOffscreenRenderer.FormBorderStyle = FormBorderStyle.None;
-                 tOffscreenRenderer.ClientSize = new Size(350, 350);
-                 tOffscreenRenderer.Location = new Point(0, 0);
-                 tOffscreenRenderer.Visible = true;
-                 tOffscreenRenderer.Show();
+            tContentBrowser?.RequestThumbnail(this, tPropItem);
+        }
 
-                 panel_RenderImage.Controls.Add(tOffscreenRenderer);
-             }
+        public void ApplyThumbnail(Bitmap bitmap, ContentPropItem forProp)
+        {
+            if (IsDisposed || tPropItem != forProp)
+                return;
 
-             tOffscreenRenderer.FilePath = tPropItem.YdrFile.FilePath;
-             tOffscreenRenderer.SaveFilePath = tPropItem.ThumbnailPath;
-             tOffscreenRenderer.tPauseRendering = false;
-             tOffscreenRenderer.ViewModel(tPropItem);*/
+            ClearThumbnail();
+
+            if (bitmap != null)
+                img_thumbnail.Image = new Bitmap(bitmap);
+        }
+
+        private void ClearThumbnail()
+        {
+            img_thumbnail.ImageLocation = null;
+            img_thumbnail.ErrorImage = null;
+            var oldImage = img_thumbnail.Image;
+            img_thumbnail.Image = null;
+            oldImage?.Dispose();
         }
 
         public void ApplyArchetypeFlags(Archetype archetype)

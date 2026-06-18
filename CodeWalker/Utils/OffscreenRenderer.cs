@@ -30,6 +30,8 @@ namespace CodeWalker.Utils
         Thread tThumbnailThread;
 
         volatile bool tFormOpen = false;
+        volatile bool tRendererReady = false;
+        public bool IsRendererReady => tRendererReady;
         public bool tPauseRendering = false;
 
         private Renderer tRenderer = null;
@@ -44,6 +46,7 @@ namespace CodeWalker.Utils
 
         public string FilePath { get; set; }
         public string SaveFilePath { get; set; }
+        public bool SaveThumbnailToDisk { get; set; } = true;
 
         YdrFile Ydr = null;
         YddFile Ydd = null;
@@ -78,22 +81,29 @@ namespace CodeWalker.Utils
 
         // Events
         public event Action StatusReady;
+        public event Action<Bitmap> ThumbnailReady;
+
+        private int captureGeneration = 0;
+        private int activeCaptureGeneration = 0;
+        private bool awaitingThumbnailCapture = false;
+        private int captureReadyFrames = 0;
+        private int captureWaitFrames = 0;
+        private const int CaptureRequiredReadyFrames = 8;
+        private const int CaptureMaxWaitFrames = 600;
 
         public OffscreenRenderer()
         {
             InitializeComponent();
 
-            MainForm tMainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
-            tGameFileCache = tMainForm.tViewport.GameFileCache;
+            var tMainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
+            tGameFileCache = tMainForm?.tViewport?.GameFileCache;
 
             tRenderer = new Renderer(this, tGameFileCache);
             tCamera = tRenderer.camera;
-            tInitedOk = tRenderer.Init();
+            tInitedOk = tRenderer.Init(1);
+            ConfigureForThumbnailRendering();
 
-            tRenderer.controllightdir = !Settings.Default.Skydome;
             tRenderer.rendercollisionmeshes = false;
-            tRenderer.renderclouds = false;
-            tRenderer.rendermoon = false;
             tRenderer.renderskeletons = false;
             tRenderer.renderfragwindows = false;
             tRenderer.SelectionFlagsTestAll = true;
@@ -143,10 +153,11 @@ namespace CodeWalker.Utils
             tCamera.CurrentRotation.X = 0.5f * (float)Math.PI;
 
             tRenderer.shaders.deferred = false;
-
+            ConfigureForThumbnailRendering();
             LoadSettings();
 
             tFormOpen = true;
+            tRendererReady = true;
             new Thread(new ThreadStart(ContentThread)).Start();
             tFrameTimer.Start();
         }
@@ -161,7 +172,7 @@ namespace CodeWalker.Utils
             if (!Monitor.TryEnter(tRenderer.RenderSyncRoot, 50))
             { return; }
 
-            //context.OutputMerger.SetRenderTargets(offscreenRTV);
+            tRenderer.RenderedDrawablesListEnable = true;
 
             tRenderer.Update(elapsed, 0, 0);
             tRenderer.BeginRender(context);
@@ -170,14 +181,74 @@ namespace CodeWalker.Utils
             tRenderer.RenderSelectionGeometry(MapSelectionMode.Entity);
             tRenderer.RenderFinalPass();
             tRenderer.EndRender();
-            tRenderer.RenderedDrawablesListEnable = true;
+
+            TryCaptureThumbnail();
 
             Monitor.Exit(tRenderer.RenderSyncRoot);
+        }
+
+        private void TryCaptureThumbnail()
+        {
+            if (!awaitingThumbnailCapture || SaveThumbnailToDisk)
+                return;
+
+            captureWaitFrames++;
+
+            if (Ydr != null && Ydr.Loaded && tRenderer.RenderedDrawables.Count >= 1)
+                captureReadyFrames++;
+            else
+                captureReadyFrames = 0;
+
+            if (captureReadyFrames >= CaptureRequiredReadyFrames)
+            {
+                awaitingThumbnailCapture = false;
+                int generation = activeCaptureGeneration;
+                Bitmap bmp = CaptureBackBufferFromDevice();
+                ThreadPool.QueueUserWorkItem(_ =>
+                {
+                    if (generation == activeCaptureGeneration)
+                        ThumbnailReady?.Invoke(bmp);
+                    else
+                        bmp?.Dispose();
+                });
+            }
+            else if (captureWaitFrames >= CaptureMaxWaitFrames)
+            {
+                awaitingThumbnailCapture = false;
+                int generation = activeCaptureGeneration;
+                ThreadPool.QueueUserWorkItem(_ =>
+                {
+                    if (generation == activeCaptureGeneration)
+                        ThumbnailReady?.Invoke(null);
+                });
+            }
         }
 
         private void LoadSettings()
         {
             var s = Settings.Default;
+        }
+
+        private void ConfigureForThumbnailRendering()
+        {
+            tRenderer.DXMan?.SetClearColour(new SharpDX.Color(0x55, 0x8B, 0xAD, 255));
+            tRenderer.controllightdir = true;
+            tRenderer.renderskydome = false;
+            tRenderer.renderclouds = false;
+            tRenderer.rendermoon = false;
+            tRenderer.controltimeofday = false;
+            tRenderer.timerunning = false;
+            tRenderer.rendernaturalambientlight = false;
+            tRenderer.renderartificialambientlight = false;
+            tRenderer.lightdirx = 0.75f;
+            tRenderer.lightdiry = 0.35f;
+
+            if (tRenderer.shaders != null)
+            {
+                tRenderer.shaders.hdr = false;
+                tRenderer.shaders.deferred = false;
+                tRenderer.shaders.shadows = false;
+            }
         }
 
         private void ContentThread()
@@ -230,14 +301,26 @@ namespace CodeWalker.Utils
         {
             if (ydr == null) return;
 
+            if (!ydr.Loaded && tGameFileCache != null)
+                tGameFileCache.LoadFile(ydr);
+
+            if (!ydr.Loaded || ydr.Drawable == null)
+            {
+                if (!SaveThumbnailToDisk)
+                    ThumbnailReady?.Invoke(null);
+                return;
+            }
             FileName = ydr.Name;
             Ydr = ydr;
+            tModelArchetype = null;
             tRpfFileEntry = Ydr.RpfFileEntry;
             tModelHash = Ydr.RpfFileEntry?.ShortNameHash ?? 0;
-            if (tModelHash != 0)
-            {
+            if (tCurrPropItem?.Archetype != null)
+                tModelArchetype = tCurrPropItem.Archetype;
+            else if (tModelHash != 0)
                 tModelArchetype = TryGetArchetype(tModelHash);
-            }
+            else if (tCurrPropItem != null)
+                tModelHash = JenkHash.GenHash(tCurrPropItem.GetCleanName());
 
             if (ydr.Drawable != null)
             {
@@ -257,8 +340,23 @@ namespace CodeWalker.Utils
             if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Stopped)
                 tThumbnailThread = new Thread(new ThreadStart(Thread_CheckForRenderProp));
 
-            if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Unstarted)
-                tThumbnailThread.Start();
+            if (SaveThumbnailToDisk)
+            {
+                if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Unstarted)
+                    tThumbnailThread.Start();
+            }
+            else
+            {
+                BeginThumbnailCapture();
+            }
+        }
+
+        private void BeginThumbnailCapture()
+        {
+            activeCaptureGeneration = captureGeneration;
+            awaitingThumbnailCapture = true;
+            captureReadyFrames = 0;
+            captureWaitFrames = 0;
         }
 
         private void MoveCameraToView(Vector3 pos, float rad)
@@ -312,6 +410,64 @@ namespace CodeWalker.Utils
             }
         }
 
+        private Bitmap CaptureBackBufferFromDevice()
+        {
+            var device = tRenderer.Device;
+            var backbuffer = tRenderer.DXMan?.backbuffer;
+            if (device == null || backbuffer == null)
+                return null;
+
+            var context = device.ImmediateContext;
+            var desc = backbuffer.Description;
+
+            var stagingDesc = new Texture2DDescription()
+            {
+                Width = desc.Width,
+                Height = desc.Height,
+                MipLevels = 1,
+                ArraySize = 1,
+                Format = desc.Format,
+                SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0),
+                Usage = ResourceUsage.Staging,
+                BindFlags = BindFlags.None,
+                CpuAccessFlags = CpuAccessFlags.Read,
+                OptionFlags = ResourceOptionFlags.None
+            };
+
+            using (var staging = new Texture2D(device, stagingDesc))
+            {
+                context.CopyResource(backbuffer, staging);
+                var dataBox = context.MapSubresource(staging, 0, MapMode.Read, MapFlags.None);
+
+                int rowPitch = dataBox.RowPitch;
+                int width = desc.Width;
+                int height = desc.Height;
+                int bytesPerPixel = 4;
+                byte[] pixelData = new byte[height * width * bytesPerPixel];
+
+                IntPtr srcPtr = dataBox.DataPointer;
+                int destOffset = 0;
+
+                for (int y = 0; y < height; y++)
+                {
+                    Marshal.Copy(srcPtr + y * rowPitch, pixelData, destOffset, width * bytesPerPixel);
+                    destOffset += width * bytesPerPixel;
+                }
+
+                context.UnmapSubresource(staging, 0);
+
+                var bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+                var bmpData = bmp.LockBits(
+                    new System.Drawing.Rectangle(0, 0, width, height),
+                    ImageLockMode.WriteOnly,
+                    PixelFormat.Format32bppArgb);
+
+                Marshal.Copy(pixelData, 0, bmpData.Scan0, pixelData.Length);
+                bmp.UnlockBits(bmpData);
+                return bmp;
+            }
+        }
+
         private void SaveThumbnailAsJpeg(Bitmap bmp, string path, long quality = 85L)
         {
             var codec = ImageCodecInfo.GetImageEncoders()
@@ -337,19 +493,21 @@ namespace CodeWalker.Utils
 
         public Bitmap CaptureWindowBitmap()
         {
-            Bitmap bmp = new Bitmap(this.Size.Width, this.Size.Height, PixelFormat.Format32bppArgb);
+            Bitmap bmp = new Bitmap(this.ClientSize.Width, this.ClientSize.Height, PixelFormat.Format32bppArgb);
 
             using (Graphics g = Graphics.FromImage(bmp))
             {
-                ContentThumbnailGenerator tForm = Application.OpenForms.OfType<ContentThumbnailGenerator>().FirstOrDefault();
-                System.Drawing.Point tLocation = new System.Drawing.Point(0, 0);
+                System.Drawing.Point tLocation = System.Drawing.Point.Empty;
 
                 this.Invoke((MethodInvoker)(() =>
                 {
-                    tLocation = tForm.GetRendererLocation();
+                    var tForm = Application.OpenForms.OfType<ContentThumbnailGenerator>().FirstOrDefault();
+                    tLocation = tForm != null
+                        ? tForm.GetRendererLocation()
+                        : this.PointToScreen(System.Drawing.Point.Empty);
                 }));
-                
-                g.CopyFromScreen(tLocation, System.Drawing.Point.Empty, new Size(350, 350));
+
+                g.CopyFromScreen(tLocation, System.Drawing.Point.Empty, this.ClientSize);
             }
 
             return bmp;
@@ -358,54 +516,85 @@ namespace CodeWalker.Utils
         public void ViewModel(ContentPropItem aPropItem, bool RestartTimer = false)
         {
             tCurrPropItem = aPropItem;
+            captureGeneration++;
+            awaitingThumbnailCapture = false;
+            Ydr = null;
+            tModelArchetype = null;
+            tRenderer.RenderedDrawables.Clear();
+            tPauseRendering = false;
 
-            byte[] data = null;
-            string name = "";
-            string path = "";
-            string extension = "";
+            if (TryLoadModelFromProp(aPropItem))
+            {
+                HandlePostLoad(RestartTimer);
+                return;
+            }
 
-            string tGtaPath = GTAFolder.GetCurrentGTAFolderWithTrailingSlash();
-            string tFullFilePath = tGtaPath + aPropItem.FilePath;
+            if (!SaveThumbnailToDisk)
+                ThumbnailReady?.Invoke(null);
+            else
+                HandlePostLoad(RestartTimer);
+        }
 
-            RpfFileEntry tRpfFileEntry = aPropItem.YdrFile.RpfFileEntry;
+        private bool TryLoadModelFromProp(ContentPropItem aPropItem)
+        {
+            RpfFileEntry tRpfFileEntry = aPropItem.YdrFile?.RpfFileEntry;
+
             if (tRpfFileEntry != null)
             {
                 RpfFile tRpfFile = tRpfFileEntry.File;
-                if (tRpfFile == null) return;
+                if (tRpfFile == null) return false;
 
-                data = tRpfFile.ExtractFile(tRpfFileEntry);
-                name = new FileInfo(tFullFilePath).Name;
-                path = tFullFilePath;
-                extension = new FileInfo(tFullFilePath).Extension;
-            }
+                byte[] data = tRpfFile.ExtractFile(tRpfFileEntry);
+                if (data == null) return false;
 
-            if (data == null) return;
+                string extension = Path.GetExtension(tRpfFileEntry.Name ?? string.Empty);
+                if (string.IsNullOrEmpty(extension) && !string.IsNullOrEmpty(aPropItem.FilePath))
+                    extension = Path.GetExtension(aPropItem.FilePath);
 
-            if (tRpfFileEntry == null)
-            {
-                tRpfFileEntry = CreateFileEntry(name, path, ref data);
-                extension = new FileInfo(tFullFilePath).Extension;
-            }
-
-            switch (extension)
-            {
-                case ".ydr":
+                if (extension == ".ydr")
+                {
                     var tYdr = RpfFile.GetFile<YdrFile>(tRpfFileEntry, data);
                     LoadModel(tYdr);
-                    break;
+                    return true;
+                }
             }
 
-            if (RestartTimer)
+            if (tGameFileCache != null && tGameFileCache.IsInited)
             {
-                if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Stopped)
-                {
-                    tThumbnailThread = new Thread(new ThreadStart(Thread_CheckForRenderProp));
-                    tThumbnailThread.Start();
-                }
-                    
+                var nameHash = JenkHash.GenHash(aPropItem.GetCleanName());
+                YdrFile ydr = null;
 
-                if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Unstarted)
-                    tThumbnailThread.Start();
+                if (aPropItem.Archetype != null)
+                    ydr = tGameFileCache.GetYdr(aPropItem.Archetype.Hash.Hash);
+
+                if (ydr == null)
+                    ydr = aPropItem.YdrFile;
+
+                if (ydr == null)
+                    ydr = tGameFileCache.GetYdr(nameHash);
+
+                if (ydr != null)
+                {
+                    LoadModel(ydr);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void HandlePostLoad(bool restartTimer)
+        {
+            if (SaveThumbnailToDisk)
+            {
+                if (restartTimer)
+                {
+                    if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Stopped)
+                        tThumbnailThread = new Thread(new ThreadStart(Thread_CheckForRenderProp));
+
+                    if (tThumbnailThread.ThreadState == System.Threading.ThreadState.Unstarted)
+                        tThumbnailThread.Start();
+                }
             }
         }
 
